@@ -362,7 +362,7 @@ char * roman_ctime(const time_t * t)
    strncpy(hour, long2roman((unsigned) ts->tm_hour), ROMAN_BUFF_LEN/4);
    strncpy(min,  long2roman((unsigned) ts->tm_min),  ROMAN_BUFF_LEN/4);
    strncpy(sec,  long2roman((unsigned) ts->tm_sec),  ROMAN_BUFF_LEN/4);
-   strncpy(year, long2roman((unsigned) ts->tm_year), ROMAN_BUFF_LEN/4);
+   strncpy(year, long2roman((unsigned) ts->tm_year + 1900), ROMAN_BUFF_LEN/4);
 
    snprintf(roman_ctime_string, ROMAN_BUFF_LEN, "%s %s %s %s:%s:%s %s %s\n", 
       roman_latin_weekday[ts->tm_wday], roman_latin_month[ts->tm_mon], day,

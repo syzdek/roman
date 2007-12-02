@@ -1,6 +1,177 @@
-I have not yet written the documentation for this project.  It should be
-forth coming and hopefully in time for release N.N.I.  In the mean time,
-may I suggest reading works from Douglas Adams, Victor Hugo, Russell Janney,
-William Shakespeare, and Clive Cussler.  Although these authors will not shed
-any light on the use of this software, they will provide hours of thought
-provoking ideas in varying degrees of entertainment.  --David Syzdek
+$Id$
+
+Roman Numeral Conversion API
+Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>
+
+Contents
+========
+   I. Introduction
+  II. Roman Numerals
+ III. Obtaining the Source
+  IV. Compiling and Installing
+   V. Programming Examples
+
+
+I. Introduction
+---------------
+
+This package was developed to provide an easy method of including Roman Numeral
+values in the output of programs written in C/C++.  Currently the only
+available functions are roman2long() and long2roman(), however I am expanding
+the library to also include date functions.  The `romandate' command provides
+and example of how the API will translate dates into Roman Numerals.  The
+`romannum' command demonstrates the capabilities of the API. 
+
+
+II. Roman Numerals
+------------------
+
+A simple chart is included below showing the values for Roman Numeral symbols. This
+chart is also included in the `romannum' command and in the roman.8 man page.
+
+   Roman Numerals:
+    Symbol    Value              Name
+      N     0  (zero)          (nullae) *
+      I     1  (one)           (unus)
+      V     5  (five)          (quinque)
+      X    10  (ten)           (decem)
+      L    50  (fifty)         (quinquaginta)
+      C   100  (one hundred)   (centum)
+      D   500  (five hundred)  (quingenti)
+      M  1000  (one thousand)  (mille)
+   
+   * Non-standard Roman numeral used by St. Bede.
+
+A bar placed across the top of a Roman Numeral implies that the value shoud be
+multiplied by 1000.  However, this utility does not use this notation since
+there is not an acceptable manner of representing this notation using ASCII
+characters.
+
+More information on Roman Numerals can be found on the following web sites:
+
+	http://en.wikipedia.org/wiki/Roman_numerals
+	http://www.novaroma.org/via_romana/numbers.html
+
+
+III. Obtaining the Source
+-------------------------
+
+This project is hosted on SourceForge.  The source code can be downloaded from the
+following web page:
+
+	https://sourceforge.net/projects/roman/
+
+The latest source code can be retieved from CVS using the following commands:
+
+	CVSROOT=:pserver:anonymous@roman.cvs.sourceforge.net:/cvsroot/roman
+	export CVSROOT
+	cvs -z3 checkout -P roman
+
+This should create a directory called `roman' which contains the latest
+development source.
+
+
+IV. Compiling and Installing
+----------------------------
+
+This project uses GNU Autoconf, GNU Automake, and GNU Libtool in order to ease
+porting source across multiple platforms.  As of this writing the source was 
+known to compile for the following platforms:
+
+	Apple OS X 10.5.1
+	Slackware Linux 11.0
+	Windows 2000 (using MinGW32)
+
+The easist way to compile the source on a Unix platform is to run the following:
+
+	gzip -cd roman-x.x.x.tar.gz | tar -xvf -
+	cd roman-x.x.x
+	./configure
+	make
+	make install
+
+For more information on building and installing using configure, please read the
+INSTALL file.
+
+The following is used to cross compile static WIN32 programs and library on
+OS X from files obtained from the CVS repository:
+
+        RELEASE=x.x.x-mingw32-static
+	rm -fR /tmp/roman-mingw32-$RELEASE
+
+	../roman/configure --prefix=/tmp/roman-$RELEASE --disable-shared \
+	                   --bindir=/tmp/roman-$RELEASE --host=i386-mingw32
+	make
+	make windist
+	rm -fR /tmp/roman-$RELEASE/share
+	cd /tmp
+	zip -r roman-$RELEASE.zip roman-$RELEASE
+
+
+Removing the `--disable-shared' option will create a DLL library which must
+be in the same directory as the executables that use it.  For convience, this
+project distributes staticly compiled programs and libraries.
+
+
+V. Programming Examples
+-----------------------
+
+The first example demonstrates generating Roman Numeral strings from an integer:
+
+	/* compile with gcc -lroman -o test1 test1.c */
+	#include <stdio.h>
+	#include <roman.h>
+
+	int main(void);
+
+	int main(void)
+	{
+	   const char * roman;
+	   roman = long2roman(3132);
+	   if (!(roman))
+	   {
+	      perror("long2roman()");
+	      return(1);
+	   };
+	   printf("Roman Numeral: %s\n", roman);
+	   return(0);
+	}
+
+If the above program is run on a Posix system, the output should be similiar
+to the following:
+
+	syzdek@tacntock$ gcc -lroman -o test1 test1.c
+	syzdek@tacntock$ ./test1 
+	Roman Numeral: MMMCXXXII
+	syzdek@tacntock$
+
+The second example demonstrates converting a Roman Numeral string into an integer:
+
+	/* compile with gcc -lroman -o test2 test2.c */
+	#include <stdio.h>
+	#include <roman.h>
+
+	int main(void);
+
+	int main(void)
+	{
+	   int num;
+	   num = roman2long("MMMCXXXII");
+	   if (num < 0)
+	   {
+	      perror("roman2long()");
+	      return(1);
+	   };
+	   printf("Number: %i\n", num);
+	   return(0);
+	}
+
+
+If the above program is run on a Posix system, the output should be similiar
+to the following:
+
+	syzdek@tacntock$ gcc -lroman -o test2 test2.c
+	syzdek@tacntock$ ./test2 
+	Number: 3132
+	syzdek@tacntock$
+

@@ -26,14 +26,38 @@
 #define _ROMAN_LIB_LIBROMAN_C 1
 #include "libroman.h"
 
+/* buffer for storing Latin time */
+char roman_ctime_string[ROMAN_BUFF_LEN];
 
 /* buffer for storing conversions */
 char roman_string[ROMAN_BUFF_LEN];
 
-/* buffer for storing Latin time */
-char roman_ctime_string[ROMAN_BUFF_LEN];
+/* array containing a Roman Numeral chart */
+const char * roman_numeral_chart[] =
+{
+   "Roman Numerals:",
+   " Symbol    Value              Name",
+   "   N     0  (zero)          (nullae) *",
+   "   I     1  (one)           (unus)",
+   "   V     5  (five)          (quinque)",
+   "   X    10  (ten)           (decem)",
+   "   L    50  (fifty)         (quinquaginta)",
+   "   C   100  (one hundred)   (centum)",
+   "   D   500  (five hundred)  (quingenti)",
+   "   M  1000  (one thousand)  (mille)",
+   "",
+   "Notes:",
+   "   A bar placed across the top of a Roman Numeral implies that",
+   "   the value shoud be multiplied by 1000.  This utility does not",
+   "   use this notation since there is not an acceptable manner of",
+   "   representing this notation using ASCII characters.",
+   "",
+   "* Non-standard Roman numeral used by St. Bede.",
+   NULL
+};
 
-/* Latin days of the month */
+
+/* Latin days of the week */
 const char * roman_latin_weekday[] =
 {
    "dies Solis",
@@ -47,7 +71,7 @@ const char * roman_latin_weekday[] =
 };
 
 
-/* Latin days of the month */
+/* Latin months of the year */
 const char * roman_latin_month[] =
 {
    "Januarius",
@@ -330,6 +354,13 @@ ROMAN_F(int) roman2long(const char * rom)
 
    /* ends function */
    return(num);
+}
+
+
+/* returns a chart of Roman Numeral symbols */
+const char ** roman_chart(void)
+{
+   return(roman_numeral_chart);
 }
 
 

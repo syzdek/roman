@@ -36,11 +36,10 @@
 #      libtool --mode=clean rm -f base64.lo byteorder.lo libroman.la
 #
 # variables
-roman_latin_weekday
-roman_latin_month
 #
 # functions
 long2roman
 roman2long
+roman_chart
 roman_ctime
 # end of symbol export file

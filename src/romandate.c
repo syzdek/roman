@@ -70,6 +70,9 @@ int main PARAMS((int argc, char * argv[]));
 /* parses config */
 MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
 
+/* displays Roman Numeral chart */
+void my_chart PARAMS((void));
+
 /* displays usage */
 void my_usage PARAMS((void));
 
@@ -112,9 +115,10 @@ MyConfig * my_cmdline(int argc, char *argv[])
    int        option_index;
    MyConfig * cnf;
 
-   static char   short_options[] = "hvV";
+   static char   short_options[] = "chvV";
    static struct option long_options[] =
    {
+      {"chart",		no_argument, 0, 'c'},
       {"help",		no_argument, 0, 'h'},
       {"verbose",	no_argument, 0, 'v'},
       {"version",	no_argument, 0, 'V'},
@@ -141,6 +145,10 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case -1:       /* no more arguments */
          case 0:        /* long option toggles */
             break;
+         case 'c':
+            my_chart();
+            free(cnf);
+            return(NULL);
          case 'h':
             my_usage();
             free(cnf);
@@ -163,6 +171,18 @@ MyConfig * my_cmdline(int argc, char *argv[])
 
    /* ends function */
    return(cnf);
+}
+
+
+/* displays Roman Numeral chart */
+void my_chart(void)
+{
+   int i;
+   const char ** chart;
+   chart = roman_chart();
+   for(i = 0; chart[i]; i++)
+      printf("%s\n", chart[i]);
+   return;
 }
 
 

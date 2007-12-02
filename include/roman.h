@@ -112,6 +112,9 @@ ROMAN_F(const char *) long2roman PARAMS((unsigned num));
 /* determines required dst buffer to decode src_len data block */
 ROMAN_F(int) roman2long PARAMS((const char * rom));
 
+/* returns a chart of Roman Numeral symbols */
+ROMAN_F(const char **) roman_chart PARAMS((void));
+
 /* returns string containing the date in Latin */
 ROMAN_F(char *) roman_ctime PARAMS((const time_t * t));
 

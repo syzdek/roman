@@ -68,13 +68,13 @@ int main PARAMS((int argc, char * argv[]));
 /* parses config */
 MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
 
-/* displays usage */
-void my_key PARAMS((void));
+/* displays Roman Numeral chart */
+void my_chart PARAMS((void));
 
 /* displays usage */
 void my_usage PARAMS((void));
 
-/* displays usage */
+/* displays version */
 void my_version PARAMS((void));
 
 
@@ -131,12 +131,11 @@ MyConfig * my_cmdline(int argc, char *argv[])
    int        option_index;
    MyConfig * cnf;
 
-   static char   short_options[] = "kn:r:hvV";
+   static char   short_options[] = "cd:r:hvV";
    static struct option long_options[] =
    {
       {"help",		no_argument, 0, 'h'},
-      {"key",		no_argument, 0, 'k'},
-      {"keys",		no_argument, 0, 'k'},
+      {"chart",		no_argument, 0, 'c'},
       {"verbose",	no_argument, 0, 'v'},
       {"version",	no_argument, 0, 'V'},
       {NULL,            0,           0, 0  }
@@ -166,16 +165,16 @@ MyConfig * my_cmdline(int argc, char *argv[])
             my_usage();
             free(cnf);
             return(NULL);
-         case 'k':
-            my_key();
+         case 'c':
+            my_chart();
             free(cnf);
             return(NULL);
-         case 'n':
+         case 'd':
             cnf->num = atol(optarg);
             if (cnf->num < 0)
             {
                fprintf(stderr, "%s: Roman numerals must be positive\n", PROGRAM_NAME);
-               fprintf(stderr, "Try `%s --key' for more information.\n", PROGRAM_NAME);
+               fprintf(stderr, "Try `%s --chart' for more information.\n", PROGRAM_NAME);
                free(cnf);
                return(NULL);
             };
@@ -220,27 +219,14 @@ MyConfig * my_cmdline(int argc, char *argv[])
 }
 
 
-/* displays usage */
-void my_key(void)
+/* displays Roman Numeral chart */
+void my_chart(void)
 {
-   printf("Roman Numerals:\n");
-   printf(" Symbol    Value              Name\n");
-   printf("   N     0  (zero)          (nullae) *\n");
-   printf("   I     1  (one)           (unus)\n");
-   printf("   V     5  (five)          (quinque)\n");
-   printf("   X    10  (ten)           (decem)\n");
-   printf("   L    50  (fifty)         (quinquaginta)\n");
-   printf("   C   100  (one hundred)   (centum)\n");
-   printf("   D   500  (five hundred)  (quingenti)\n");
-   printf("   M  1000  (one thousand)  (mille)\n");
-   printf("\n");
-   printf("Notes:\n");
-   printf("   A bar placed across the top of a Roman Numeral implies that\n");
-   printf("   the value shoud be multiplied by 1000.  This utility does not\n");
-   printf("   use this notation since there is not an acceptable manner of\n");
-   printf("   representing this notation using ASCII characters.\n");
-   printf("\n");
-   printf("* Non-standard Roman numeral used by St. Bede.\n");
+   int i;
+   const char ** chart;
+   chart = roman_chart();
+   for(i = 0; chart[i]; i++)
+      printf("%s\n", chart[i]);
    return;
 }
 
@@ -249,9 +235,9 @@ void my_key(void)
 void my_usage(void)
 {
    printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -n number             number to convert to Roman Numeral\n");
+   printf("  -d number             number to convert to Roman Numeral\n");
    printf("  -r numeral            Roman Numeral to convert to number\n");
-   printf("  -k, --key             print Roman Numeral key\n");
+   printf("  -c, --chart           print Roman Numeral chart\n");
    printf("  -h, --help            print this help and exit\n");
    printf("  -V, --version         print version number and exit\n");
 #ifdef PACKAGE_BUGREPORT

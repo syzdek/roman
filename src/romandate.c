@@ -189,9 +189,25 @@ void my_chart(void)
 /* displays usage */
 void my_usage(void)
 {
+   //printf("Usage: %s [OPTIONS] [+format]\n", PROGRAM_NAME);
    printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -h, --help            print this help and exit\n");
-   printf("  -V, --version         print version number and exit\n");
+   printf("  -c, --chart               print this help and exit\n");
+   printf("  -h, --help                print this help and exit\n");
+   //printf("  -u, --utc, --universal    print Coordinated Universal Time\n");
+   printf("  -V, --version             print version number and exit\n");
+   //printf("\n");
+   //printf("Format:\n");
+   //printf("  %%%%    a literal %%\n");
+   //printf("  %%a   latin's abbreviated weekday name (Sol..Sat)\n");
+   //printf("  %%A   latin's full weekday name, variable length (dies Solis..dies Saturni)\n");
+   //printf("  %%b   latin's abbreviated month name (Jan..Dec)\n");
+   //printf("  %%B   latin's full month name, variable length (Januarius..December)\n");
+   //printf("  %%c   latin's date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII)\n");
+   //printf("  %%C   century\n");
+   //printf("  %%d   same as %%e\n");
+   //printf("  %%D   same as %%m/%%d/%%Y\n");
+   //printf("  %%e   day of month (I..XXXI)\n");
+   //printf("  %%F   same as %%Y-%%m-%%d\n");
 #ifdef PACKAGE_BUGREPORT
    printf("\n");
    printf("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);

@@ -235,11 +235,11 @@ void my_chart(void)
 void my_usage(void)
 {
    printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -d number             number to convert to Roman Numeral\n");
-   printf("  -r numeral            Roman Numeral to convert to number\n");
-   printf("  -c, --chart           print Roman Numeral chart\n");
-   printf("  -h, --help            print this help and exit\n");
-   printf("  -V, --version         print version number and exit\n");
+   printf("  -d number                 number to convert to Roman Numeral\n");
+   printf("  -r numeral                Roman Numeral to convert to number\n");
+   printf("  -c, --chart               print this help and exit\n");
+   printf("  -h, --help                print this help and exit\n");
+   printf("  -V, --version             print version number and exit\n");
 #ifdef PACKAGE_BUGREPORT
    printf("\n");
    printf("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);

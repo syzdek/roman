@@ -118,6 +118,15 @@ $(man_MANS): Makefile doc/long2roman.3.in doc/roman.1.in doc/roman2long.3.in
 	@${do_subst} < $(srcdir)/${@}.in > ${@} || exit 1
 	@chmod 0644 ${@}
 
+# windows dist files
+windist: Makefile
+	make dist-zip
+	make install
+	cp @PACKAGE_TARNAME@-@PACKAGE_VERSION@.zip $(DESTDIR)/$(prefix)/
+	cp $(srcdir)/ChangeLog                     $(DESTDIR)/$(prefix)/ChangeLog.txt
+	cp $(srcdir)/COPYING                       $(DESTDIR)/$(prefix)/COPYING.txt
+	cp $(srcdir)/README                        $(DESTDIR)/$(prefix)/README.txt
+	cp $(srcdir)/TODO                          $(DESTDIR)/$(prefix)/TODO.txt
 
 # local targets
 install-exec-local:

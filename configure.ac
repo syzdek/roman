@@ -31,9 +31,9 @@ AC_PREREQ(2.61)
 
 AC_COPYRIGHT([Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.])
 AC_REVISION($Revision$)
-AC_INIT([Roman Numeral Conversion API],[0.0.0-rc2],[syzdek@users.sourceforge.net],[roman])
+AC_INIT([Roman Numeral Conversion API],[0.0.1],[syzdek@users.sourceforge.net],[roman])
 AC_DEFINE_UNQUOTED(PACKAGE_COPYRIGHT, ["Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>."], ["Copyright info"])
-AC_SUBST([RELEASE_MONTH],["November 2007"])
+AC_SUBST([RELEASE_MONTH],["December 2007"])
 
 # Version Info:
 #    Current    -- the current version number of this API

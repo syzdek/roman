@@ -95,6 +95,12 @@ esac
 AM_CONDITIONAL([WIN32], [test "x${WINTEST}" = "xyes"])
 
 
+# checks data types
+AC_CHECK_MEMBER([struct tm.tm_zone],
+		[AC_DEFINE_UNQUOTED(HAVE_STRUCT_TM_TM_ZONE, [1], [have time zone member])],, 
+		[#include <time.h>])
+
+
 # Creates outputs
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

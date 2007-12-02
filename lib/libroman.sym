@@ -1,0 +1,46 @@
+#
+#   $Id$
+#
+#   Roman Numeral Conversion API
+#   Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
+#
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
+#
+#   lib/libroman.sym - list of symbols to export in libroman
+#
+#   Build:
+#      CFLAGS="-I../include"
+#      LDFLAGS="-L../compat -export-symbols libroman.sym -rpath /usr/local/lib"
+#      export CFLAGS LDFLAGS
+#      libtool --mode=compile gcc -g -O2 ${CFLAGS}  -c base64.c
+#      libtool --mode=compile gcc -g -O2 ${CFLAGS}  -c byteorder.c
+#      libtool --mode=link    gcc -g -O2 ${LDFLAGS} -o libroman.la \
+#              base64.lo byteorder.lo
+#
+#   Install:
+#      libtool --mode=install install -c libroman.la /usr/local/lib/libroman.la
+#
+#   Clean:
+#      libtool --mode=clean rm -f base64.lo byteorder.lo libroman.la
+#
+# variables
+roman_latin_weekday
+roman_latin_month
+#
+# functions
+long2roman
+roman2long
+roman_ctime
+# end of symbol export file

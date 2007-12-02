@@ -1,0 +1,27 @@
+.\"
+.\" $Id$
+.\"
+.\" Roman Numeral Conversion API
+.\" Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
+.\"
+.\" Permission is granted to copy, distribute and/or modify this document
+.\" under the terms of the GNU Free Documentation License, Version 1.2
+.\" or any later version published by the Free Software Foundation;
+.\" with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+.\" A copy of the license is included in the section entitled "GNU
+.\" Free Documentation License".
+.\"
+.\" doc/roman.1.in - man page for Roman Numeral routines
+.\"
+.TH "ROMAN NUMERAL" 1 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.SH NAME
+roman \- Roman numeral conversion utility
+.SH SYNOPSIS
+.B roman
+.SH DESCRIPTION
+.SH OPTIONS
+.SH SEE ALSO
+.BR roman (3)
+.SH REPORTING BUGS
+Report bugs to <@PACKAGE_BUGREPORT@>.
+.\" end of man page

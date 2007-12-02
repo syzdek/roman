@@ -364,9 +364,15 @@ char * roman_ctime(const time_t * t)
    strncpy(sec,  long2roman((unsigned) ts->tm_sec),  ROMAN_BUFF_LEN/4);
    strncpy(year, long2roman((unsigned) ts->tm_year + 1900), ROMAN_BUFF_LEN/4);
 
+#ifdef HAVE_STRUCT_TM_TM_ZONE
    snprintf(roman_ctime_string, ROMAN_BUFF_LEN, "%s %s %s %s:%s:%s %s %s\n", 
       roman_latin_weekday[ts->tm_wday], roman_latin_month[ts->tm_mon], day,
       hour, min, sec, ts->tm_zone, year);
+#else
+   snprintf(roman_ctime_string, ROMAN_BUFF_LEN, "%s %s %s %s:%s:%s %s\n", 
+      roman_latin_weekday[ts->tm_wday], roman_latin_month[ts->tm_mon], day,
+      hour, min, sec, year);
+#endif
 
    /* ends function */
    return(roman_ctime_string);

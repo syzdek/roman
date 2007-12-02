@@ -105,7 +105,7 @@ OS X from files obtained from the CVS repository:
 	make windist
 	rm -fR /tmp/roman-$RELEASE/share
 	cd /tmp
-	zip -r roman-$RELEASE.zip roman-$RELEASE
+	zip -r roman-$RELEASE-mingw32-static.zip roman-$RELEASE
 
 
 Removing the `--disable-shared' option will create a DLL library which must

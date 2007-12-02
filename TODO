@@ -21,6 +21,8 @@
 	  ctime(), asctime(), and strftime() (syzdek) 
 	- Write texinfo documentation (syzdek)
 	- Make library thread safe (syzdek)
+	- brush up on Latin so the romandate command can be grammatically
+	  correct (syzdek)
 
 Abbr:
 	SUSv3	- The Single Unix Specification Version 3

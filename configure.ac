@@ -41,7 +41,7 @@ AC_SUBST([RELEASE_MONTH],["December 2007"])
 #    Age        -- How many seqential past API versions is supported by
 #                  this implementation
 # Format => Current:Revision:Age
-AC_SUBST(LIB_VERSION_INFO, 0:0:0)
+AC_SUBST(LIB_VERSION_INFO, 1:0:0)
 
 AC_CONFIG_AUX_DIR([gnu])
 AC_CONFIG_SRCDIR([.])
@@ -98,6 +98,9 @@ AM_CONDITIONAL([WIN32], [test "x${WINTEST}" = "xyes"])
 # checks data types
 AC_CHECK_MEMBER([struct tm.tm_zone],
 		[AC_DEFINE_UNQUOTED(HAVE_STRUCT_TM_TM_ZONE, [1], [have time zone member])],, 
+		[#include <time.h>])
+AC_CHECK_MEMBER([struct tm.tm_gmtoff],
+		[AC_DEFINE_UNQUOTED(HAVE_STRUCT_TM_TM_GMTOFF, [1], [have time zone member])],, 
 		[#include <time.h>])
 
 

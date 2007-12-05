@@ -41,6 +41,7 @@
 
 #include <roman.h>
 
+#include "roman_charts.h"
 
 /////////////////
 //             //
@@ -67,9 +68,6 @@ int main PARAMS((int argc, char * argv[]));
 
 /* parses config */
 MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
-
-/* displays Roman Numeral chart */
-void my_chart PARAMS((void));
 
 /* displays usage */
 void my_usage PARAMS((void));
@@ -108,7 +106,7 @@ int main(int argc, char * argv[])
    }
    else if (cnf->num != -1)
    {
-      if (!(str = long2roman((unsigned) cnf->num)))
+      if (!(str = long2roman(cnf->num)))
       {
          perror(PROGRAM_NAME ": long2roman()");
          free(cnf);
@@ -131,7 +129,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
    int        option_index;
    MyConfig * cnf;
 
-   static char   short_options[] = "cd:r:hvV";
+   static char   short_options[] = "a:cr:hvV";
    static struct option long_options[] =
    {
       {"help",		no_argument, 0, 'h'},
@@ -161,15 +159,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case -1:       /* no more arguments */
          case 0:        /* long option toggles */
             break;
-         case 'h':
-            my_usage();
-            free(cnf);
-            return(NULL);
-         case 'c':
-            my_chart();
-            free(cnf);
-            return(NULL);
-         case 'd':
+         case 'a':
             cnf->num = atol(optarg);
             if (cnf->num < 0)
             {
@@ -179,6 +169,14 @@ MyConfig * my_cmdline(int argc, char *argv[])
                return(NULL);
             };
             break;
+         case 'h':
+            my_usage();
+            free(cnf);
+            return(NULL);
+         case 'c':
+            my_roman_numeral_chart();
+            free(cnf);
+            return(NULL);
          case 'r':
             cnf->rom = optarg;
             break;
@@ -219,24 +217,12 @@ MyConfig * my_cmdline(int argc, char *argv[])
 }
 
 
-/* displays Roman Numeral chart */
-void my_chart(void)
-{
-   int i;
-   const char ** chart;
-   chart = roman_chart();
-   for(i = 0; chart[i]; i++)
-      printf("%s\n", chart[i]);
-   return;
-}
-
-
 /* displays usage */
 void my_usage(void)
 {
    printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -d number                 number to convert to Roman Numeral\n");
-   printf("  -r numeral                Roman Numeral to convert to number\n");
+   printf("  -a arabic                 convert Arabic numerals to Roman numerals\n");
+   printf("  -r roman                  convert Roman numerals to Arabic numerals\n");
    printf("  -c, --chart               print this help and exit\n");
    printf("  -h, --help                print this help and exit\n");
    printf("  -V, --version             print version number and exit\n");

@@ -356,14 +356,14 @@ ROMAN_F(int) roman2long(const char * rom)
 
 
 /* returns string containing the date in Latin */
-char * roman_asctime(struct tm * tm)
+ROMAN_F(char *) roman_asctime(struct tm * tm)
 {
    return(roman_asctime_r(tm, roman_ctime_string, ROMAN_BUFF_LEN));
 }
 
 
 /* returns string containing the date in Latin */
-char * roman_asctime_r(struct tm * tm, char * buff, unsigned len)
+ROMAN_F(char *) roman_asctime_r(struct tm * tm, char * buff, unsigned len)
 {
    memset(buff, 0, ROMAN_BUFF_LEN);
    roman_strftime(buff, len, "%c\n", tm);
@@ -372,14 +372,14 @@ char * roman_asctime_r(struct tm * tm, char * buff, unsigned len)
 
 
 /* returns string containing the date in Latin */
-char * roman_ctime(const time_t * tp)
+ROMAN_F(char *) roman_ctime(const time_t * tp)
 {
    return(roman_ctime_r(tp, roman_ctime_string, ROMAN_BUFF_LEN));
 }
 
 
 /* returns string containing the date in Latin */
-char * roman_ctime_r(const time_t * tp, char * buff, unsigned len)
+ROMAN_F(char *) roman_ctime_r(const time_t * tp, char * buff, unsigned len)
 {
    return(roman_asctime_r(localtime(tp), buff, len));
 }
@@ -445,8 +445,8 @@ ROMAN_F(size_t) roman_strftime(char * str, unsigned str_len, const char * fmt,
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(size_t) roman_strftime_str(char * str, unsigned str_len, const char * fmt,
-	struct tm * tm)
+ROMAN_F(size_t) roman_strftime_str(char * str, unsigned str_len,
+	const char * fmt, struct tm * tm)
 {
    /* declares local vars */
    unsigned     str_pos;

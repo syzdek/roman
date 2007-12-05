@@ -14,6 +14,22 @@
 #   ChangeLog - list of changes made to each revision
 #
 
+0.0.2
+	- changed command line options for romannum to `-a' for Arabic numerals
+	  instead of using `-d' for decimal numerals. (syzdek) 
+	- added long2roman_r(), roman_asctime(), roman_asctime_r,
+	  roman_ctime_r, and roman_strftime() to library (syzdek)
+	- re-wrote long2roman() to use long2roman_r() (syzdek)
+	- changed input variable for long2roman() from 'unsigned' to 'signed'
+	  so that negative numers do not produce an error (syzdek)
+	- re-wrote roman_ctime() to use roman_strftime() (syzdek)
+	- updated "romandate" to use roman_strftime() (syzdek) 
+	- updated "romandate" to accept custom format strings displaying the
+	  date and time (syzdek)
+	- updated "romandate" to allow display of UTC time (syzdek)
+	- moved Roman numeral chart array from library source to utility
+	  source hoping it helps the MinGW32 cross compiled binaries (syzdek)
+
 0.0.1
 	- initial release of package (syzdek)
 

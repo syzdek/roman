@@ -428,6 +428,7 @@ ROMAN_F(size_t) roman_strftime(char * str, unsigned str_len, const char * fmt,
          case 'R':
             str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M", tm);
             break;
+         case 'T':
          case 'X':
             str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M:%S", tm);
             break;

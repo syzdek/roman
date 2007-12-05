@@ -15,14 +15,12 @@
 #
 
 	- Finish writing man pages for existing functions and utilities. (syzdek)
-	- Add the SUSv3 command line switches from command `date' to the utility
-	  `romandate' (syzdek)
-	- write Roman Numeral equivalent functions to the SUSv3 functions
-	  ctime(), asctime(), and strftime() (syzdek) 
 	- Write texinfo documentation (syzdek)
-	- Make library thread safe (syzdek)
 	- brush up on Latin so the romandate command can be grammatically
 	  correct (syzdek)
+	- add date format operands '%T', '%U', '%V', and '%W' equivalents of
+	  SUSv3 date command (syzdek)
+	- write simple example programs using library functions (syzdek)
 
 Abbr:
 	SUSv3	- The Single Unix Specification Version 3

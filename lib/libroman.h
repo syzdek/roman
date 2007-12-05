@@ -57,4 +57,12 @@
 //              //
 //////////////////
 
+/* returns string containing the date in Latin */
+size_t roman_strftime_char PARAMS((char * s, unsigned len, int c,
+	struct tm * tmptr));
+
+/* returns string containing the date in Latin */
+size_t roman_strftime_str PARAMS((char * str, unsigned str_len,
+	const char * fmt, struct tm * tm));
+
 #endif /* end of header file */

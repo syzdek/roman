@@ -39,7 +39,11 @@
 #
 # functions
 long2roman
+long2roman_r
 roman2long
-roman_chart
+roman_asctime
+roman_asctime_r
 roman_ctime
+roman_ctime_r
+roman_strftime
 # end of symbol export file

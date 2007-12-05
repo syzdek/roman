@@ -43,6 +43,34 @@
 
 #include <roman.h>
 
+#include "roman_charts.h"
+
+
+///////////////////
+//               //
+//  Definitions  //
+//               //
+///////////////////
+
+#ifndef PROGRAM_NAME
+#define PROGRAM_NAME "romandate"
+#endif
+
+#ifndef PACKAGE_NAME
+#define PACKAGE_NAME "Roman Numeral Conversion API"
+#endif
+
+#ifndef PACKAGE_VERSION
+#define PACKAGE_VERSION ""
+#endif
+
+#ifndef PACKAGE_COPYRIGHT
+#define PACKAGE_COPYRIGHT "Copyright (C) 2007 David M. Syzdek"
+#endif
+
+#define MY_BUFF_LEN	1024
+
+#define MY_OPT_UTC	0x0001
 
 /////////////////
 //             //
@@ -53,8 +81,7 @@
 typedef struct my_config_struct
 {
    int          opts;
-   int          num;
-   const char * rom;
+   const char * fmt;
 } MyConfig;
 
 
@@ -69,9 +96,6 @@ int main PARAMS((int argc, char * argv[]));
 
 /* parses config */
 MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
-
-/* displays Roman Numeral chart */
-void my_chart PARAMS((void));
 
 /* displays usage */
 void my_usage PARAMS((void));
@@ -90,16 +114,23 @@ void my_version PARAMS((void));
 int main(int argc, char * argv[])
 {
    /* declares local vars */
-//   int          num;
+   char         buff[MY_BUFF_LEN];
    time_t       t;
    MyConfig   * cnf;
-//   const char * str;
+   struct tm  * tptr;
 
    if (!(cnf = my_cmdline(argc, argv)))
       return(1);
 
    t = time(NULL);
-   printf("%s", roman_ctime(&t));
+   if (cnf->opts & MY_OPT_UTC)
+      tptr = gmtime(&t);
+   else
+      tptr = localtime(&t);
+
+   roman_strftime(buff, MY_BUFF_LEN, &cnf->fmt[1], tptr);
+
+   printf("%s\n", buff);
 
    /* ends function */
    free(cnf);
@@ -115,11 +146,14 @@ MyConfig * my_cmdline(int argc, char *argv[])
    int        option_index;
    MyConfig * cnf;
 
-   static char   short_options[] = "chvV";
+   static char   short_options[] = "cd:huvV";
    static struct option long_options[] =
    {
       {"chart",		no_argument, 0, 'c'},
+      {"date",          no_argument, 0, 'd'},
       {"help",		no_argument, 0, 'h'},
+      {"utc",		no_argument, 0, 'h'},
+      {"universal",	no_argument, 0, 'h'},
       {"verbose",	no_argument, 0, 'v'},
       {"version",	no_argument, 0, 'V'},
       {NULL,            0,           0, 0}
@@ -132,7 +166,6 @@ MyConfig * my_cmdline(int argc, char *argv[])
       return(NULL);
    };
    memset(cnf, 0, sizeof(MyConfig));
-   cnf->num = -1;
 
    /* sets variables */
    option_index = 0;
@@ -146,13 +179,18 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case 0:        /* long option toggles */
             break;
          case 'c':
-            my_chart();
+            my_roman_numeral_chart();
             free(cnf);
             return(NULL);
+         case 'd':
+            break;
          case 'h':
             my_usage();
             free(cnf);
             return(NULL);
+         case 'u':
+            cnf->opts |= MY_OPT_UTC;
+            break;
          case 'V':
             my_version();
             free(cnf);
@@ -169,45 +207,100 @@ MyConfig * my_cmdline(int argc, char *argv[])
       };
    };
 
+   /* sets date format string */
+   if (optind < argc)
+      cnf->fmt = argv[optind];
+   else
+      cnf->fmt = "+%a %b %e %H:%M:%S %Z %Y";
+   if (cnf->fmt[0] != '+')
+   {
+      fprintf(stderr, "%s: illegal time format\n", PROGRAM_NAME);
+      fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+      free(cnf);
+      return(NULL);
+   };
+
    /* ends function */
    return(cnf);
-}
-
-
-/* displays Roman Numeral chart */
-void my_chart(void)
-{
-   int i;
-   const char ** chart;
-   chart = roman_chart();
-   for(i = 0; chart[i]; i++)
-      printf("%s\n", chart[i]);
-   return;
 }
 
 
 /* displays usage */
 void my_usage(void)
 {
-   //printf("Usage: %s [OPTIONS] [+format]\n", PROGRAM_NAME);
-   printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -c, --chart               print this help and exit\n");
+   printf("Usage: %s [OPTIONS] [+format]\n", PROGRAM_NAME);
+   printf("  -c, --chart               print table of Roman numeral values and exit\n");
+   printf("  -d, --date=STRING         display time described by STRING, not `now'\n");
+   printf("  -f, --format-chart        printf format operands and exit\n");
    printf("  -h, --help                print this help and exit\n");
-   //printf("  -u, --utc, --universal    print Coordinated Universal Time\n");
+   printf("  -u, --utc, --universal    print Coordinated Universal Time\n");
    printf("  -V, --version             print version number and exit\n");
-   //printf("\n");
-   //printf("Format:\n");
-   //printf("  %%%%    a literal %%\n");
-   //printf("  %%a   latin's abbreviated weekday name (Sol..Sat)\n");
-   //printf("  %%A   latin's full weekday name, variable length (dies Solis..dies Saturni)\n");
-   //printf("  %%b   latin's abbreviated month name (Jan..Dec)\n");
-   //printf("  %%B   latin's full month name, variable length (Januarius..December)\n");
-   //printf("  %%c   latin's date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII)\n");
-   //printf("  %%C   century\n");
-   //printf("  %%d   same as %%e\n");
-   //printf("  %%D   same as %%m/%%d/%%Y\n");
-   //printf("  %%e   day of month (I..XXXI)\n");
-   //printf("  %%F   same as %%Y-%%m-%%d\n");
+   printf("\n");
+   printf("Date Format:\n");
+   printf("  %%%%   a literal %%\n");
+   printf("  %%a   Latin's abbreviated weekday name (Sol..Sat)\n");
+   printf("  %%A   Latin's full weekday name, variable length (Solis..Saturni)\n");
+   printf("  %%b   Latin's abbreviated month name (Jan..Dec)\n");
+   printf("  %%B   Latin's full month name, variable length (Januarius..December)\n");
+   printf("  %%c   Latin's date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII)\n");
+   printf("  %%C   century\n");
+   printf("  %%d   same as %%e\n");
+   printf("  %%D   same as %%m/%%d/%%Y\n");
+   printf("  %%e   day of month (I..XXXI)\n");
+   printf("  %%F   same as %%Y-%%m-%%d\n");
+   printf("  %%g   year of century (N..XCIX)\n");
+   printf("  %%G   year\n");
+   printf("  %%h   same as %%b\n");
+   printf("  %%H   hour (N..XXIII\n");
+   printf("  %%I   hour (N..XII\n");
+   printf("  %%j   day of year (I..XXXLXVI\n");
+   printf("  %%k   hour (0..XXIII\n");
+   printf("  %%l   hour (I..XII\n");
+   printf("  %%m   month (I..XII\n");
+   printf("  %%M   minute (N..LIX\n");
+   printf("  %%n   a newline\n");
+   //printf("  %%N   nanoseconds\n");
+   printf("  %%p   Latin's upper case AM or PM indicator\n");
+   printf("  %%P   Latin's lower case AM or PM indicator\n");
+   printf("  %%r   time as %%I:%%M:%%S %%p\n");
+   printf("  %%R   time as %%H:%%M\n");
+   printf("  %%S   second (I..LX)\n");
+   printf("  %%t   a horizontal tab\n");
+   printf("  %%T   time as %%H:%%M:%%S\n");
+   printf("  %%u   day of week (I..VII);  I represents Lunae\n");
+   //printf("  %%U   week number of year with Solis as first day of week\n");
+   //printf("  %%V   week number of year with Lunae as first day of week\n");
+   printf("  %%w   day of week (N..VI);  N represents Solis\n");
+   //printf("  %%W   week number of year with Lunae as first day of week\n");
+   printf("  %%x   date as %%m/%%d/%%Y\n");
+   printf("  %%X   same as %%T\n");
+   printf("  %%y   same as %%g\n");
+   printf("  %%Y   same as %%G\n");
+   printf("  %%z   GMT offset\n");
+   printf("  %%Z   time zone or nothing if no time zone is determinable\n");
+   printf("\n");
+   printf("Latin Week Days:\n");
+   printf("   Solis       Sunday\n");
+   printf("   Lunae       Monday\n");
+   printf("   Martis      Tuesday\n");
+   printf("   Mercurii    Wednesday\n");
+   printf("   Lovis       Thursday\n");
+   printf("   Veneris     Friday\n");
+   printf("   Saturni     Saturday\n");
+   printf("\n");
+   printf("Latin Months:\n");
+   printf("   Januarius   January\n");
+   printf("   Februarius  February\n");
+   printf("   Martius     March\n");
+   printf("   Aprilis     April\n");
+   printf("   Maius       May\n");
+   printf("   Junius      June\n");
+   printf("   Julius      July\n");
+   printf("   Augustus    August\n");
+   printf("   September   September\n");
+   printf("   October     October\n");
+   printf("   Novembris   November\n");
+   printf("   December    December\n");
 #ifdef PACKAGE_BUGREPORT
    printf("\n");
    printf("Report bugs to <%s>.\n", PACKAGE_BUGREPORT);

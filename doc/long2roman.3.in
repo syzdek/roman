@@ -11,52 +11,108 @@
 .\" A copy of the license is included in the section entitled "GNU
 .\" Free Documentation License".
 .\"
+.\" @configure_input@
+.\"
 .\" doc/long2roman.3.in - man page for Roman Numeral routines
 .\"
-.TH "ROMAN NUMERAL" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.TH "ROMAN NUMERAL API" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
 .SH NAME
-roman \- Roman numeral conversion routines
+long2roman, long2roman_r \- convert
+.I signed int
+to ASCII string containing the Roman Numeral value
 .SH LIBRARY
-Roman Numeral Conversions (libroman, -lroman)
+Roman Numeral Conversion API (libroman, -lroman)
 .SH SYNOPSIS
 .nf
 .B #include <roman.h>
 .sp
-.BI "const char * long2roman( unsigned " number ");"
+.BI "const char * long2roman(int " num ");"
+.br
+.BI "char * long2roman_r(int " num ", char * " buff ", size_t " len ");"
 .fi
 .SH DESCRIPTION
-The
-.B long2roman()
-function converts
-.I number
-from an
-.I unsigned int
-to a 
-.I char
-pointer that points to memory containing the Roman numeral representation of
-the value.
-.PP
-Subsequent calls to
-.B long2roman()
+The function
+.B long2roman
+takes an argument of
+.I num
+and returns a pointer to a string containing the integer's Roman Numeral
+representation of the integer's value.  Subsequent calls to
+.B long2roman
 will overwrite previous values.
+.PP
+The function
+.B long2roman_r
+provides the same functionality as
+.B long2roman,
+except that the caller must provide the out buffer
+.I buff
+to store the result.
+.I buff
+must be at least
+.I len
+characters long.
 .SH RETURN VALUES
 If successful, 
 .B long2roman
-returns a pointer to a string containing the Roman numeral equivalent. If there
-is an error, it will return a
+and
+.B long2roman_r
+return a pointer to a string containing the Roman Numeral representation of the value of
+.I num.
+If there is an error, they will return a
 .B NULL
-pointer and sets
+pointer and set
 .I errno
-to indicate the error.
+to indicate the error condition.
 .SH ERRORS
 .TP
 .B EDOM
 .I number
 is too large to be represented using this method.
-.SH SEE ALSO
-.BR roman (1),
-.BR roman2long (3)
-.BR roman_ctime (3)
+.SH EXAMPLES
+\fB#include\fR <stdio.h>
+.br
+\fB#include\fR <string.h>
+.br
+\fB#include\fR <roman.h>
+.sp
+\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[]);
+.sp
+\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[])
+.br
+{
+.br
+   \fBint\fR  \fIi\fR;
+   \fBint\fR  \fInum\fR;
+   \fBchar\fR \fIbuff\fR[512];
+.sp
+   \fBfor\fR(\fIi\fR = 1; \fIi\fR < \fIargc\fR; \fIi\fR++)
+.br
+   {
+.br
+      \fInum\fR = \fBatol\fR(\fIargv\fR[\fIi\fR]);
+.br
+      \fBprintf\fR("%i == %s\\n", \fInum\fR, \fBlong2roman\fR(\fInum\fR));
+.br
+      \fBprintf\fR("%i == %s\\n", \fInum\fR, \fBlong2roman_r\fR(\fInum\fR, \fIbuff\fR, 512));
+.br
+   }
+.sp
+   \fBreturn\fR(\fI0\fR);
+.br
+}
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
+.SH COPYRIGHT
+Copyright (C) 2007 David M. Syzdek.
+.br
+This is free software; see the source for copying conditions.  There is
+NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR
+PURPOSE.
+.SH SEE ALSO
+.BR roman (7),
+.BR romandate (1)
+.BR romannum (1)
+.BR roman2long (3)
+.BR roman_ctime (3)
+.BR roman_strftime (3)
 .\" end of man page

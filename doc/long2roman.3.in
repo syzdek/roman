@@ -23,13 +23,15 @@ to ASCII string containing the Roman Numeral value
 .SH LIBRARY
 Roman Numeral Conversion API (libroman, -lroman)
 .SH SYNOPSIS
-.nf
-.B #include <roman.h>
+\fB#include <roman.h>\fR
 .sp
-.BI "const char * long2roman(int " num ");"
+\fIconst char *\fR
 .br
-.BI "char * long2roman_r(int " num ", char * " buff ", size_t " len ");"
-.fi
+\fBlong2roman\fR(\fIint num\fR);
+.sp
+\fIchar *\fR
+.br
+\fBlong2roman_r\fR(\fIint num\fR, \fIchar * buff\fR, \fIsize_t len\fR);
 .SH DESCRIPTION
 The function
 .B long2roman
@@ -66,34 +68,56 @@ to indicate the error condition.
 .SH ERRORS
 .TP
 .B EDOM
-.I number
-is too large to be represented using this method.
+\fInum\fR is too large to be represented using this method.
+.TP
+.B EFAULT
+bad address in \fIstr\fR
+.TP
+.B ENOBUFS
+Insufficient storage space available in \fIstr\fR.
 .SH EXAMPLES
-\fB#include\fR <stdio.h>
+\fB#include <stdio.h>\fR
 .br
-\fB#include\fR <string.h>
+\fB#include <string.h>\fR
 .br
-\fB#include\fR <roman.h>
+\fB#include <roman.h>\fR
 .sp
-\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[]);
+\fIint\fR \fBmain\fR(\fIint argc\fR, \fIchar * argv[]\fR);
 .sp
-\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[])
+\fIint\fR \fBmain\fR(\fIint argc\fR, \fIchar * argv[]\fR)
 .br
 {
 .br
-   \fBint\fR  \fIi\fR;
-   \fBint\fR  \fInum\fR;
-   \fBchar\fR \fIbuff\fR[512];
+   \fIint          i\fR;
+   \fIint          num\fR;
+   \fIchar         buff[512]\fR;
+   \fIconst char * ptr\fR;
 .sp
    \fBfor\fR(\fIi\fR = 1; \fIi\fR < \fIargc\fR; \fIi\fR++)
 .br
    {
 .br
       \fInum\fR = \fBatol\fR(\fIargv\fR[\fIi\fR]);
+.sp
+      \fIptr\fR = \fBlong2roman\fR(\fInum\fR);
 .br
-      \fBprintf\fR("%i == %s\\n", \fInum\fR, \fBlong2roman\fR(\fInum\fR));
+      \fBif\fR(\fIptr\fR)
 .br
-      \fBprintf\fR("%i == %s\\n", \fInum\fR, \fBlong2roman_r\fR(\fInum\fR, \fIbuff\fR, 512));
+         \fBprintf\fR("%i == %s\\n", \fInum\fR, \fIptr\fR);
+.br
+      \fBelse\fR
+.br
+         \fBperror\fR("long2roman_r()");
+.sp
+      \fIptr\fR = \fBlong2roman_r\fR(\fInum\fR, \fIbuff\fR, \fI512\fR);
+.br
+      \fBif\fR(\fIptr\fR)
+.br
+         \fBprintf\fR("%i == %s\\n", \fInum\fR, \fIptr\fR);
+.br
+      \fBelse\fR
+.br
+         \fBperror\fR("long2roman_r()");
 .br
    }
 .sp
@@ -103,7 +127,7 @@ is too large to be represented using this method.
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
 .SH COPYRIGHT
-Copyright (C) 2007 David M. Syzdek.
+@PACKAGE_COPYRIGHT@
 .br
 This is free software; see the source for copying conditions.  There is
 NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR

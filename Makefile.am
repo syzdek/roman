@@ -42,8 +42,17 @@ lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
 man_MANS				= \
 					  doc/long2roman.3 \
-					  doc/roman.1 \
-					  doc/roman2long.3
+					  doc/long2roman_r.3 \
+					  doc/roman.7 \
+					  doc/roman2long.3 \
+					  doc/roman_asctime.3 \
+					  doc/roman_asctime_r.3 \
+					  doc/roman_ctime.3 \
+					  doc/roman_ctime_r.3 \
+					  doc/roman_strftime.3 \
+					  doc/romandate.1 \
+					  doc/romannum.1 \
+					  doc/romannumeral.7
 
 
 # macros for lib/libroman.la
@@ -72,7 +81,10 @@ src_romannum_CPPFLAGS			= -DPROGRAM_NAME="\"romannum\"" $(AM_CPPFLAGS)
 src_romannum_CFLAGS			= $(AM_CFLAGS)
 src_romannum_LDFLAGS			= $(AM_LDFLAGS)
 src_romannum_LDADD			= $(AM_LDADD)
-src_romannum_SOURCES			= src/romannum.c $(include_HEADERS)
+src_romannum_SOURCES			= $(include_HEADERS) \
+					  src/roman_charts.c \
+					  src/roman_charts.h \
+					  src/romannum.c
 
 # macros for src/romandate
 src_romandate_DEPENDENCIES		= $(lib_LTLIBRARIES) Makefile
@@ -80,14 +92,18 @@ src_romandate_CPPFLAGS			= -DPROGRAM_NAME="\"romandate\"" $(AM_CPPFLAGS)
 src_romandate_CFLAGS			= $(AM_CFLAGS)
 src_romandate_LDFLAGS			= $(AM_LDFLAGS)
 src_romandate_LDADD			= $(AM_LDADD)
-src_romandate_SOURCES			= src/romandate.c $(include_HEADERS)
+src_romandate_SOURCES			= $(include_HEADERS) \
+					  src/roman_charts.c \
+					  src/roman_charts.h \
+					  src/romandate.c
 
 
 TESTS					=
 XFAIL_TESTS				=
 EXTRA_DIST				= \
 					  doc/long2roman.3.in \
-					  doc/roman.1.in \
+					  doc/long2roman_r.3 \
+					  doc/roman.7.in \
 					  doc/roman2long.3.in \
 					  lib/libroman.def \
 					  lib/libroman.sym 
@@ -96,27 +112,55 @@ CLEANFILES				= \
 					  $(srcdir)/a.out \
 					  config.h.in~ \
 					  $(srcdir)/config.h.in~ \
-					  $(man_MANS) \
+					  doc/long2roman.3 \
+					  doc/roman.7 \
+					  doc/roman2long.3 \
+					  doc/roman_ctime.3 \
+					  doc/roman_strftime.3 \
+					  doc/romandate.1 \
+					  doc/romannum.1 \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.zip
 
 
 # substitution routine
 do_subst = sed \
+	-e 's,[@]configure_input[@],${@}. Generated from ${@}.in by make.,g' \
 	-e 's,[@]SHELL[@],@SHELL@,g' \
 	-e 's,[@]PACKAGE_VERSION[@],@PACKAGE_VERSION@,g' \
 	-e 's![@]PACKAGE_NAME[@]!@PACKAGE_NAME@!g' \
 	-e 's,[@]PACKAGE_TARNAME[@],@PACKAGE_TARNAME@,g' \
 	-e 's,[@]PACKAGE_BUGREPORT[@],@PACKAGE_BUGREPORT@,g' \
+	-e 's,[@]PACKAGE_COPYRIGHT[@],@PACKAGE_COPYRIGHT@,g' \
 	-e 's,[@]RELEASE_MONTH[@],@RELEASE_MONTH@,g'
+do_subst_fn = \
+		echo "do_subst < ${@}.in > ${@}"; \
+		mkdir -p `dirname ${@}` || exit 1; \
+		${do_subst} < $(srcdir)/${@}.in > ${@} || exit 1; \
+		chmod 0755 ${@}
 
 
 # custom targets
-$(man_MANS): Makefile doc/long2roman.3.in doc/roman.1.in doc/roman2long.3.in
-	@echo "do_subst < ${@}.in > ${@}"
-	@mkdir -p `dirname ${@}` || exit 1
-	@${do_subst} < $(srcdir)/${@}.in > ${@} || exit 1
-	@chmod 0644 ${@}
+doc/long2roman.3: Makefile doc/long2roman.3.in
+	@$(do_subst_fn)
+
+doc/roman.7: Makefile doc/roman.7.in
+	@$(do_subst_fn)
+
+doc/roman2long.3: Makefile doc/roman2long.3.in
+	@$(do_subst_fn)
+
+doc/roman_ctime.3: Makefile doc/roman_ctime.3.in
+	@$(do_subst_fn)
+
+doc/roman_strftime.3: Makefile doc/roman_strftime.3.in
+	@$(do_subst_fn)
+
+doc/romandate.1: Makefile doc/romandate.1.in
+	@$(do_subst_fn)
+
+doc/romannum.1: Makefile doc/romannum.1.in
+	@$(do_subst_fn)
 
 # windows dist files
 windist: Makefile

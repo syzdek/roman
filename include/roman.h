@@ -89,6 +89,14 @@
 #undef  ROMAN_BUFF_LEN
 #define ROMAN_BUFF_LEN 1024
 
+
+/* errno values */
+#ifdef _ROMAN_LIBRARY
+#ifndef ENOBUFS
+#define ENOBUFS ENOMEM
+#endif
+#endif
+
 ///////////////
 //           //
 //  Headers  //

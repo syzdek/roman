@@ -205,7 +205,14 @@ Insufficient storage space available in \fIstr\fR.
 .sp
    \fIt\fR = \fBtime\fR(\fINULL\fR);
 .sp
-   \fIlen\fR = \fBroman_strftime(str, 512, "%c"
+   \fItm\fR = \fBlocaltime\fR(\fI&t\fR);
+.sp
+   \fIlen\fR = \fBroman_strftime\fR(\fIbuff\fR, \fI512\fR, "%a %b %e %H:%M:%S %Z %Y", \fItm\fR);
+.br
+   \fBif\fR (\fIlen\fR)
+      \fBprintf\fR("%s\\n", \fIbuff\fR);
+   \fBelse\fR
+      \fBperror\fR("roman_strftime()");
 .sp
    \fBreturn\fR(\fI0\fR);
 .br

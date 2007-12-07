@@ -107,31 +107,32 @@
 BEGIN_C_DECLS
 
 /* encodes Arabic numeral with Roman numerals */
-ROMAN_F(const char *) long2roman PARAMS((signed num));
+ROMAN_F(const char *) long2roman PARAMS((int num));
 
 /* encodes Arabic numeral with Roman numerals using external buffer */
-ROMAN_F(const char *) long2roman_r PARAMS((signed num, char * str,
-	unsigned len));
+ROMAN_F(char *) long2roman_r PARAMS((int num, char * str,
+	size_t len));
 
 /* determines required dst buffer to decode src_len data block */
-ROMAN_F(int) roman2long PARAMS((const char * rom));
+ROMAN_F(unsigned) roman2long PARAMS((const char * str));
 
 /* returns string containing the date in Latin */
-char * roman_asctime PARAMS((struct tm * tm));
+ROMAN_F(const char *) roman_asctime PARAMS((const struct tm * tm));
 
 /* returns string containing the date in Latin */
-char * roman_asctime_r PARAMS((struct tm * tm, char * buff, unsigned len));
+ROMAN_F(char *) roman_asctime_r PARAMS((const struct tm * tm, char * buff,
+	size_t len));
 
 /* returns string containing the date in Latin */
-ROMAN_F(char *) roman_ctime PARAMS((const time_t * tp));
+ROMAN_F(const char *) roman_ctime PARAMS((const time_t * tp));
 
 /* returns string containing the date in Latin */
 ROMAN_F(char *) roman_ctime_r PARAMS((const time_t * tp, char * buff,
-	unsigned len));
+	size_t len));
 
 /* returns string containing the date in Latin */
-ROMAN_F(size_t) roman_strftime PARAMS((char * str, unsigned str_len,
-	const char * fmt, struct tm * tm));
+ROMAN_F(size_t) roman_strftime PARAMS((char * str, size_t str_len,
+	const char * fmt, const struct tm * tm));
 
 END_C_DECLS
 

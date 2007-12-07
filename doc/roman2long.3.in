@@ -11,46 +11,97 @@
 .\" A copy of the license is included in the section entitled "GNU
 .\" Free Documentation License".
 .\"
+.\" @configure_input@
+.\"
 .\" doc/roman2long.3.in - man page for Roman Numeral routines
 .\"
 .TH "ROMAN NUMERAL" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
 .SH NAME
-roman \- Roman numeral conversion routines
+roman2long \- convert ASCII string containing a Roman Numeral value to
+.I signed int.
 .SH LIBRARY
-Roman Numeral Conversions (libroman, -lroman)
+Roman Numeral Conversion API (libroman, -lroman)
 .SH SYNOPSIS
 .nf
 .B #include <roman.h>
 .sp
-.BI "int roman2long( const char * " numeral ");"
+.BI "int roman2long(const char * " str ");"
 .fi
 .SH DESCRIPTION
-The
-.B roman2long()
-function converts
-.I numeral
-from a
-.I string
-to a 
-.I int
-which contains the value of the Roman numeral.
+The function
+.B roman2long
+takes an argument of
+.I str
+and returns an integer containing the value of the Roman Numeral.
+.\"
+.\"The
+.\".B roman2long()
+.\"function converts
+.\".I numeral
+.\"from a
+.\".I string
+.\"to a 
+.\".I int
+.\"which contains the value of the Roman numeral.
 .SH RETURN VALUES
 If successful, 
 .B roman2long
 returns the numeric value of
-.I numeral
+.I str
 or \-1 if an error occurred (in which case,
 .I errno
 is set appropriately).
+.SH EXAMPLES
+\fB#include\fR <stdio.h>
+.br
+\fB#include\fR <roman.h>
+.sp
+\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[]);
+.sp
+\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[])
+.br
+{
+.br
+   \fBint\fR \fIi\fR;
+   \fBint\fR \fInum\fR;
+.sp
+   \fBfor\fR(\fIi\fR = 1; \fIi\fR < \fIargc\fR; \fIi\fR++)
+.br
+   {
+.br
+      \fInum\fR = \fBroman2long\fR(\fIargv\fR[\fIi\fR]);
+.br
+      \fBif\fR(\fInum\fR == -1)
+.br
+         \fBperror\fR("roman2long()");
+.br
+      \fBelse\fR
+.br
+         \fBprintf\fR("%s == %i\\n", \fIargv\fR[\fIi\fR], \fInum\fR);
+.br
+   }
+.sp
+   \fBreturn\fR(\fI0\fR);
+.br
+}
 .SH ERRORS
 .TP
 .B EINVAL
 .I numeral
 contains either invalid characters or an invalid Roman numeral.
-.SH SEE ALSO
-.BR roman (1),
-.BR roman2long (3)
-.BR roman_ctime (3)
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
+.SH COPYRIGHT
+@PACKAGE_COPYRIGHT@
+.br
+This is free software; see the source for copying conditions.  There is
+NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR
+PURPOSE.
+.SH SEE ALSO
+.BR roman (7),
+.BR romandate (1),
+.BR romannum (1),
+.BR long2roman (3),
+.BR roman_ctime (3),
+.BR roman_strftime (3)
 .\" end of man page

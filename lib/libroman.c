@@ -86,6 +86,18 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    unsigned u;
    unsigned dividend;
 
+   /* checks arguments */
+   if ((num > 5000) || (num < 0))
+   {
+      errno = EDOM;
+      return(NULL);
+   };
+   if (! str)
+   {
+      errno = EFAULT;
+      return(NULL);
+   };
+
    /* sets initial values */
    pos = 0;
    memset(str, 0, len);
@@ -104,7 +116,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
       num *= -1;
       if (1 > len)
       {
-         errno = EDOM;
+         errno = ENOBUFS;
          return(NULL);
       };
       str[pos] = '-';
@@ -115,7 +127,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    dividend = num/1000;
    if (dividend > (len-1))
    {
-      errno = EDOM;
+      errno = ENOBUFS;
       return(NULL);
    };
    for(u = 0; u < dividend; u++)
@@ -127,7 +139,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    dividend = num/100;
    if (dividend > (len-1-pos))
    {
-      errno = EDOM;
+      errno = ENOBUFS;
       return(NULL);
    };
    if (dividend == 9)
@@ -159,7 +171,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    dividend = num/10;
    if (dividend > (len-1-pos))
    {
-      errno = EDOM;
+      errno = ENOBUFS;
       return(NULL);
    };
    if (dividend == 9)
@@ -191,7 +203,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    dividend = num;
    if (dividend > (len-1-pos))
    {
-      errno = EDOM;
+      errno = ENOBUFS;
       return(NULL);
    };
    if (dividend == 9)
@@ -223,7 +235,7 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
 
 
 /* determines required dst buffer to decode src_len data block */
-ROMAN_F(unsigned) roman2long(const char * str)
+ROMAN_F(int) roman2long(const char * str)
 {
    /* declares local vars */
    int      num;
@@ -235,7 +247,7 @@ ROMAN_F(unsigned) roman2long(const char * str)
    /* checks args */
    if (!(str))
    {
-      errno = EINVAL;
+      errno = EFAULT;
       return(0);
    };
 
@@ -394,12 +406,21 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
 	const struct tm * tm)
 {
    /* declares local vars */
+   unsigned     str_add;
    unsigned     str_pos;
    unsigned     fmt_pos;
    unsigned     fmt_len;
 
+   /* checks arguments */
+   if ((! str) || (! fmt) || (! tm))
+   {
+      errno = EFAULT;
+      return(0);
+   };
+
    /* initialize values */   
    str_len--;	/* always leave room for '\0' */
+   str_add = 0;
    str_pos = 0;
    fmt_pos = 0;
    fmt_len = strlen(fmt);
@@ -407,6 +428,7 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
    /* loops through format */
    while((fmt_pos < fmt_len) && (str_pos < str_len))
    {
+      /* handle normal character */
       if (fmt[fmt_pos] != '%')
       {
          str[str_pos] = fmt[fmt_pos];
@@ -414,34 +436,49 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
          fmt_pos++;
          continue;
       };
+
+      /* handle format operand */
       switch(fmt[fmt_pos+1])
       {
          case 'c':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%a %b %e %H:%M:%S %Z %Y", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%a %b %e %H:%M:%S %Z %Y", tm);
             break;
          case 'D':
          case 'x':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%m/%d/%y", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%m/%d/%y", tm);
             break;
          case 'F':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%Y-%m-%d", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%Y-%m-%d", tm);
             break;
          case 'r':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%I:%M:%S %p", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%I:%M:%S %p", tm);
             break;
          case 'R':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M", tm);
             break;
          case 'T':
          case 'X':
-            str_pos += roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M:%S", tm);
+            str_add = roman_strftime_str(&str[str_pos], (str_len-str_pos), "%H:%M:%S", tm);
             break;
          default:
-            str_pos += roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
+            str_add = roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
             break;
       };
+      if (!(str_add))
+         return(0);
+      str_pos += str_add;
       fmt_pos += 2;
    };
+
+   /* checks length */
+   if ((str_pos >= (str_len+1)) || (fmt_pos < fmt_len))
+   {
+      str[0] = '\0';
+      errno  = ENOBUFS;
+      return(0);
+   };
+
+   /* terminats string */
    str[str_pos] = '\0';
 
    /* ends function */
@@ -454,12 +491,19 @@ size_t roman_strftime_str(char * str, size_t str_len,
 	const char * fmt, const struct tm * tm)
 {
    /* declares local vars */
+   unsigned     str_add;
    unsigned     str_pos;
    unsigned     fmt_pos;
    unsigned     fmt_len;
 
+   /* checks arguments */
+   if ((! str) || (! fmt) || (! tm))
+   {
+      errno = EFAULT;
+      return(0);
+   };
+
    /* initialize values */   
-   str_len--;	/* always leave room for '\0' */
    str_pos = 0;
    fmt_pos = 0;
    fmt_len = strlen(fmt);
@@ -470,13 +514,26 @@ size_t roman_strftime_str(char * str, size_t str_len,
       if (fmt[fmt_pos] != '%')
       {
          str[str_pos] = fmt[fmt_pos];
-         str_pos++;
+         str_add = 1;
          fmt_pos++;
       } else {
-         str_pos += roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
+         str_add = roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
          fmt_pos += 2;
       };
+      if (!(str_add))
+         return(0);
+      str_pos += str_add;
    };
+
+   /* checks for buffer length */
+   if ((str_pos > str_len) || (fmt_pos < fmt_len))
+   {
+      str[0] = '\0';
+      errno  = ENOBUFS;
+      return(0);
+      str[str_pos] = '\0';
+   };
+
    str[str_pos] = '\0';
 
    /* ends function */
@@ -685,12 +742,16 @@ size_t roman_strftime_char(char * s, size_t len, int c,
          break;
 
       default:
-         s[0] = c;
-         return(1);
+         errno = EINVAL;
+         return(0);
    };
 
-   if (pos >= len)
+   /* checks for enough room and copies string */
+   if (pos > len)
+   {
+      errno = ENOBUFS;
       return(0);
+   };
    strncpy(s, ptr, pos);
    return(pos);
 

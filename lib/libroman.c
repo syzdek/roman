@@ -71,7 +71,7 @@ static const char * roman_var_mon[] =
 /////////////////
 
 /* encodes Arabic numeral with Roman numerals */
-ROMAN_F(const char *) long2roman(signed num)
+ROMAN_F(const char *) long2roman(int num)
 {
    /* wrap long2roman_r() with library buffer */
    return(long2roman_r(num, roman_string, ROMAN_BUFF_LEN));
@@ -79,7 +79,7 @@ ROMAN_F(const char *) long2roman(signed num)
 
 
 /* encodes Arabic numeral with Roman numerals using external buffer */
-ROMAN_F(const char *) long2roman_r(signed num, char * str, unsigned len)
+ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
 {
    /* local variables */
    unsigned pos;
@@ -223,7 +223,7 @@ ROMAN_F(const char *) long2roman_r(signed num, char * str, unsigned len)
 
 
 /* determines required dst buffer to decode src_len data block */
-ROMAN_F(int) roman2long(const char * rom)
+ROMAN_F(unsigned) roman2long(const char * str)
 {
    /* declares local vars */
    int      num;
@@ -233,7 +233,7 @@ ROMAN_F(int) roman2long(const char * rom)
    unsigned diff;
 
    /* checks args */
-   if (!(rom))
+   if (!(str))
    {
       errno = EINVAL;
       return(0);
@@ -241,19 +241,18 @@ ROMAN_F(int) roman2long(const char * rom)
 
    /* sets initial values */
    num  = 0;
-   len  = strlen(rom);
+   len  = strlen(str);
    old  = 1000;
    diff = 1000;
 
    /* loops through characters */
    for(i = 0; i < len; i++)
    {
-
-      switch(rom[i])
+      switch(str[i])
       {
          case 'n':
          case 'N':
-            if (strlen(rom) > 1)
+            if (strlen(str) > 1)
             {
                errno = EINVAL;
                return(-1);
@@ -262,6 +261,11 @@ ROMAN_F(int) roman2long(const char * rom)
             break;
          case 'i':
          case 'I':
+            if ((old == 1) && (diff != 1))
+            {
+               errno = EINVAL;
+               return(-1);
+            };
             old   = diff;
             num  += 1;
             diff  = 1;
@@ -269,7 +273,7 @@ ROMAN_F(int) roman2long(const char * rom)
          case 'v':
          case 'V':
             num += 5;
-            if ((diff < 5) && (old < 5))
+            if (((diff < 5) && (old < 5)) || (old == 5) || (diff == 5))
             {
                errno = EINVAL;
                return(-1);
@@ -282,7 +286,7 @@ ROMAN_F(int) roman2long(const char * rom)
          case 'x':
          case 'X':
             num += 10;
-            if ((diff < 10) && (old < 10))
+            if (((diff < 10) && (old < 10)) || ((old == 10) && (diff != 10)))
             {
                errno = EINVAL;
                return(-1);
@@ -295,7 +299,7 @@ ROMAN_F(int) roman2long(const char * rom)
          case 'l':
          case 'L':
             num += 50;
-            if ((diff < 50) && (old < 50))
+            if (((diff < 50) && (old < 50)) || (old == 50) || (diff == 50))
             {
                errno = EINVAL;
                return(-1);
@@ -308,7 +312,7 @@ ROMAN_F(int) roman2long(const char * rom)
          case 'c':
          case 'C':
             num += 100;
-            if ((diff < 100) && (old < 100))
+            if (((diff < 100) && (old < 100)) || ((old == 100) && (diff != 100)))
             {
                errno = EINVAL;
                return(-1);
@@ -321,7 +325,7 @@ ROMAN_F(int) roman2long(const char * rom)
          case 'd':
          case 'D':
             num += 500;
-            if ((diff < 500) && (old < 500))
+            if (((diff < 500) && (old < 500)) || (old == 500) || (diff == 500))
             {
                errno = EINVAL;
                return(-1);
@@ -356,14 +360,14 @@ ROMAN_F(int) roman2long(const char * rom)
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(char *) roman_asctime(struct tm * tm)
+ROMAN_F(const char *) roman_asctime(const struct tm * tm)
 {
    return(roman_asctime_r(tm, roman_ctime_string, ROMAN_BUFF_LEN));
 }
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(char *) roman_asctime_r(struct tm * tm, char * buff, unsigned len)
+ROMAN_F(char *) roman_asctime_r(const struct tm * tm, char * buff, size_t len)
 {
    memset(buff, 0, ROMAN_BUFF_LEN);
    roman_strftime(buff, len, "%c\n", tm);
@@ -372,22 +376,22 @@ ROMAN_F(char *) roman_asctime_r(struct tm * tm, char * buff, unsigned len)
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(char *) roman_ctime(const time_t * tp)
+ROMAN_F(const char *) roman_ctime(const time_t * tp)
 {
    return(roman_ctime_r(tp, roman_ctime_string, ROMAN_BUFF_LEN));
 }
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(char *) roman_ctime_r(const time_t * tp, char * buff, unsigned len)
+ROMAN_F(char *) roman_ctime_r(const time_t * tp, char * buff, size_t len)
 {
    return(roman_asctime_r(localtime(tp), buff, len));
 }
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(size_t) roman_strftime(char * str, unsigned str_len, const char * fmt,
-	struct tm * tm)
+ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
+	const struct tm * tm)
 {
    /* declares local vars */
    unsigned     str_pos;
@@ -446,8 +450,8 @@ ROMAN_F(size_t) roman_strftime(char * str, unsigned str_len, const char * fmt,
 
 
 /* returns string containing the date in Latin */
-ROMAN_F(size_t) roman_strftime_str(char * str, unsigned str_len,
-	const char * fmt, struct tm * tm)
+size_t roman_strftime_str(char * str, size_t str_len,
+	const char * fmt, const struct tm * tm)
 {
    /* declares local vars */
    unsigned     str_pos;
@@ -481,8 +485,8 @@ ROMAN_F(size_t) roman_strftime_str(char * str, unsigned str_len,
 
 
 /* returns string containing the date in Latin */
-size_t roman_strftime_char(char * s, unsigned len, int c,
-        struct tm * tm)
+size_t roman_strftime_char(char * s, size_t len, int c,
+        const struct tm * tm)
 {
    /* declares local vars */
    char         buff[ROMAN_BUFF_LEN];

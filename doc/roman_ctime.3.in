@@ -1,0 +1,59 @@
+.\"
+.\" $Id$
+.\"
+.\" Roman Numeral Conversion API
+.\" Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
+.\"
+.\" Permission is granted to copy, distribute and/or modify this document
+.\" under the terms of the GNU Free Documentation License, Version 1.2
+.\" or any later version published by the Free Software Foundation;
+.\" with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+.\" A copy of the license is included in the section entitled "GNU
+.\" Free Documentation License".
+.\"
+.\" @configure_input@
+.\"
+.\" doc/long2roman.3.in - man page for Roman Numeral routines
+.\"
+.TH "ROMAN NUMERAL API" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.SH NAME
+roman_asctime, roman_asctime_r, roman_ctime, roman_ctime_r \-
+transform date and time to ASCII using Roman Numerals
+.SH LIBRARY
+Roman Numeral Conversion API (libroman, -lroman)
+.SH SYNOPSIS
+\fB#include <time.h>\fR
+.br
+\fB#include <roman.h>\fR
+.sp
+\fIconst char *\fR
+.br
+\fBroman_asctime\fR(\fIconst struct tm * tm\fR);
+.sp
+\fIchar *\fR
+.br
+\fBroman_asctime_r\fB(\fIconst struct tm * tm\fR, \fIchar * buff\fR, \fIsize_t len\fR);
+.sp
+\fIconst char *\fR
+.br
+\fBroman_ctime\fR(\fIconst time_t * clock\fR);
+.sp
+\fIchar *\fR
+.br
+\fBroman_ctime_r\fR(\fIconst time_t * clock\fR, \fIchar * buff\fR, \fIsize_t len\fR);
+.SH REPORTING BUGS
+Report bugs to <@PACKAGE_BUGREPORT@>.
+.SH COPYRIGHT
+@PACKAGE_COPYRIGHT@
+.br
+This is free software; see the source for copying conditions.  There is
+NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR
+PURPOSE.
+.SH SEE ALSO
+.BR roman (7),
+.BR romandate (1),
+.BR romannum (1),
+.BR long2roman (3),
+.BR roman2long (3),
+.BR roman_strftime (3)
+.\" end of man page

@@ -114,7 +114,7 @@ ROMAN_F(char *) long2roman_r PARAMS((int num, char * str,
 	size_t len));
 
 /* determines required dst buffer to decode src_len data block */
-ROMAN_F(unsigned) roman2long PARAMS((const char * str));
+ROMAN_F(int) roman2long PARAMS((const char * str));
 
 /* returns string containing the date in Latin */
 ROMAN_F(const char *) roman_asctime PARAMS((const struct tm * tm));

@@ -29,6 +29,10 @@
 	- updated "romandate" to allow display of UTC time (syzdek)
 	- moved Roman numeral chart array from library source to utility
 	  source hoping it helps the MinGW32 cross compiled binaries (syzdek)
+	- improved Roman Numeral checking by disallowing the use of the
+	  addition and substraction method using the symbol [Example: XCX == C
+	  or IXI == X] and disallowing duplicate V, L, and D symbols in the
+	  same Roman Numeral [Example: VV == X or LL == 100] (syzdek)
 
 0.0.1
 	- initial release of package (syzdek)

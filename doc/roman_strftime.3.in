@@ -61,7 +61,7 @@ Aprilis, Maius, Junius, Julius, Augustus, September, October, Novembris,
 December).
 .TP
 .B %c
-is replaced by Latin's date and time date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII).
+is the same as %a %b %e %H:%M:%S %Z %Y.
 .TP
 .B %C
 is replaced by (year / 100).
@@ -182,6 +182,34 @@ invalid format operand in \fIfmt\fR.
 .TP
 .B ENOBUFS
 Insufficient storage space available in \fIstr\fR.
+.SH EXAMPLES
+\fB#include <time.h>\fR
+.br
+\fB#include <stdio.h>\fR
+.br
+\fB#include <roman.h>\fR
+.sp
+\fIint\fR \fBmain\fR(\fIvoid\fR);
+.sp
+\fIint\fR \fBmain\fR(\fIvoid\fR)
+.br
+{
+.br
+   \fItime_t      t\fR;
+.br
+   \fIchar        buff[512];
+.br
+   \fIsize_t      len\fR;
+.br
+   \fIstruct tm * tm\fR;
+.sp
+   \fIt\fR = \fBtime\fR(\fINULL\fR);
+.sp
+   \fIlen\fR = \fBroman_strftime(str, 512, "%c"
+.sp
+   \fBreturn\fR(\fI0\fR);
+.br
+}
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
 .SH COPYRIGHT

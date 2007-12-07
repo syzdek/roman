@@ -482,7 +482,7 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
    str[str_pos] = '\0';
 
    /* ends function */
-   return(0);
+   return(str_pos);
 }
 
 

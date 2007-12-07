@@ -1,0 +1,200 @@
+.\"
+.\" $Id$
+.\"
+.\" Roman Numeral Conversion API
+.\" Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
+.\"
+.\" Permission is granted to copy, distribute and/or modify this document
+.\" under the terms of the GNU Free Documentation License, Version 1.2
+.\" or any later version published by the Free Software Foundation;
+.\" with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+.\" A copy of the license is included in the section entitled "GNU
+.\" Free Documentation License".
+.\"
+.\" @configure_input@
+.\"
+.\" doc/long2roman.3.in - man page for Roman Numeral routines
+.\"
+.TH "ROMAN NUMERAL API" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.SH NAME
+roman_strftime \- convert
+.SH LIBRARY
+Roman Numeral Conversion API (libroman, -lroman)
+.SH SYNOPSIS
+\fB#include <time.h>\fR
+.br
+\fB#incude <roman.h>\fR
+.sp
+\fIsize_t\fR
+\fBroman_strftime\fR(\fIchar * str\fR, \fIsize_t len\fR, \fIconst char * fmt\fR, \fIconst struct tm * tm\fR);
+.SH DESCRIPTION
+The function \fBroman_strftime\fR formats the information from \fItm\fR into
+the buffer \fIstr\fR, according to the format string pointed to by \fIfmt\fR.
+.sp
+No more than \fIlen\fR characters, including the terminating NULL character,
+will be placed into the buffer.  \fBroman_strftime\fR returns the numer of
+characters copied into the buffer, not counting the terminating NULL character.
+.sp
+The \fIfmt\fR string consists of zero or more format operands and ordinary
+characters. All ordinary characters are copied directly into the buffer. A
+format operand consists of a `%' character and one of the following 
+characters:
+.TP
+.B %%
+is a literal %
+.TP
+.B %a
+is replaced by the abbreviated Latin weekday name (Sol, Lun, Mar, Mer, Lov,
+Ven, Sat).
+.TP
+.B %A
+is replaced by the full Latin weekday name (Solis, Linae, Martis, Mercurii,
+Lovis, Veneris, Saturni).
+.TP
+.B %b
+is replaced by the abbreviated Latin month name (Jan, Feb, Mar, Apr, Mai, Jun,
+Jul, Aug, Sep, Oct, Nov, Dec).
+.TP
+.B %B
+is replaced by the full Latin month name (Januarius, Februarius, Martius,
+Aprilis, Maius, Junius, Julius, Augustus, September, October, Novembris,
+December).
+.TP
+.B %c
+is replaced by Latin's date and time date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII).
+.TP
+.B %C
+is replaced by (year / 100).
+.TP
+.B %d
+is replaced by the day of month (I..XXXI).
+.TP
+.B %D
+is the same as %m/%d/%Y.
+.TP
+.B %e
+is the same as %d.
+.TP
+.B %F
+is the same as %Y-%m-%d.
+.TP
+.B %g
+is replaced by the year of the century (N..XCIX).
+.TP
+.B %G
+is replaced by the year.
+.TP
+.B %h
+is the same as %b.
+.TP
+.B %H
+is replaced by the hour using 24-hour notation (N..XXIII).
+.TP
+.B %I
+is replaced by the hour using 12-hour notation (I..XII).
+.TP
+.B %j
+is replaced by the day of year (I..XXXLXVI).
+.TP
+.B %k
+is the same as %H.
+.TP
+.B %l
+is the same as %I.
+.TP
+.B %m
+is replaced by the month (I..XII).
+.TP
+.B %M
+is replaced by the minute (N..LIX).
+.TP
+.B %n
+is replaced by a <newline>.
+.\" .TP
+.\" .B %N
+.\" is replaced by nanoseconds.
+.TP
+.B %p
+is replaced by upper case AM or PM indicator.
+.TP
+.B %P
+is replaced by lower case AM or PM indicator.
+.TP
+.B %r
+is the same as %I:%M:%S %p.
+.TP
+.B %R
+is the same as %H:%M.
+.TP
+.B %S
+is replaced by the second (N..LX).
+.TP
+.B %t
+is replaced by a horizontal <tab>.
+.TP
+.B %T
+is the same as %H:%M:%S.
+.TP
+.B %u
+is replaced by the day of week (I..VII); I represents Lunae.
+.\" .TP
+.\" .B %U
+.\" is replaced by the week number with Solis as the first day of the week.
+.\" .TP
+.\" .B %V
+.\" is replaced by the week number with Lunae as the first day of the week.
+.TP
+.B %w
+is replaced by the day of week (N..VI);  N represents Solis.
+.\" .TP
+.\" .B %W
+.\" is replaced by the week number with Lunae as the first day of the week.
+.TP
+.B %x
+is the same as %m/%d/%Y.
+.TP
+.B %X
+is the same as %T.
+.TP
+.B %y
+is the same as %g.
+.TP
+.B %Y
+is the same as %G.
+.TP
+.B %z
+is replaced by the GMT offset in minutes.
+.TP
+.B %Z
+is replaced by the time zone or nothing if no time zone is determinable.
+.SH RETURN VALUES
+If successful, \fBroman_strftime\fR returns the number of characters copied
+into the buffer, not counting the terminating \fINULL\fR character. If an
+error is encountered, \fBroman_strftime\fR returns zero and \fIerrno\fR will
+be set.  If  an  error  is encountered the buffer contents are indeterminate.
+.SH ERRORS
+.TP
+.B EFAULT
+bad address in either \fIstr\fR, \fIfmt\fR, or \fItm\fR.
+.TP
+.B EINVAL
+invalid format operand in \fIfmt\fR.
+.TP
+.B ENOBUFS
+Insufficient storage space available in \fIstr\fR.
+.SH REPORTING BUGS
+Report bugs to <@PACKAGE_BUGREPORT@>.
+.SH COPYRIGHT
+@PACKAGE_COPYRIGHT@
+.br
+This is free software; see the source for copying conditions.  There is
+NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR
+PURPOSE.
+.SH SEE ALSO
+.BR roman (7),
+.BR romandate (1),
+.BR romannum (1),
+.BR long2roman (3),
+.BR roman2long (3),
+.BR roman_ctime (3)
+.\" end of man page

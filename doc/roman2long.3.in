@@ -22,11 +22,11 @@ roman2long \- convert ASCII string containing a Roman Numeral value to
 .SH LIBRARY
 Roman Numeral Conversion API (libroman, -lroman)
 .SH SYNOPSIS
-.nf
-.B #include <roman.h>
+\fB#include <roman.h>\fR
 .sp
-.BI "int roman2long(const char * " str ");"
-.fi
+\fIint\fR
+.br
+\fBroman2long\fR(\fIconst char * str\fR);
 .SH DESCRIPTION
 The function
 .B roman2long
@@ -51,19 +51,26 @@ returns the numeric value of
 or \-1 if an error occurred (in which case,
 .I errno
 is set appropriately).
+.SH ERRORS
+.TP
+.B EFAULT
+bad address in \fIstr\fR.
+.TP
+.B EINVAL
+\fIstr\fR contains either invalid characters or an invalid Roman numeral.
 .SH EXAMPLES
-\fB#include\fR <stdio.h>
+\fB#include <stdio.h>\fB
 .br
-\fB#include\fR <roman.h>
+\fB#include <roman.h>\fB
 .sp
-\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[]);
+\fBint main\fR(\fIint argc\fR, \fIchar * argv[]\fR);
 .sp
-\fBint main\fR(\fBint\fR \fIargc\fR, \fB char *\fR \fIargv\fR[])
+\fBint main\fR(\fIint argc\fR, \fIchar * argv[]\fR)
 .br
 {
 .br
-   \fBint\fR \fIi\fR;
-   \fBint\fR \fInum\fR;
+   \fIint i\fR;
+   \fIint num\fR;
 .sp
    \fBfor\fR(\fIi\fR = 1; \fIi\fR < \fIargc\fR; \fIi\fR++)
 .br
@@ -71,24 +78,19 @@ is set appropriately).
 .br
       \fInum\fR = \fBroman2long\fR(\fIargv\fR[\fIi\fR]);
 .br
-      \fBif\fR(\fInum\fR == -1)
+      \fBif\fR(\fInum\fR == \fI-1\fR)
 .br
          \fBperror\fR("roman2long()");
 .br
       \fBelse\fR
 .br
-         \fBprintf\fR("%s == %i\\n", \fIargv\fR[\fIi\fR], \fInum\fR);
+         \fBprintf\fR("%s == %i\\n", \fIargv[i]\fR, \fInum\fR);
 .br
    }
 .sp
    \fBreturn\fR(\fI0\fR);
 .br
 }
-.SH ERRORS
-.TP
-.B EINVAL
-.I numeral
-contains either invalid characters or an invalid Roman numeral.
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
 .SH COPYRIGHT

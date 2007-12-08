@@ -32,7 +32,7 @@ Roman Numeral Conversion API (libroman, -lroman)
 .sp
 \fIchar *\fR
 .br
-\fBroman_asctime_r\fB(\fIconst struct tm * tm\fR, \fIchar * buff\fR, \fIsize_t len\fR);
+\fBroman_asctime_r\fB(\fIconst struct tm * tm\fR, \fIchar * str\fR, \fIsize_t len\fR);
 .sp
 \fIconst char *\fR
 .br
@@ -40,7 +40,62 @@ Roman Numeral Conversion API (libroman, -lroman)
 .sp
 \fIchar *\fR
 .br
-\fBroman_ctime_r\fR(\fIconst time_t * clock\fR, \fIchar * buff\fR, \fIsize_t len\fR);
+\fBroman_ctime_r\fR(\fIconst time_t * clock\fR, \fIchar * str\fR, \fIsize_t len\fR);
+.SH DESCRIPTION
+The functions \fBroman_asctime\fR and \fBroman_ctime\fR accept an argument
+representing a specific time and return a string representing the formatted
+data and time.
+.sp
+The functions \fRroman_asctime_r\fR and \fBroman_ctime_r\fR provide the same
+functionality as \fBroman_asctime\fR and \fBroman_ctime\fR respectively, except
+that the caller must provide the out buffer \fIstr\fR to store the result. \fIstr\fR
+must be at least \fIlen\fR characters long.
+.SH RETURN VALUES
+If successfull, these functions each return a string containing a formatted
+date.  If an error ocurrs, \fINULL\fR is returned and \fIerrno\fR is set.
+.SH ERRORS
+.TP
+.B EFAULT
+bad address in \fIstr\fR.
+.TP
+.B ENOBUFS
+Insufficient storage space available in \fIstr\fR.
+.SH EXAMPLES
+\fB#include <time.h>\fR
+.br
+\fB#include <stdio.h>\fR
+.br
+\fB#include <roman.h>\fR
+.sp
+\fIint\fR \fBmain\fR(\fIvoid\fR);
+.sp
+\fIint\fR \fBmain\fR(\fIvoid\fR)
+.br
+{
+.br
+   \fIchar         str[512]\fR;
+.br
+   \fItime_t       t\fR;
+.br
+   \fIsize_t       len\fR;
+.br
+   \fIstruct tm  * tm\fR;
+.br
+   \fIconst char * ptr\fI;
+.sp
+   \fIt\fR = \fBtime\fR(\fINULL\fR);
+.sp
+   \fIptr\fR = \fBroman_ctime\fR(\fI&t\fR);
+.br
+   \fBprintf\fR("%s\\n", \fIptr\fR);
+.sp
+   \fIptr\fR = \fBroman_ctime_r\fR(\fI&t\fR, \fIstr\fR, \fI512\fR);
+.br
+   \fBprintf\fR("%s\\n", \fIptr\fR);
+.sp
+   \fBreturn\fR(\fI0\fR);
+.br
+}
 .SH REPORTING BUGS
 Report bugs to <@PACKAGE_BUGREPORT@>.
 .SH COPYRIGHT

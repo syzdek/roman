@@ -15,35 +15,23 @@
 .\"
 .\" doc/roman2long.3.in - man page for Roman Numeral routines
 .\"
-.TH "ROMAN NUMERAL" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.TH "ROMAN2LONG" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@" "@PACKAGE_NAME@"
 .SH NAME
 roman2long \- convert ASCII string containing a Roman Numeral value to
 .I signed int.
 .SH LIBRARY
 Roman Numeral Conversion API (libroman, -lroman)
 .SH SYNOPSIS
-\fB#include <roman.h>\fR
-.sp
-\fIint\fR
-.br
-\fBroman2long\fR(\fIconst char * str\fR);
+.B #include <roman.h>
+
+.BI "int roman2long(const char * " str ");"
 .SH DESCRIPTION
 The function
 .B roman2long
 takes an argument of
 .I str
 and returns an integer containing the value of the Roman Numeral.
-.\"
-.\"The
-.\".B roman2long()
-.\"function converts
-.\".I numeral
-.\"from a
-.\".I string
-.\"to a 
-.\".I int
-.\"which contains the value of the Roman numeral.
-.SH RETURN VALUES
+.SH "RETURN VALUES"
 If successful, 
 .B roman2long
 returns the numeric value of
@@ -57,41 +45,21 @@ is set appropriately).
 bad address in \fIstr\fR.
 .TP
 .B EINVAL
-\fIstr\fR contains either invalid characters or an invalid Roman numeral.
+.I str
+contains either invalid characters or an invalid Roman numeral.
 .SH EXAMPLES
-\fB#include <stdio.h>\fB
-.br
-\fB#include <roman.h>\fB
-.sp
-\fBint main\fR(\fIint argc\fR, \fIchar * argv[]\fR);
-.sp
-\fBint main\fR(\fIint argc\fR, \fIchar * argv[]\fR)
-.br
-{
-.br
-   \fIint i\fR;
-   \fIint num\fR;
-.sp
-   \fBfor\fR(\fIi\fR = 1; \fIi\fR < \fIargc\fR; \fIi\fR++)
-.br
-   {
-.br
-      \fInum\fR = \fBroman2long\fR(\fIargv\fR[\fIi\fR]);
-.br
-      \fBif\fR(\fInum\fR == \fI-1\fR)
-.br
-         \fBperror\fR("roman2long()");
-.br
-      \fBelse\fR
-.br
-         \fBprintf\fR("%s == %i\\n", \fIargv[i]\fR, \fInum\fR);
-.br
-   }
-.sp
-   \fBreturn\fR(\fI0\fR);
-.br
-}
-.SH REPORTING BUGS
+.nf
+int num;
+
+num = roman2long("MCMXCVII");
+if (num == \-1)
+   perror("roman2long");
+else
+   printf("MCMXCVII == %i\\n", num);
+.fi
+.SH AUTHOR
+Written by David M. Syzdek.
+.SH "REPORTING BUGS"
 Report bugs to <@PACKAGE_BUGREPORT@>.
 .SH COPYRIGHT
 @PACKAGE_COPYRIGHT@
@@ -99,7 +67,7 @@ Report bugs to <@PACKAGE_BUGREPORT@>.
 This is free software; see the source for copying conditions.  There is
 NO warranty; not even for MERCHANTABILITY or FITNESS FOR  A  PARTICULAR
 PURPOSE.
-.SH SEE ALSO
+.SH "SEE ALSO"
 .BR roman (7),
 .BR romandate (1),
 .BR romannum (1),

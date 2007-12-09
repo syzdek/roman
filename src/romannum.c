@@ -223,7 +223,7 @@ void my_usage(void)
    printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
    printf("  -a arabic                 convert Arabic numerals to Roman numerals\n");
    printf("  -r roman                  convert Roman numerals to Arabic numerals\n");
-   printf("  -c, --chart               print this help and exit\n");
+   printf("  -c, --chart               print table of the Roman numeral symbols and exit\n");
    printf("  -h, --help                print this help and exit\n");
    printf("  -V, --version             print version number and exit\n");
 #ifdef PACKAGE_BUGREPORT

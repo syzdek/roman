@@ -15,7 +15,7 @@
 .\"
 .\" doc/long2roman.3.in - man page for Roman Numeral routines
 .\"
-.TH "ROMAN NUMERAL API" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
+.TH "ROMAN_CTIME" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@" "@PACKAGE_NAME@"
 .SH NAME
 roman_asctime, roman_asctime_r, roman_ctime, roman_ctime_r \-
 transform date and time to ASCII using Roman Numerals

@@ -1,0 +1,168 @@
+.\"
+.\" $Id$
+.\"
+.\" Roman Numeral Conversion API
+.\" Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
+.\"
+.\" Permission is granted to copy, distribute and/or modify this document
+.\" under the terms of the GNU Free Documentation License, Version 1.2
+.\" or any later version published by the Free Software Foundation;
+.\" with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+.\" A copy of the license is included in the section entitled "GNU
+.\" Free Documentation License".
+.\"
+.\" @configure_input@
+.\"
+.\" doc/romandate.1.in - man page for Roman Numeral routines
+.\"
+.TH ROMANDATE "1" "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@" "User Commands"
+.SH NAME
+romandate \- displays date and time using Roman numerals 
+.SH SYNOPSIS
+\fBromandate\fR [\fB-u\fR] [\fB-d\fR \fIYYYYmmddHHMMSS\fR] [\fI+format\fR]
+.br
+\fBromandate\fR [\fB--chart\fR \fB-c\fR]
+.SH DESCRIPTION
+.TP
+\fB\-c\fR, \fB\-\-chart\fR
+print table of the Roman numeral symbols and exit
+.HP
+\fB\-d\fR, \fB\-\-date\fR=\fIYYYYmmddHHMMSS\fR display time described by YYYYmmddHHMMSS, not `now'
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+print this help and exit
+.TP
+\fB\-u\fR, \fB\-\-utc\fR, \fB\-\-universal\fR
+print Coordinated Universal Time
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+print version number and exit
+.SS "Date Format:"
+.TP
+%%
+a literal %
+.TP
+%a
+Latin's abbreviated weekday name (Sol..Sat)
+.TP
+%A
+Latin's full weekday name, variable length (Solis..Saturni)
+.TP
+%b
+Latin's abbreviated month name (Jan..Dec)
+.TP
+%B
+Latin's full month name, variable length (Januarius..December)
+.TP
+%c
+Latin's date and time (Sat Nov IV XII:II:XXXIII EST MCMXCVII)
+.TP
+%C
+century
+.TP
+%d
+same as %e
+.TP
+%D
+same as %m/%d/%Y
+.TP
+%e
+day of month (I..XXXI)
+.TP
+%F
+same as %Y\-%m\-%d
+.TP
+%g
+year of century (N..XCIX)
+.TP
+%G
+year
+.TP
+%h
+same as %b
+.TP
+%H
+hour using 24\-hour notation (N..XXIII)
+.TP
+%I
+hour using 12\-hour notation (N..XII
+.TP
+%j
+day of year (I..XXXLXVI)
+.TP
+%k
+hour (0..XXIII)
+.TP
+%l
+hour (I..XII)
+.TP
+%m
+month (I..XII)
+.TP
+%M
+minute (N..LIX)
+.TP
+%n
+a newline
+.TP
+%p
+Latin's upper case AM or PM indicator
+.TP
+%P
+Latin's lower case AM or PM indicator
+.TP
+%r
+time as %I:%M:%S %p
+.TP
+%R
+time as %H:%M
+.TP
+%S
+second (I..LX)
+.TP
+%t
+a horizontal tab
+.TP
+%T
+time as %H:%M:%S
+.TP
+%u
+day of week (I..VII);  I represents Lunae
+.TP
+%w
+day of week (N..VI);  N represents Solis
+.TP
+%x
+date as %m/%d/%Y
+.TP
+%X
+same as %T
+.TP
+%y
+same as %g
+.TP
+%Y
+same as %G
+.TP
+%z
+GMT offset
+.TP
+%Z
+time zone or nothing if no time zone is determinable
+.SH AUTHOR
+Written by David M. Syzdek.
+.SH "REPORTING BUGS"
+Report bugs to <@PACKAGE_BUGREPORT@>.
+.SH COPYRIGHT
+@PACKAGE_COPYRIGHT@
+.br
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+.SH "SEE ALSO"
+.BR roman (7),
+.BR romannum (1),
+.BR long2roman (3),
+.BR roman2long (3),
+.BR roman_ctime (3),
+.BR roman_strftime (3)
+.\" end of man page

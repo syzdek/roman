@@ -219,7 +219,6 @@ windist: Makefile
 	make dist-zip
 	make txtdocs
 	make install
-	mv $(DESTDIR)/$(prefix)/bin/*.dll          $(DESTDIR)/$(prefix)/lib
 	cp -R $(builddir)/doc/txt                  $(DESTDIR)/$(prefix)/docs
 	cp @PACKAGE_TARNAME@-@PACKAGE_VERSION@.zip $(DESTDIR)/$(prefix)/
 	cp $(srcdir)/ChangeLog                     $(DESTDIR)/$(prefix)/ChangeLog.txt

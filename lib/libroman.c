@@ -569,6 +569,12 @@ size_t roman_strftime_char(char * s, size_t len, int c,
        *  The following are defined by SUSv3 strftime() declaration
        *  http://www.unix.org/single_unix_specification/
        */
+
+      /* replace with literal '%' */
+      case '%':
+         pos = strlen(ptr = "%");
+         break;
+
       /* Replaced by the locale's abbreviated weekday name. [ tm_wday] */
       case 'a':
          if (tm->tm_wday > 6)

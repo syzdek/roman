@@ -81,6 +81,7 @@
 typedef struct my_config_struct
 {
    int          opts;
+   time_t       tclock;
    const char * fmt;
 } MyConfig;
 
@@ -93,6 +94,9 @@ typedef struct my_config_struct
 
 /* main statement */
 int main PARAMS((int argc, char * argv[]));
+
+/* converts string to time */
+time_t my_ascii2time PARAMS((const char * str));
 
 /* parses config */
 MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
@@ -115,18 +119,16 @@ int main(int argc, char * argv[])
 {
    /* declares local vars */
    char         buff[MY_BUFF_LEN];
-   time_t       t;
    MyConfig   * cnf;
    struct tm  * tptr;
 
    if (!(cnf = my_cmdline(argc, argv)))
       return(1);
 
-   t = time(NULL);
    if (cnf->opts & MY_OPT_UTC)
-      tptr = gmtime(&t);
+      tptr = gmtime(&cnf->tclock);
    else
-      tptr = localtime(&t);
+      tptr = localtime(&cnf->tclock);
 
    roman_strftime(buff, MY_BUFF_LEN, &cnf->fmt[1], tptr);
 
@@ -135,6 +137,64 @@ int main(int argc, char * argv[])
    /* ends function */
    free(cnf);
    return(0);
+}
+
+
+/* converts string to time using yymmddHHMMSS */
+time_t my_ascii2time(const char * str)
+{
+   /* declares local vars */
+   char      buff[5];
+   size_t    len;
+   struct tm tm;
+
+   /* initializes variables */
+   memset(&tm,   0, sizeof(struct tm));
+   memset(buff, 0, 5);
+   len        = strlen(str);
+   tm.tm_mday = 1;
+
+   /* check arguments */
+   if (len < 2)
+      return(0);
+   if (len &0x01)
+      return(0);
+   if (len > 14)
+      return(0);
+
+   /* calculates year */
+   if (len < 4)
+      return(0);
+   strncpy(buff, &str[0], 4);
+   tm.tm_year = atol(buff) - 1900;
+   memset(buff, 0, 5);
+
+   /* calculates month */
+   if (len < 6)
+      return(mktime(&tm));
+   strncpy(buff, &str[4], 2);
+   tm.tm_mon = atol(buff) - 1;
+
+   /* calculates month */
+   if (len < 8)
+      return(mktime(&tm));
+   strncpy(buff, &str[6], 2);
+   tm.tm_mday = atol(buff);
+
+   /* calculates month */
+   if (len < 10)
+      return(mktime(&tm));
+   strncpy(buff, &str[8], 2);
+   tm.tm_hour = atol(buff);
+
+   /* calculates month */
+   if (len < 12)
+      return(mktime(&tm));
+   strncpy(buff, &str[10], 2);
+   tm.tm_min = atol(buff);
+
+   /* ends function */
+   return(mktime(&tm));
 }
 
 
@@ -169,6 +229,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
 
    /* sets variables */
    option_index = 0;
+   cnf->tclock  = time(NULL);
 
    /* loops through args */
    while((c = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1)
@@ -183,6 +244,13 @@ MyConfig * my_cmdline(int argc, char *argv[])
             free(cnf);
             return(NULL);
          case 'd':
+            if (!(cnf->tclock = my_ascii2time(optarg)))
+            {
+               fprintf(stderr, "%s: invalid time STRING\n", PROGRAM_NAME);
+               fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+               free(cnf);
+               return(NULL);
+            };
             break;
          case 'h':
             my_usage();
@@ -229,9 +297,8 @@ MyConfig * my_cmdline(int argc, char *argv[])
 void my_usage(void)
 {
    printf("Usage: %s [OPTIONS] [+format]\n", PROGRAM_NAME);
-   printf("  -c, --chart               print table of Roman numeral values and exit\n");
-   printf("  -d, --date=STRING         display time described by STRING, not `now'\n");
-   printf("  -f, --format-chart        printf format operands and exit\n");
+   printf("  -c, --chart               print table of the Roman numeral symbols and exit\n");
+   printf("  -d, --date=YYYYmmddHHMMSS display time described by YYYYmmddHHMMSS, not `now'\n");
    printf("  -h, --help                print this help and exit\n");
    printf("  -u, --utc, --universal    print Coordinated Universal Time\n");
    printf("  -V, --version             print version number and exit\n");

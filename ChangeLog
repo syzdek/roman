@@ -33,6 +33,7 @@
 	  addition and substraction method using the symbol [Example: XCX == C
 	  or IXI == X] and disallowing duplicate V, L, and D symbols in the
 	  same Roman Numeral [Example: VV == X or LL == 100] (syzdek)
+	- functions now return error conditions using errno (syzdek)
 
 0.0.1
 	- initial release of package (syzdek)

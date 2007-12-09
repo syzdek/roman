@@ -18,9 +18,10 @@
 	- Write texinfo documentation (syzdek)
 	- brush up on Latin so the romandate command can be grammatically
 	  correct (syzdek)
-	- add date format operands '%T', '%U', '%V', and '%W' equivalents of
+	- add date format operands '%U', '%V', and '%W' equivalents of
 	  SUSv3 date command (syzdek)
-	- write simple example programs using library functions (syzdek)
+	- write `du' utility that outputs data in Roman Numerals (syzdek)
+	- write `romancalc' utility that acts as a calculator (syzdek)
 
 Abbr:
 	SUSv3	- The Single Unix Specification Version 3

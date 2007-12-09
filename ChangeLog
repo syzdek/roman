@@ -14,6 +14,14 @@
 #   ChangeLog - list of changes made to each revision
 #
 
+0.0.3
+	- fixed error checking in long2roman().  The previous version would
+	  allow a number line MIMM, XIXX, CXCC.  However the following would
+	  fail on MMIM, XXIX, and CCXC.  The function now correctly reports
+	  and error for the first set of numbers and allows the second set of
+	  numbers. (syzdek)
+	- added tests to help avoid problems like the above (syzdek)
+
 0.0.2
 	- changed command line options for romannum to `-a' for Arabic numerals
 	  instead of using `-d' for decimal numerals. (syzdek) 

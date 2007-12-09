@@ -87,7 +87,7 @@
 
 /* parameters used by library */
 #undef  ROMAN_BUFF_LEN
-#define ROMAN_BUFF_LEN 1024
+#define ROMAN_BUFF_LEN 512
 
 
 /* errno values */

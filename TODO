@@ -16,6 +16,7 @@
 
 	- Finish writing man pages for existing functions and utilities. (syzdek)
 	- Write texinfo documentation (syzdek)
+	- write additional tests to fully test library (syzdek)
 	- brush up on Latin so the romandate command can be grammatically
 	  correct (syzdek)
 	- add date format operands '%U', '%V', and '%W' equivalents of

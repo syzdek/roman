@@ -244,8 +244,7 @@ ROMAN_F(int) roman2long(const char * str)
    int      num;
    unsigned i;
    unsigned len;
-   unsigned old;
-   unsigned diff;
+   unsigned p[2];	// stores values of previous symbols for error checking
 
    /* checks args */
    if (!(str))
@@ -257,8 +256,8 @@ ROMAN_F(int) roman2long(const char * str)
    /* sets initial values */
    num  = 0;
    len  = strlen(str);
-   old  = 1000;
-   diff = 1000;
+   p[0] = 1000;
+   p[1] = 1000;
 
    /* loops through characters */
    for(i = 0; i < len; i++)
@@ -276,92 +275,92 @@ ROMAN_F(int) roman2long(const char * str)
             break;
          case 'i':
          case 'I':
-            if ((old == 1) && (diff != 1))
+            if ((p[1] == 1) && (p[0] != 1))
             {
                errno = EINVAL;
                return(-1);
             };
-            old   = diff;
+            p[1]   = p[0];
             num  += 1;
-            diff  = 1;
+            p[0]  = 1;
             break;
          case 'v':
          case 'V':
             num += 5;
-            if (((diff < 5) && (old < 5)) || (old == 5) || (diff == 5))
+            if (((p[0] < 5) && (p[1] < 5)) || (p[1] == 5) || (p[0] == 5))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 5)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 5;
+            else if (p[0] < 5)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 5;
             break;
          case 'x':
          case 'X':
             num += 10;
-            if (((diff < 10) && (old < 10)) || ((old == 10) && (diff != 10)))
+            if (((p[0] < 10) && (p[1] < 10)) || ((p[1] < 10) && (p[0] <= 10)))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 10)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 10;
+            else if (p[0] < 10)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 10;
             break;
          case 'l':
          case 'L':
             num += 50;
-            if (((diff < 50) && (old < 50)) || (old == 50) || (diff == 50))
+            if (((p[0] < 50) && (p[1] < 50)) || (p[1] == 50) || (p[0] == 50))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 50)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 50;
+            else if (p[0] < 50)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 50;
             break;
          case 'c':
          case 'C':
             num += 100;
-            if (((diff < 100) && (old < 100)) || ((old == 100) && (diff != 100)))
+            if (((p[0] < 100) && (p[1] < 100)) || ((p[1] < 100) && (p[0] <= 100)))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 100)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 100;
+            else if (p[0] < 100)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 100;
             break;
          case 'd':
          case 'D':
             num += 500;
-            if (((diff < 500) && (old < 500)) || (old == 500) || (diff == 500))
+            if (((p[0] < 500) && (p[1] < 500)) || (p[1] == 500) || (p[0] == 500))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 500)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 500;
+            else if (p[0] < 500)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 500;
             break;
          case 'm':
          case 'M':
             num += 1000;
-            if ((diff < 1000) && (old < 1000))
+            if (((p[0] < 1000) && (p[1] < 1000)) || ((p[1] < 100) && (p[0] <= 1000)))
             {
                errno = EINVAL;
                return(-1);
             }
-            else if (diff < 1000)
-               num -= (diff * 2);
-            old  = diff;
-            diff = 1000;
+            else if (p[0] < 1000)
+               num -= (p[0] * 2);
+            p[1]  = p[0];
+            p[0] = 1000;
             break;
          default:
             errno = EINVAL;

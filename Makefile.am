@@ -162,6 +162,16 @@ doc/romandate.1: Makefile doc/romandate.1.in
 doc/romannum.1: Makefile doc/romannum.1.in
 	@$(do_subst_fn)
 
+htmldocs: Makefile $(man_MANS)
+	@$(mkdir_p) doc/html
+	groff -Thtml -mandoc doc/long2roman.3     |grep -v 'a href' > doc/html/long2roman.3.html
+	groff -Thtml -mandoc doc/roman.7          |grep -v 'a href' > doc/html/roman.7.shtml
+	groff -Thtml -mandoc doc/roman2long.3     |grep -v 'a href' > doc/html/roman2long.3.shtml
+	groff -Thtml -mandoc doc/roman_ctime.3    |grep -v 'a href' > doc/html/roman_ctime.3.shtml
+	groff -Thtml -mandoc doc/roman_strftime.3 |grep -v 'a href' > doc/html/roman_strftime.3.shtml
+	groff -Thtml -mandoc doc/romandate.1      |grep -v 'a href' > doc/html/romandate.1.shtml
+	groff -Thtml -mandoc doc/romannum.1       |grep -v 'a href' > doc/html/romannum.1.shtml
+
 # windows dist files
 windist: Makefile
 	make dist-zip

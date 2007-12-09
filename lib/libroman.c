@@ -553,11 +553,12 @@ size_t roman_strftime_char(char * s, size_t len, int c,
    char         buff[ROMAN_BUFF_LEN];
    int          num;
    size_t       pos;
+#ifdef HAVE_STRUCT_TM_TM_GMTOFF
    unsigned     u;
+#endif
    const char * ptr;
 
    /* initialize variables */
-//   memset(buff, 0, ROMAN_BUFF_LEN);
    num = 0;
    pos = 0;
    ptr = "";
@@ -760,7 +761,7 @@ size_t roman_strftime_char(char * s, size_t len, int c,
             pos++;
          };
 #else
-         pos = strlen(ptr = ' ');
+         pos = strlen(ptr = " ");
 #endif
          break;
 
@@ -769,7 +770,7 @@ size_t roman_strftime_char(char * s, size_t len, int c,
 #ifdef HAVE_STRUCT_TM_TM_ZONE
          pos = strlen(ptr = tm->tm_zone);
 #else
-         pos = strlen(ptr = ' ');
+         pos = strlen(ptr = " ");
 #endif
          break;
 

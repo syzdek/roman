@@ -1,11 +1,12 @@
 $Id$
 
 Roman Numeral Conversion API
-Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>
+Copyright (C) 2007 David M. Syzdek
 
 Contents
 ========
    I. Introduction
+  II. Reporting Problems
   II. Roman Numerals
  III. Obtaining the Source
   IV. Compiling and Installing
@@ -16,18 +17,36 @@ I. Introduction
 ---------------
 
 This package was developed to provide an easy method of including Roman Numeral
-values in the output of programs written in C/C++.  Currently the only
-available functions are roman2long() and long2roman(), however I am expanding
-the library to also include date functions.  The `romandate' command provides
-and example of how the API will translate dates into Roman Numerals.  The
-`romannum' command demonstrates the capabilities of the API. 
+values in the output of programs written in C/C++.  There are example programs
+that demonstrates the use of the functions included in the library.  The
+utilities `romannum' and `romandate' show possible uses for the functions as
+well as provide silly tools to play with.
+
+
+II. Reporting Problems
+----------------------
+
+Please report problems regarding this package using the SourceForge Tracker.
+The Tracker page for this project is available here:
+
+	<a href=http://sourceforge.net/tracker/?group_id=211070>
+	http://sourceforge.net/tracker/?group_id=211070
+	</a>
+
+If the Tracker is too confusing, time consuming, detailed, arbitrary, ridiculous,
+chaotic, organized, purlple, "I don't speak your crazy moon-language."; send the
+request to:
+
+	<a href=mailto:syzdek@users.sourceforge.net>
+	syzdek@users.sourceforge.net
+	</a>
 
 
 II. Roman Numerals
 ------------------
 
 A simple chart is included below showing the values for Roman Numeral symbols. This
-chart is also included in the `romannum' command and in the roman.8 man page.
+chart is also included in the `romannum' command and in the roman.7 man page.
 
    Roman Numerals:
     Symbol    Value              Name
@@ -59,7 +78,9 @@ III. Obtaining the Source
 This project is hosted on SourceForge.  The source code can be downloaded from the
 following web page:
 
+	<a href=https://sourceforge.net/projects/roman/>
 	https://sourceforge.net/projects/roman/
+	</a>
 
 The latest source code can be retieved from CVS using the following commands:
 
@@ -93,24 +114,23 @@ The easist way to compile the source on a Unix platform is to run the following:
 For more information on building and installing using configure, please read the
 INSTALL file.
 
-The following is used to cross compile static WIN32 programs and library on
-OS X from files obtained from the CVS repository:
+The Windows binaries that are released on SourceForge are cross-compiled on
+OS X using MinGW32.  How to cross-compile is beyond the scope of this document
+however the following should work if your environment is set up correctly:
 
-        RELEASE=x.x.x-mingw32-static
-	rm -fR /tmp/roman-mingw32-$RELEASE
-
-	../roman/configure --prefix=/tmp/roman-$RELEASE --disable-shared \
-	                   --bindir=/tmp/roman-$RELEASE --host=i386-mingw32
+	gzip -cd roman-x.x.x.tar.gz | tar -xvf -
+	cd roman-x.x.x
+	./configure --prefix=/tmp/roman-mingw32 --disable-shared \
+	            --bindir=/tmp/roman-mingw32 --host=i386-mingw32
 	make
-	make windist
-	rm -fR /tmp/roman-$RELEASE/share
-	cd /tmp
-	zip -r roman-$RELEASE.zip roman-$RELEASE
-
+	make install
 
 Removing the `--disable-shared' option will create a DLL library which must
-be in the same directory as the executables that use it.  For convience, this
-project distributes staticly compiled programs and libraries.
+be in the same directory as the executables that use it. I am a Unix developer,
+so I am not familiar with the development tools available on Windows.  If you
+have questions about developing on Windows, please see the MSDN.  If there is
+an error in how I generate Windows libraries, please let me know and I will
+try to correct it in the next release.
 
 
 V. Programming Examples
@@ -174,4 +194,14 @@ to the following:
 	syzdek@tacntock$ ./test2 
 	Number: 3132
 	syzdek@tacntock$
+
+Additional examples are included in the `examples' directory.
+
+
+=============================================================================
+
+Please enjoy this project.
+
+Sincerely,
+David M. Syzdek
 

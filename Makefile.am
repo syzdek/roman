@@ -30,7 +30,7 @@ DIST_SUBDIRS				=
 
 # Global flags
 AM_LIBS					=
-AM_LDADD				= -lroman
+AM_LDADD				= lib/libroman.la
 AM_LDFLAGS				= -L$(top_builddir)/lib
 AM_CFLAGS                               = @CFLAGS_WARNINGS@
 AM_CPPFLAGS				= -I$(top_srcdir)/include
@@ -91,7 +91,7 @@ src_romandate_DEPENDENCIES		= $(lib_LTLIBRARIES) Makefile
 src_romandate_CPPFLAGS			= -DPROGRAM_NAME="\"romandate\"" $(AM_CPPFLAGS)
 src_romandate_CFLAGS			= $(AM_CFLAGS)
 src_romandate_LDFLAGS			= $(AM_LDFLAGS)
-src_romandate_LDADD			= $(AM_LDADD)
+src_romandate_LDADD			= $(AM_LDADD) 
 src_romandate_SOURCES			= $(include_HEADERS) \
 					  src/roman_charts.c \
 					  src/roman_charts.h \
@@ -105,6 +105,19 @@ EXTRA_DIST				= \
 					  doc/long2roman_r.3 \
 					  doc/roman.7.in \
 					  doc/roman2long.3.in \
+					  doc/roman_asctime.3 \
+					  doc/roman_asctime_r.3 \
+					  doc/roman_ctime.3.in \
+					  doc/roman_ctime_r.3 \
+					  doc/roman_strftime.3.in \
+					  doc/romandate.1.in \
+					  doc/romannum.1.in \
+					  doc/romannumeral.7 \
+					  examples/long2roman.c \
+					  examples/roman2long.c \
+					  examples/roman_asctime.c \
+					  examples/roman_ctime.c \
+					  examples/roman_strftime.c \
 					  lib/libroman.def \
 					  lib/libroman.sym 
 CLEANFILES				= \
@@ -165,17 +178,48 @@ doc/romannum.1: Makefile doc/romannum.1.in
 htmldocs: Makefile $(man_MANS)
 	@$(mkdir_p) doc/html
 	groff -Thtml -mandoc doc/long2roman.3     |grep -v 'a href' > doc/html/long2roman.3.html
-	groff -Thtml -mandoc doc/roman.7          |grep -v 'a href' > doc/html/roman.7.shtml
-	groff -Thtml -mandoc doc/roman2long.3     |grep -v 'a href' > doc/html/roman2long.3.shtml
-	groff -Thtml -mandoc doc/roman_ctime.3    |grep -v 'a href' > doc/html/roman_ctime.3.shtml
-	groff -Thtml -mandoc doc/roman_strftime.3 |grep -v 'a href' > doc/html/roman_strftime.3.shtml
-	groff -Thtml -mandoc doc/romandate.1      |grep -v 'a href' > doc/html/romandate.1.shtml
-	groff -Thtml -mandoc doc/romannum.1       |grep -v 'a href' > doc/html/romannum.1.shtml
+	groff -Thtml -mandoc doc/roman.7          |grep -v 'a href' > doc/html/roman.7.html
+	groff -Thtml -mandoc doc/roman2long.3     |grep -v 'a href' > doc/html/roman2long.3.html
+	groff -Thtml -mandoc doc/roman_ctime.3    |grep -v 'a href' > doc/html/roman_ctime.3.html
+	groff -Thtml -mandoc doc/roman_strftime.3 |grep -v 'a href' > doc/html/roman_strftime.3.html
+	groff -Thtml -mandoc doc/romandate.1      |grep -v 'a href' > doc/html/romandate.1.html
+	groff -Thtml -mandoc doc/romannum.1       |grep -v 'a href' > doc/html/romannum.1.html
 
-# windows dist files
+txtdocs: Makefile $(man_MANS)
+	@$(mkdir_p) doc/txt
+	groff -a -Tascii -mandoc doc/long2roman.3     |grep -v 'a href' > doc/txt/long2roman.3.txt
+	groff -a -Tascii -mandoc doc/roman.7          |grep -v 'a href' > doc/txt/roman.7.txt
+	groff -a -Tascii -mandoc doc/roman2long.3     |grep -v 'a href' > doc/txt/roman2long.3.txt
+	groff -a -Tascii -mandoc doc/roman_ctime.3    |grep -v 'a href' > doc/txt/roman_ctime.3.txt
+	groff -a -Tascii -mandoc doc/roman_strftime.3 |grep -v 'a href' > doc/txt/roman_strftime.3.txt
+	groff -a -Tascii -mandoc doc/romandate.1      |grep -v 'a href' > doc/txt/romandate.1.txt
+	groff -a -Tascii -mandoc doc/romannum.1       |grep -v 'a href' > doc/txt/romannum.1.txt
+
+#
+# Notes for making binary
+# windows release.
+#
+#   RELEASE=x.x.x-win32
+#   rm -Rf /tmp/roman-$RELEASE
+#
+#   ../roman/configure	--prefix=/tmp/roman-$RELEASE --enable-shared \
+#			--bindir=/tmp/roman-$RELEASE --host=i386-mingw32
+#   make
+#   make install
+#   make distclean
+#   ../roman/configure	--prefix=/tmp/roman-$RELEASE --disable-shared \
+#			--bindir=/tmp/roman-$RELEASE --host=i386-mingw32
+#   make
+#   make windist
+#   rm -fR /tmp/roman-$RELEASE/share
+#   cd /tmp
+#   zip -r roman-$RELEASE.zip roman-$RELEASE
+#   
 windist: Makefile
 	make dist-zip
+	make txtdocs
 	make install
+	cp -R $(builddir)/doc/txt                  $(DESTDIR)/$(prefix)/docs
 	cp @PACKAGE_TARNAME@-@PACKAGE_VERSION@.zip $(DESTDIR)/$(prefix)/
 	cp $(srcdir)/ChangeLog                     $(DESTDIR)/$(prefix)/ChangeLog.txt
 	cp $(srcdir)/COPYING                       $(DESTDIR)/$(prefix)/COPYING.txt

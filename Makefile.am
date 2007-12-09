@@ -38,10 +38,11 @@ AM_CPPFLAGS				= -I$(top_srcdir)/include
 
 # automake targets
 bin_PROGRAMS				= src/romannum src/romandate
+check_PROGRAMS				= tests/check_roman2long \
+					  tests/check_long2roman
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
-man_MANS				= \
-					  doc/long2roman.3 \
+man_MANS				= doc/long2roman.3 \
 					  doc/long2roman_r.3 \
 					  doc/roman.7 \
 					  doc/roman2long.3 \
@@ -97,8 +98,16 @@ src_romandate_SOURCES			= $(include_HEADERS) \
 					  src/roman_charts.h \
 					  src/romandate.c
 
+# macros for tests/long2roman
+tests_check_long2roman_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_long2roman_LDADD		= $(AM_LDADD)
 
-TESTS					=
+# macros for tests/roman2long
+tests_check_roman2long_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2long_LDADD		= $(AM_LDADD)
+
+
+TESTS					= $(check_PROGRAMS)
 XFAIL_TESTS				=
 EXTRA_DIST				= \
 					  doc/long2roman.3.in \

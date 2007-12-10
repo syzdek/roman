@@ -7,10 +7,10 @@ Contents
 ========
    I. Introduction
   II. Reporting Problems
-  II. Roman Numerals
- III. Obtaining the Source
-  IV. Compiling and Installing
-   V. Programming Examples
+ III. Roman Numerals
+  IV. Obtaining the Source
+   V. Compiling and Installing
+  VI. Programming Examples
 
 
 I. Introduction
@@ -42,8 +42,8 @@ request to:
 	</a>
 
 
-II. Roman Numerals
-------------------
+III. Roman Numerals
+-------------------
 
 A simple chart is included below showing the values for Roman Numeral symbols. This
 chart is also included in the `romannum' command and in the roman.7 man page.
@@ -72,8 +72,8 @@ More information on Roman Numerals can be found on the following web sites:
 	http://www.novaroma.org/via_romana/numbers.html
 
 
-III. Obtaining the Source
--------------------------
+IV. Obtaining the Source
+------------------------
 
 This project is hosted on SourceForge.  The source code can be downloaded from the
 following web page:
@@ -92,8 +92,8 @@ This should create a directory called `roman' which contains the latest
 development source.
 
 
-IV. Compiling and Installing
-----------------------------
+V. Compiling and Installing
+---------------------------
 
 This project uses GNU Autoconf, GNU Automake, and GNU Libtool in order to ease
 porting source across multiple platforms.  As of this writing the source was 
@@ -133,8 +133,8 @@ an error in how I generate Windows libraries, please let me know and I will
 try to correct it in the next release.
 
 
-V. Programming Examples
------------------------
+VI. Programming Examples
+------------------------
 
 The first example demonstrates generating Roman Numeral strings from an integer:
 

@@ -85,10 +85,27 @@
 #endif
 
 
-/* parameters used by library */
+/* length of buffers used by library */
 #undef  ROMAN_BUFF_LEN
-#define ROMAN_BUFF_LEN 512
+#define ROMAN_BUFF_LEN		512
 
+
+/* largest value that can be encoded by library */
+#undef ROMAN_NUMERAL_MAX
+#define ROMAN_NUMERAL_MAX	5000
+
+/*
+ *  smallest value that can be encoded by library
+ *
+ *  Notes:
+ *     ROMAN_NUMERAL_MIN should not be set to a negative number (although the
+ *     library can handle negative numbers). This behavior is consistent with
+ *     roman2long() which uses a negative number to represent an error. The
+ *     library should not decode a string it is incapable of encoding.
+ *        --David Syzdek 2007/12/11
+ */
+#undef ROMAN_NUMERAL_MIN
+#define ROMAN_NUMERAL_MIN	0
 
 ///////////////
 //           //

@@ -90,14 +90,16 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
    unsigned dividend;
 
    /* checks arguments */
-   if ((num > 5000) || (num < 0))
-   {
-      errno = EDOM;
-      return(NULL);
-   };
    if (! str)
    {
       errno = EFAULT;
+      return(NULL);
+   };
+
+   /* verify that number is withing boundaries */
+   if ((num > ROMAN_NUMERAL_MAX) || (num < ROMAN_NUMERAL_MIN))
+   {
+      errno = EDOM;
       return(NULL);
    };
 

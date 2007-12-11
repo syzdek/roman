@@ -26,14 +26,14 @@
 #define _ROMAN_LIB_LIBROMAN_C 1
 #include "libroman.h"
 
-/* buffer for storing Latin time */
+/* internal buffer used by roman_asctime() */
 char roman_asctime_string[ROMAN_BUFF_LEN];
 
-/* buffer for storing Latin time */
+/* internal buffer used by roman_ctime() */
 char roman_ctime_string[ROMAN_BUFF_LEN];
 
-/* buffer for storing conversions */
-char roman_string[ROMAN_BUFF_LEN];
+/* internal buffer used by long2roman() */
+char long2roman_string[ROMAN_BUFF_LEN];
 
 /* Latin days of the week */
 static const char * roman_var_wday[] =
@@ -77,7 +77,7 @@ static const char * roman_var_mon[] =
 ROMAN_F(const char *) long2roman(int num)
 {
    /* wrap long2roman_r() with library buffer */
-   return(long2roman_r(num, roman_string, ROMAN_BUFF_LEN));
+   return(long2roman_r(num, long2roman_string, ROMAN_BUFF_LEN));
 }
 
 

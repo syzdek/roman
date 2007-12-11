@@ -19,6 +19,8 @@
 	  to match the purpose of the function. Some of the comments had been
 	  copied and pasted when creating new functions without having the
 	  comments updated. (syzdek)
+	- updated comments of global variables to better describe the purpose
+	  of the variable (syzdek)
 	- Moved missing errno declarations required to compile libroman.la
 	  from include/roman.h to lib/libroman.h (syzdek)
 

@@ -63,11 +63,11 @@
 //              //
 //////////////////
 
-/* returns string containing the date in Latin */
+/* processes a roman_strftime format operand */
 size_t roman_strftime_char PARAMS((char * s, size_t len, int c,
 	const struct tm * tm));
 
-/* returns string containing the date in Latin */
+/* processes roman_strftime format operand which expands to multiple operands */
 size_t roman_strftime_str PARAMS((char * str, size_t str_len,
 	const char * fmt, const struct tm * tm));
 

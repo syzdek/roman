@@ -51,6 +51,12 @@
 
 #include <roman.h>
 
+
+/* reuired errno values */
+#ifndef ENOBUFS
+#define ENOBUFS ENOMEM
+#endif
+
 //////////////////
 //              //
 //  Prototypes  //

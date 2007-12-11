@@ -23,6 +23,7 @@
 	  of the variable (syzdek)
 	- Moved missing errno declarations required to compile libroman.la
 	  from include/roman.h to lib/libroman.h (syzdek)
+	- arranged functions so that they are in alphabetical order (syzdek)
 
 0.0.3
 	- fixed error checking in long2roman().  The previous version would
@@ -39,7 +40,7 @@
 	  roman_ctime_r, and roman_strftime() to library (syzdek)
 	- re-wrote long2roman() to use long2roman_r() (syzdek)
 	- changed input variable for long2roman() from 'unsigned' to 'signed'
-	  so that negative numers do not produce an error (syzdek)
+	  so that negative numbers do not produce an error (syzdek)
 	- re-wrote roman_ctime() to use roman_strftime() (syzdek)
 	- updated "romandate" to use roman_strftime() (syzdek) 
 	- updated "romandate" to accept custom format strings displaying the
@@ -48,7 +49,7 @@
 	- moved Roman numeral chart array from library source to utility
 	  source hoping it helps the MinGW32 cross compiled binaries (syzdek)
 	- improved Roman Numeral checking by disallowing the use of the
-	  addition and substraction method using the symbol [Example: XCX == C
+	  addition and subtraction method using the symbol [Example: XCX == C
 	  or IXI == X] and disallowing duplicate V, L, and D symbols in the
 	  same Roman Numeral [Example: VV == X or LL == 100] (syzdek)
 	- functions now return error conditions using errno (syzdek)

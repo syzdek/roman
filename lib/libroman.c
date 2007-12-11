@@ -488,61 +488,6 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
 }
 
 
-/* processes roman_strftime format operand which expands to multiple operands */
-size_t roman_strftime_str(char * str, size_t str_len,
-	const char * fmt, const struct tm * tm)
-{
-   /* declares local vars */
-   unsigned     str_add;
-   unsigned     str_pos;
-   unsigned     fmt_pos;
-   unsigned     fmt_len;
-
-   /* checks arguments */
-   if ((! str) || (! fmt) || (! tm))
-   {
-      errno = EFAULT;
-      return(0);
-   };
-
-   /* initialize values */   
-   str_pos = 0;
-   fmt_pos = 0;
-   fmt_len = strlen(fmt);
-
-   /* loops through format */
-   while((fmt_pos < fmt_len) && (str_pos < str_len))
-   {
-      if (fmt[fmt_pos] != '%')
-      {
-         str[str_pos] = fmt[fmt_pos];
-         str_add = 1;
-         fmt_pos++;
-      } else {
-         str_add = roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
-         fmt_pos += 2;
-      };
-      if (!(str_add))
-         return(0);
-      str_pos += str_add;
-   };
-
-   /* checks for buffer length */
-   if ((str_pos > str_len) || (fmt_pos < fmt_len))
-   {
-      str[0] = '\0';
-      errno  = ENOBUFS;
-      return(0);
-      str[str_pos] = '\0';
-   };
-
-   str[str_pos] = '\0';
-
-   /* ends function */
-   return(str_pos);
-}
-
-
 /* processes a roman_strftime format operand */
 size_t roman_strftime_char(char * s, size_t len, int c,
         const struct tm * tm)
@@ -788,6 +733,61 @@ size_t roman_strftime_char(char * s, size_t len, int c,
 
    /* ends function */
    return(pos);
+}
+
+
+/* processes roman_strftime format operand which expands to multiple operands */
+size_t roman_strftime_str(char * str, size_t str_len,
+        const char * fmt, const struct tm * tm)
+{
+   /* declares local vars */
+   unsigned     str_add;
+   unsigned     str_pos;
+   unsigned     fmt_pos;
+   unsigned     fmt_len;
+
+   /* checks arguments */
+   if ((! str) || (! fmt) || (! tm))
+   {
+      errno = EFAULT;
+      return(0);
+   };
+
+   /* initialize values */
+   str_pos = 0;
+   fmt_pos = 0;
+   fmt_len = strlen(fmt);
+
+   /* loops through format */
+   while((fmt_pos < fmt_len) && (str_pos < str_len))
+   {
+      if (fmt[fmt_pos] != '%')
+      {
+         str[str_pos] = fmt[fmt_pos];
+         str_add = 1;
+         fmt_pos++;
+      } else {
+         str_add = roman_strftime_char(&str[str_pos], (str_len-str_pos), fmt[fmt_pos+1], tm);
+         fmt_pos += 2;
+      };
+      if (!(str_add))
+         return(0);
+      str_pos += str_add;
+   };
+
+   /* checks for buffer length */
+   if ((str_pos > str_len) || (fmt_pos < fmt_len))
+   {
+      str[0] = '\0';
+      errno  = ENOBUFS;
+      return(0);
+      str[str_pos] = '\0';
+   };
+
+   str[str_pos] = '\0';
+
+   /* ends function */
+   return(str_pos);
 }
 
 /* end of source file */

@@ -14,6 +14,14 @@
 #   ChangeLog - list of changes made to each revision
 #
 
+0.0.4
+	- updated comments of function declarations and function prototypes
+	  to match the purpose of the function. Some of the comments had been
+	  copied and pasted when creating new functions without having the
+	  comments updated. (syzdek)
+	- Moved missing errno declarations required to compile libroman.la
+	  from include/roman.h to lib/libroman.h (syzdek)
+
 0.0.3
 	- fixed error checking in long2roman().  The previous version would
 	  allow a number line MIMM, XIXX, CXCC.  However the following would

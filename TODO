@@ -23,6 +23,8 @@
 	  SUSv3 date command (syzdek)
 	- write `du' utility that outputs data in Roman Numerals (syzdek)
 	- write `romancalc' utility that acts as a calculator (syzdek)
+	- rename roman2long(), long2roman(), and long2roman_r() to more
+	  appropiate name since the use "int" not "long" (syzdek)
 
 Abbr:
 	SUSv3	- The Single Unix Specification Version 3

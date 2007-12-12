@@ -40,6 +40,7 @@ AM_CPPFLAGS				= -I$(top_srcdir)/include
 bin_PROGRAMS				= src/romannum src/romandate
 check_PROGRAMS				= tests/check_roman2long \
 					  tests/check_long2roman
+noinst_DATA				= lib/libroman.def lib/libroman.sym
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
 man_MANS				= doc/long2roman.3 \
@@ -57,19 +58,18 @@ man_MANS				= doc/long2roman.3 \
 
 
 # macros for lib/libroman.la
-lib_libroman_la_DEPENDENCIES		= lib/libroman.sym Makefile
+lib_libroman_la_DEPENDENCIES		= lib/libroman.def lib/libroman.sym Makefile
 lib_libroman_la_CFLAGS			= $(AM_CFLAGS)
 lib_libroman_la_LIBADD			= $(AM_LIBS)
-lib_libroman_la_LDFLAGS			= \
-                                          $(AM_LDFLAGS) \
+lib_libroman_la_LDFLAGS			= $(AM_LDFLAGS) \
                                           -rpath '$(libdir)' \
 					  -no-undefined
-lib_libroman_la_SOURCES			= \
-					  $(include_HEADERS) \
+lib_libroman_la_SOURCES			= $(include_HEADERS) \
 					  lib/libroman.c \
 					  lib/libroman.h
 if WIN32
-lib_libroman_la_LDFLAGS			+= -release @PACKAGE_VERSION@
+lib_libroman_la_LDFLAGS			+= -release @LIB_RELEASE_INFO@
+lib_libroman_la_LDFLAGS			+= -export-symbols $(builddir)/lib/libroman.def
 else
 lib_libroman_la_LDFLAGS			+= -export-symbols $(srcdir)/lib/libroman.sym
 lib_libroman_la_LDFLAGS			+= -version-info @LIB_VERSION_INFO@
@@ -141,6 +141,7 @@ CLEANFILES				= \
 					  doc/roman_strftime.3 \
 					  doc/romandate.1 \
 					  doc/romannum.1 \
+					  lib/libroman.def \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.zip
 
@@ -182,6 +183,9 @@ doc/romandate.1: Makefile doc/romandate.1.in
 	@$(do_subst_fn)
 
 doc/romannum.1: Makefile doc/romannum.1.in
+	@$(do_subst_fn)
+
+lib/libroman.def: Makefile lib/libroman.def.in
 	@$(do_subst_fn)
 
 htmldocs: Makefile $(man_MANS)

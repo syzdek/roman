@@ -128,8 +128,7 @@ BEGIN_C_DECLS
 ROMAN_F(const char *) long2roman PARAMS((int num));
 
 /* encodes number as a string with Roman numerals using external buffer */
-ROMAN_F(char *) long2roman_r PARAMS((int num, char * str,
-	size_t len));
+ROMAN_F(char *) long2roman_r PARAMS((int num, char * str, size_t len));
 
 /* converts Roman numeral string to integer */
 ROMAN_F(int) roman2long PARAMS((const char * str));

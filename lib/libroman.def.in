@@ -20,10 +20,16 @@
 ;
 ;   lib/libroman.def - Export directives for Visual Studio 6.0
 ;
-LIBRARY		libroman
+LIBRARY		libroman-@LIB_RELEASE_INFO@
 DESCRIPTION	"Roman Numeral Conversion Functions"
 EXPORTS
 		; Explicit exports can go here
 		long2roman
+		long2roman_r
 		roman2long
+		roman_asctime
+		roman_asctime_r
+		roman_ctime
+		roman_ctime_r
+		roman_strftime
 ; end of symbol def file

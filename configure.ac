@@ -43,6 +43,7 @@ AC_SUBST([RELEASE_MONTH],["December 2007"])
 #                  this implementation
 # Format => Current:Revision:Age
 AC_SUBST(LIB_VERSION_INFO, 1:0:0)
+AC_SUBST(LIB_RELEASE_INFO, 1-0-0) # used by Win32 DLLs
 
 AC_CONFIG_AUX_DIR([gnu])
 AC_CONFIG_SRCDIR([.])

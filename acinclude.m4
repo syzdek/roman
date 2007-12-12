@@ -91,7 +91,7 @@ AC_DEFUN([AC_ROMAN_ENABLE_WARNINGS],[dnl
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wparentheses"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wreturn-type"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wswitch"
-      #ac_roman_warnings_list="${ac_roman_warnings_list} -Wswitch-default"   # for some reason any call to memset() fails with this flag
+      ac_roman_warnings_list="${ac_roman_warnings_list} -Wswitch-default"   # for some reason any call to memset() fails with this flag
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wtrigraphs"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wunused"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wunknown-pragmas"
@@ -114,7 +114,7 @@ AC_DEFUN([AC_ROMAN_ENABLE_WARNINGS],[dnl
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wmissing-prototypes"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wmissing-declarations"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wmissing-noreturn"
-      #ac_roman_warnings_list="${ac_roman_warnings_list} -Wmissing-format-attribute" # vprintf is failing this warning
+      ac_roman_warnings_list="${ac_roman_warnings_list} -Wmissing-format-attribute" # vprintf is failing this warning
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wredundant-decls"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Wunreachable-code"
       ac_roman_warnings_list="${ac_roman_warnings_list} -Winvalid-pch"

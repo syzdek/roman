@@ -22,6 +22,24 @@
 /*
  *  src/romannum.c - utility for convertingi to/from Roman Numerals
  */
+/*
+ *  Simple Build:
+ *     gcc -Wall -c romannum.c
+ *     gcc -Wall -c roman_charts.c
+ *     gcc -Wall -o romannum romannum.o roman_charts.o
+ *
+ *  Libtool Build:
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c romannum.c
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c roman_charts.c
+ *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o romannum \
+ *             romannum.o roman_charts.o -lroman
+ *
+ *  Libtool Install:
+ *     libtool --mode=install install -c romannum /usr/local/bin/romannum
+ *
+ *  Libtool Clean:
+ *     libtool --mode=clean rm -f romannum.lo roman_charts.lo romannum
+ */
 #define _ROMAN_SRC_ROMANNUM_C 1
 
 ///////////////
@@ -125,11 +143,12 @@ int main(int argc, char * argv[])
 MyConfig * my_cmdline(int argc, char *argv[])
 {
    /* declares local vars */
+   int        i;
    int        c;
    int        option_index;
    MyConfig * cnf;
 
-   static char   short_options[] = "a:cr:hvV";
+   static char   short_options[] = "chvV";
    static struct option long_options[] =
    {
       {"help",		no_argument, 0, 'h'},
@@ -159,16 +178,6 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case -1:       /* no more arguments */
          case 0:        /* long option toggles */
             break;
-         case 'a':
-            cnf->num = atol(optarg);
-            if (cnf->num < 0)
-            {
-               fprintf(stderr, "%s: Roman numerals must be positive\n", PROGRAM_NAME);
-               fprintf(stderr, "Try `%s --chart' for more information.\n", PROGRAM_NAME);
-               free(cnf);
-               return(NULL);
-            };
-            break;
          case 'h':
             my_usage();
             free(cnf);
@@ -177,9 +186,6 @@ MyConfig * my_cmdline(int argc, char *argv[])
             my_roman_numeral_chart();
             free(cnf);
             return(NULL);
-         case 'r':
-            cnf->rom = optarg;
-            break;
          case 'V':
             my_version();
             free(cnf);
@@ -196,20 +202,31 @@ MyConfig * my_cmdline(int argc, char *argv[])
       };
    };
 
-   /* checks arguments */
-   if ( (cnf->rom) && (cnf->num != -1) )
-   {
-      fprintf(stderr, "%s: incompatible arguments `-r' and `-n'\n", PROGRAM_NAME);
-      fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
-      free(cnf);
-      return(NULL);
-   };
-   if ( (!(cnf->rom)) && (cnf->num == -1) )
+   /* checks for number to convert */
+   if ((optind + 1) != argc)
    {
       fprintf(stderr, "%s: missing required arguments\n", PROGRAM_NAME);
       fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
       free(cnf);
       return(NULL);
+   };
+
+   /* determine type of number */
+   for(i = 0; i < (int) strlen(argv[optind]); i++)
+      if ( ((argv[optind][i] < '0') || (argv[optind][i] > '9')) && (argv[optind][i] != '-') )
+         cnf->rom = argv[optind];
+
+   /* assume the number is arabic if string contains only */
+   if (!(cnf->rom))
+   {
+      cnf->num = atol(argv[optind]);
+      if (cnf->num < 0)
+      {
+         fprintf(stderr, "%s: Roman numerals must be positive\n", PROGRAM_NAME);
+         fprintf(stderr, "Try `%s --chart' for more information.\n", PROGRAM_NAME);
+         free(cnf);
+         return(NULL);
+      };
    };
 
    /* ends function */
@@ -220,9 +237,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
 /* displays usage */
 void my_usage(void)
 {
-   printf("Usage: %s [OPTIONS]\n", PROGRAM_NAME);
-   printf("  -a arabic                 convert Arabic numerals to Roman numerals\n");
-   printf("  -r roman                  convert Roman numerals to Arabic numerals\n");
+   printf("Usage: %s [OPTIONS] number\n", PROGRAM_NAME);
    printf("  -c, --chart               print table of the Roman numeral symbols and exit\n");
    printf("  -h, --help                print this help and exit\n");
    printf("  -V, --version             print version number and exit\n");

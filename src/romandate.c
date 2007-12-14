@@ -22,6 +22,24 @@
 /*
  *  src/romandate.c - utility for displaying the date in Latin
  */
+/*
+ *  Simple Build:
+ *     gcc -Wall -c romandate.c
+ *     gcc -Wall -c roman_charts.c
+ *     gcc -Wall -o romandate romandate.o roman_charts.o
+ *
+ *  Libtool Build:
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c romandate.c
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c roman_charts.c
+ *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o romandate \
+ *             romandate.o roman_charts.o -lroman
+ *
+ *  Libtool Install:
+ *     libtool --mode=install install -c romandate /usr/local/bin/romandate
+ *
+ *  Libtool Clean:
+ *     libtool --mode=clean rm -f romandate.lo roman_charts.lo romandate
+ */
 #define _ROMAN_SRC_ROMANDATE_C 1
 
 ///////////////

@@ -42,8 +42,8 @@ AC_SUBST([RELEASE_MONTH],["December 2007"])
 #    Age        -- How many seqential past API versions is supported by
 #                  this implementation
 # Format => Current:Revision:Age
-AC_SUBST(LIB_VERSION_INFO, 1:0:0)
-AC_SUBST(LIB_RELEASE_INFO, 1-0-0) # used by Win32 DLLs
+AC_SUBST(LIB_VERSION_INFO, 2:0:1)
+AC_SUBST(LIB_RELEASE_INFO, 2) # used by Win32 DLLs
 
 AC_CONFIG_AUX_DIR([gnu])
 AC_CONFIG_SRCDIR([.])

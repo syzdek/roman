@@ -127,7 +127,7 @@ EXTRA_DIST				= \
 					  examples/roman_asctime.c \
 					  examples/roman_ctime.c \
 					  examples/roman_strftime.c \
-					  lib/libroman.def \
+					  lib/libroman.def.in \
 					  lib/libroman.sym 
 CLEANFILES				= \
 					  a.out \

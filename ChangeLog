@@ -28,8 +28,11 @@
 	- enabled additional GCC warnings with strict warnings (syzdek)
 	- updated romannum to automatically determine which conversion to
 	  perform on the specified number (syzdek)
-	- updated LIB_VERSION_INFO to 2:0:1 to accomadate changes to
+	- updated LIB_VERSION_INFO to 2:0:1 to accommodate changes to
 	  libroman.la (syzdek)
+	- replaced functions long2roman, long2roman_r, and roman2long with
+	  int2roman, int2roman_r, roman2int to make function names more
+	  accurate (syzdek)
 
 0.0.3
 	- fixed error checking in long2roman().  The previous version would

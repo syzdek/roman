@@ -64,11 +64,12 @@
 //////////////////
 
 /* processes a roman_strftime format operand */
-size_t roman_strftime_char PARAMS((char * s, size_t len, int c,
-	const struct tm * tm));
+ROMAN_L(size_t) roman_strftime_char PARAMS((char * s, size_t len, int c,
+	const struct tm * tm)) __attribute__ ((always_inline));
 
 /* processes roman_strftime format operand which expands to multiple operands */
-size_t roman_strftime_str PARAMS((char * str, size_t str_len,
-	const char * fmt, const struct tm * tm));
+ROMAN_L(size_t) roman_strftime_str PARAMS((char * str, size_t str_len,
+	const char * fmt, const struct tm * tm))
+	__attribute__ ((always_inline));
 
 #endif /* end of header file */

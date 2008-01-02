@@ -38,8 +38,11 @@
 # variables
 #
 # functions
+int2roman
+int2roman_r
 long2roman
 long2roman_r
+roman2int
 roman2long
 roman_asctime
 roman_asctime_r

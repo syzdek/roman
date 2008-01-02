@@ -27,13 +27,13 @@
 #include "libroman.h"
 
 /* internal buffer used by roman_asctime() */
-char roman_asctime_string[ROMAN_BUFF_LEN];
+static char roman_var_asctime[ROMAN_BUFF_LEN];
 
 /* internal buffer used by roman_ctime() */
-char roman_ctime_string[ROMAN_BUFF_LEN];
+static char roman_var_ctime[ROMAN_BUFF_LEN];
 
-/* internal buffer used by long2roman() */
-char long2roman_string[ROMAN_BUFF_LEN];
+/* internal buffer used by int2roman() */
+static char roman_var_int2roman[ROMAN_BUFF_LEN];
 
 /* Latin days of the week */
 static const char * roman_var_wday[] =
@@ -47,7 +47,6 @@ static const char * roman_var_wday[] =
    "Saturni",
    NULL
 };
-
 
 /* Latin months of the year */
 static const char * roman_var_mon[] =
@@ -74,15 +73,15 @@ static const char * roman_var_mon[] =
 /////////////////
 
 /* encodes number as a string with Roman numerals */
-ROMAN_F(const char *) long2roman(int num)
+ROMAN_F(const char *) int2roman(int num)
 {
-   /* wrap long2roman_r() with library buffer */
-   return(long2roman_r(num, long2roman_string, ROMAN_BUFF_LEN));
+   /* wrap int2roman_r() with library buffer */
+   return(int2roman_r(num, roman_var_int2roman, ROMAN_BUFF_LEN));
 }
 
 
 /* encodes number as a string with Roman numerals using external buffer */
-ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
+ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
 {
    /* local variables */
    unsigned pos;
@@ -239,8 +238,26 @@ ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
 }
 
 
+/* deprecated in v0.0.4 in favor of int2roman */
+/* encodes number as a string with Roman numerals */
+ROMAN_F(const char *) long2roman(int num)
+{
+   /* wrap int2roman_r() with library buffer */
+   return(int2roman_r(num, roman_var_int2roman, ROMAN_BUFF_LEN));
+}
+
+
+/* deprecated in v0.0.4 in favor of int2roman_r */
+/* encodes number as a string with Roman numerals using external buffer */
+ROMAN_F(char *) long2roman_r(int num, char * str, size_t len)
+{
+   /* wrap int2roman_r() with library buffer */
+   return(int2roman_r(num, str, len));
+}
+
+
 /* converts Roman numeral string to integer */
-ROMAN_F(int) roman2long(const char * str)
+ROMAN_F(int) roman2int(const char * str)
 {
    /* declares local vars */
    int      num;
@@ -375,10 +392,17 @@ ROMAN_F(int) roman2long(const char * str)
 }
 
 
+/* converts Roman numeral string to integer */
+ROMAN_F(int) roman2long(const char * str)
+{
+   return(roman2int(str));
+}
+
+
 /* encodes broken-out time as Roman numerals and Latin */
 ROMAN_F(const char *) roman_asctime(const struct tm * tm)
 {
-   return(roman_asctime_r(tm, roman_asctime_string, ROMAN_BUFF_LEN));
+   return(roman_asctime_r(tm, roman_var_asctime, ROMAN_BUFF_LEN));
 }
 
 
@@ -394,7 +418,7 @@ ROMAN_F(char *) roman_asctime_r(const struct tm * tm, char * buff, size_t len)
 /* encodes time as  Roman numerals and Latin */
 ROMAN_F(const char *) roman_ctime(const time_t * tp)
 {
-   return(roman_ctime_r(tp, roman_ctime_string, ROMAN_BUFF_LEN));
+   return(roman_ctime_r(tp, roman_var_ctime, ROMAN_BUFF_LEN));
 }
 
 
@@ -491,7 +515,7 @@ ROMAN_F(size_t) roman_strftime(char * str, size_t str_len, const char * fmt,
 
 
 /* processes a roman_strftime format operand */
-size_t roman_strftime_char(char * s, size_t len, int c,
+ROMAN_L(size_t) roman_strftime_char(char * s, size_t len, int c,
         const struct tm * tm)
 {
    /* declares local vars */
@@ -562,33 +586,33 @@ size_t roman_strftime_char(char * s, size_t len, int c,
        */
       case 'C':
          i = (tm->tm_year+1900) / 100;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the day of the month as a decimal number */
       case 'd':
-         pos = strlen(ptr = long2roman_r(tm->tm_mday, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_mday, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the day of the month as a decimal number */
       case 'e':
-         pos = strlen(ptr = long2roman_r(tm->tm_mday, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_mday, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the last 2 digits of the week-based year */
       case 'g':
          i = tm->tm_year % 100;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the week-based year as a decimal number */
       case 'G':
-         pos = strlen(ptr = long2roman_r(tm->tm_year, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_year, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the hour (24-hour clock) as a decimal number */
       case 'H':
-         pos = strlen((ptr = long2roman_r(tm->tm_hour, buff, ROMAN_BUFF_LEN)));
+         pos = strlen((ptr = int2roman_r(tm->tm_hour, buff, ROMAN_BUFF_LEN)));
          break;
 
       /* Replaced by the hour (12-hour clock) as a decimal number */
@@ -599,24 +623,24 @@ size_t roman_strftime_char(char * s, size_t len, int c,
             i = 12;
          else
             i = tm->tm_hour;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the day of the year as a decimal number [001,366] */
       case 'j':
          i = tm->tm_yday + 1;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the month as a decimal number */
       case 'm':
          i = tm->tm_mon + 1;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the minute as a decimal number */
       case 'M':
-         pos = strlen(ptr = long2roman_r(tm->tm_min, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_min, buff, ROMAN_BUFF_LEN));
          break;
 
       /* replaced by new line */
@@ -640,12 +664,12 @@ size_t roman_strftime_char(char * s, size_t len, int c,
 
 //      /* seconds since Jan 1, 1970 */
 //      case 's':
-//         pos = strlen(ptr = long2roman_r(mktime(tm), buff, ROMAN_BUFF_LEN));
+//         pos = strlen(ptr = int2roman_r(mktime(tm), buff, ROMAN_BUFF_LEN));
 //         break;
 
       /* Replaced by the second */
       case 'S':
-         pos = strlen(ptr = long2roman_r(tm->tm_sec, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_sec, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by a <tab>. */
@@ -656,15 +680,15 @@ size_t roman_strftime_char(char * s, size_t len, int c,
       /* replaced by the weekday as a number */
       case 'u':
          if (!(tm->tm_wday))
-            pos = strlen(ptr = long2roman_r(7, buff, ROMAN_BUFF_LEN));
+            pos = strlen(ptr = int2roman_r(7, buff, ROMAN_BUFF_LEN));
          else
-            pos = strlen(ptr = long2roman_r(tm->tm_wday, buff, ROMAN_BUFF_LEN));
+            pos = strlen(ptr = int2roman_r(tm->tm_wday, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the week number of the year */
 //      case 'U':
 //         i = (tm->tm_yday - tm->tm_wday + 1)/7;
-//         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+//         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
 //         break;
 
 //      /* Replaced by the week number of the year */
@@ -673,7 +697,7 @@ size_t roman_strftime_char(char * s, size_t len, int c,
 
       /* Replaced by the weekday as a decimal number [0,6] */
       case 'w':
-         pos = strlen(ptr = long2roman_r(tm->tm_wday, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(tm->tm_wday, buff, ROMAN_BUFF_LEN));
          break;
 
 //        /* Replaced by the week number of the year */
@@ -683,13 +707,13 @@ size_t roman_strftime_char(char * s, size_t len, int c,
       /* Replaced by the last two digits of the year */
       case 'y':
          i = tm->tm_year % 100;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       /* Replaced by the year as a decimal number */
       case 'Y':
          i = tm->tm_year + 1900;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          break;
 
       case 'z':
@@ -697,7 +721,7 @@ size_t roman_strftime_char(char * s, size_t len, int c,
          i = tm->tm_gmtoff / 60;
          if (tm->tm_gmtoff < 0)
             i *= -1;
-         pos = strlen(ptr = long2roman_r(i, buff, ROMAN_BUFF_LEN));
+         pos = strlen(ptr = int2roman_r(i, buff, ROMAN_BUFF_LEN));
          if (tm->tm_gmtoff < 0)
          {
             buff[strlen(buff)+1] = '\0';
@@ -739,7 +763,7 @@ size_t roman_strftime_char(char * s, size_t len, int c,
 
 
 /* processes roman_strftime format operand which expands to multiple operands */
-size_t roman_strftime_str(char * str, size_t str_len,
+ROMAN_L(size_t) roman_strftime_str(char * str, size_t str_len,
         const char * fmt, const struct tm * tm)
 {
    /* declares local vars */

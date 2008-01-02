@@ -33,6 +33,9 @@ AM_LIBS					=
 AM_LDADD				= lib/libroman.la
 AM_LDFLAGS				= -L$(top_builddir)/lib
 AM_CFLAGS                               = @CFLAGS_WARNINGS@
+if ! WIN32
+AM_CFLAGS				+= -fvisibility=hidden
+endif
 AM_CPPFLAGS				= -I$(top_srcdir)/include
 
 
@@ -43,9 +46,12 @@ check_PROGRAMS				= tests/check_roman2long \
 noinst_DATA				= lib/libroman.def lib/libroman.sym
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
-man_MANS				= doc/long2roman.3 \
+man_MANS				= doc/int2roman.3 \
+					  doc/int2roman_r.3 \
+					  doc/long2roman.3 \
 					  doc/long2roman_r.3 \
 					  doc/roman.7 \
+					  doc/roman2int.3 \
 					  doc/roman2long.3 \
 					  doc/roman_asctime.3 \
 					  doc/roman_asctime_r.3 \
@@ -134,9 +140,9 @@ CLEANFILES				= \
 					  $(srcdir)/a.out \
 					  config.h.in~ \
 					  $(srcdir)/config.h.in~ \
-					  doc/long2roman.3 \
+					  doc/int2roman.3 \
 					  doc/roman.7 \
-					  doc/roman2long.3 \
+					  doc/roman2int.3 \
 					  doc/roman_ctime.3 \
 					  doc/roman_strftime.3 \
 					  doc/romandate.1 \
@@ -164,13 +170,13 @@ do_subst_fn = \
 
 
 # custom targets
-doc/long2roman.3: Makefile doc/long2roman.3.in
+doc/int2roman.3: Makefile doc/int2roman.3.in
 	@$(do_subst_fn)
 
 doc/roman.7: Makefile doc/roman.7.in
 	@$(do_subst_fn)
 
-doc/roman2long.3: Makefile doc/roman2long.3.in
+doc/roman2int.3: Makefile doc/roman2int.3.in
 	@$(do_subst_fn)
 
 doc/roman_ctime.3: Makefile doc/roman_ctime.3.in

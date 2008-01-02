@@ -117,5 +117,9 @@ AC_MSG_NOTICE([ ])
 AC_MSG_NOTICE([   Use Warnings                  $USE_WARNINGS])
 AC_MSG_NOTICE([   Use Strict Warnings           $USE_STRICTWARNINGS])
 AC_MSG_NOTICE([ ])
+AC_MSG_NOTICE([   Please send suggestions to:   $PACKAGE_BUGREPORT])
+AC_MSG_NOTICE([ ])
 AC_MSG_NOTICE([   run `make all'])
 AC_MSG_NOTICE([ ])
+
+# end of autoconf script

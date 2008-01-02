@@ -26,8 +26,11 @@ LIBRARY		libroman-@LIB_RELEASE_INFO@
 DESCRIPTION	"Roman Numeral Conversion Functions"
 EXPORTS
 		; Explicit exports can go here
+		int2roman
+		int2roman_r
 		long2roman
 		long2roman_r
+		roman2int
 		roman2long
 		roman_asctime
 		roman_asctime_r

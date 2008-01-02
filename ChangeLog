@@ -23,7 +23,13 @@
 	  of the variable (syzdek)
 	- Moved missing errno declarations required to compile libroman.la
 	  from include/roman.h to lib/libroman.h (syzdek)
-	- arranged functions so that they are in alphabetical order (syzdek)
+	- arranged functions lib/libroman.c so that they are in alphabetical
+	  order (syzdek)
+	- enabled additional GCC warnings with strict warnings (syzdek)
+	- updated romannum to automatically determine which conversion to
+	  perform on the specified number (syzdek)
+	- updated LIB_VERSION_INFO to 2:0:1 to accomadate changes to
+	  libroman.la (syzdek)
 
 0.0.3
 	- fixed error checking in long2roman().  The previous version would

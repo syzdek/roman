@@ -33,16 +33,13 @@ AM_LIBS					=
 AM_LDADD				= lib/libroman.la
 AM_LDFLAGS				= -L$(top_builddir)/lib
 AM_CFLAGS                               = @CFLAGS_WARNINGS@
-if ! WIN32
-AM_CFLAGS				+= -fvisibility=hidden
-endif
 AM_CPPFLAGS				= -I$(top_srcdir)/include
 
 
 # automake targets
 bin_PROGRAMS				= src/romannum src/romandate
-check_PROGRAMS				= tests/check_roman2long \
-					  tests/check_long2roman
+check_PROGRAMS				= tests/check_roman2int \
+					  tests/check_int2roman
 noinst_DATA				= lib/libroman.def lib/libroman.sym
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
@@ -105,21 +102,23 @@ src_romandate_SOURCES			= $(include_HEADERS) \
 					  src/romandate.c
 
 # macros for tests/long2roman
-tests_check_long2roman_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_long2roman_LDADD		= $(AM_LDADD)
+tests_check_int2roman_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_int2roman_LDADD		= $(AM_LDADD)
 
 # macros for tests/roman2long
-tests_check_roman2long_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2long_LDADD		= $(AM_LDADD)
+tests_check_roman2int_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_LDADD		= $(AM_LDADD)
 
 
 TESTS					= $(check_PROGRAMS)
 XFAIL_TESTS				=
-EXTRA_DIST				= \
-					  doc/long2roman.3.in \
+EXTRA_DIST				= doc/int2roman.3.in \
+					  doc/int2roman_r.3 \
+					  doc/long2roman.3 \
 					  doc/long2roman_r.3 \
 					  doc/roman.7.in \
-					  doc/roman2long.3.in \
+					  doc/roman2int.3.in \
+					  doc/roman2long.3 \
 					  doc/roman_asctime.3 \
 					  doc/roman_asctime_r.3 \
 					  doc/roman_ctime.3.in \

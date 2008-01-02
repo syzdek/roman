@@ -13,11 +13,11 @@
 .\"
 .\" @configure_input@
 .\"
-.\" doc/long2roman.3.in - man page for Roman Numeral routines
+.\" doc/int2roman.3.in - man page for Roman Numeral routines
 .\"
 .TH "ROMAN NUMERAL API" 3 "@RELEASE_MONTH@" "@PACKAGE_TARNAME@ @PACKAGE_VERSION@"
 .SH NAME
-long2roman, long2roman_r \- convert
+int2roman, int2roman_r \- convert
 .I signed int
 to ASCII string containing the Roman Numeral value
 .SH LIBRARY
@@ -27,25 +27,25 @@ Roman Numeral Conversion API (libroman, -lroman)
 .sp
 \fIconst char *\fR
 .br
-\fBlong2roman\fR(\fIint num\fR);
+\fBint2roman\fR(\fIint num\fR);
 .sp
 \fIchar *\fR
 .br
-\fBlong2roman_r\fR(\fIint num\fR, \fIchar * buff\fR, \fIsize_t len\fR);
+\fBint2roman_r\fR(\fIint num\fR, \fIchar * buff\fR, \fIsize_t len\fR);
 .SH DESCRIPTION
 The function
-.B long2roman
+.B int2roman
 takes an argument of
 .I num
 and returns a pointer to a string containing the integer's Roman Numeral
 representation of the integer's value.  Subsequent calls to
-.B long2roman
+.B int2roman
 will overwrite previous values.
 .PP
 The function
-.B long2roman_r
+.B int2roman_r
 provides the same functionality as
-.B long2roman,
+.B int2roman,
 except that the caller must provide the out buffer
 .I buff
 to store the result.
@@ -55,9 +55,9 @@ must be at least
 characters long.
 .SH RETURN VALUES
 If successful, 
-.B long2roman
+.B int2roman
 and
-.B long2roman_r
+.B int2roman_r
 return a pointer to a string containing the Roman Numeral representation of the value of
 .I num.
 If there is an error, they will return a
@@ -99,7 +99,7 @@ Insufficient storage space available in \fIstr\fR.
 .br
       \fInum\fR = \fBatol\fR(\fIargv\fR[\fIi\fR]);
 .sp
-      \fIptr\fR = \fBlong2roman\fR(\fInum\fR);
+      \fIptr\fR = \fBint2roman\fR(\fInum\fR);
 .br
       \fBif\fR(\fIptr\fR)
 .br
@@ -107,9 +107,9 @@ Insufficient storage space available in \fIstr\fR.
 .br
       \fBelse\fR
 .br
-         \fBperror\fR("long2roman_r()");
+         \fBperror\fR("int2roman_r()");
 .sp
-      \fIptr\fR = \fBlong2roman_r\fR(\fInum\fR, \fIbuff\fR, \fI512\fR);
+      \fIptr\fR = \fBint2roman_r\fR(\fInum\fR, \fIbuff\fR, \fI512\fR);
 .br
       \fBif\fR(\fIptr\fR)
 .br
@@ -117,7 +117,7 @@ Insufficient storage space available in \fIstr\fR.
 .br
       \fBelse\fR
 .br
-         \fBperror\fR("long2roman_r()");
+         \fBperror\fR("int2roman_r()");
 .br
    }
 .sp
@@ -136,7 +136,7 @@ PURPOSE.
 .BR roman (7),
 .BR romandate (1)
 .BR romannum (1)
-.BR roman2long (3)
+.BR roman2int (3)
 .BR roman_ctime (3)
 .BR roman_strftime (3)
 .\" end of man page

@@ -19,16 +19,10 @@
 .SH NAME
 romannum \- converts between Roman numerals and Arabic numerals
 .SH SYNOPSIS
-\fBromannum\fR [\fB-a\fR \fIarabic\fR] [\fB-r\fR \fIroman\fR]
+\fBromannum\fR \fIstring\fR
 .br
 \fBromannum\fR [\fB--chart\fR \fB-c\fR]
 .SH DESCRIPTION
-.TP
-\fB\-a\fR \fIarabic\fR
-convert \fIarabic\fR from Arabic numerals to Roman numerals
-.TP
-\fB\-r\fR \fIroman\fR
-convert \fIroman\fR from Roman numerals to Arabic numerals
 .TP
 \fB\-c\fR, \fB\-\-chart\fR
 print table of the Roman numeral symbols and exit
@@ -50,8 +44,8 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .SH "SEE ALSO"
 .BR roman (7),
 .BR romandate (1),
-.BR long2roman (3),
-.BR roman2long (3),
+.BR int2roman (3),
+.BR roman2int (3),
 .BR roman_ctime (3),
 .BR roman_strftime (3)
 .\" end of man page

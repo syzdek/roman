@@ -14,6 +14,13 @@
 #   NEWS - News for release N.N.I or in modern notation, 0.0.1
 #
 
+2008/01/02
+	- Deprecated the functions long2roman(), long2roman_r(), and
+	  roman2long().  These functions were replaced with the identical
+	  functions int2roman(), int2roman_r(), and roman2int().  This
+	  change was made so that the function names would accurately
+	  described the purpose of the function.
+
 2007/12/09
 	* release version 0.0.2 on SourceForge (syzdek)
 
@@ -33,6 +40,6 @@
 	  parties. (syzdek)
 
 2007/11/23
-	* The idea for this project was concieved. (syzdek)
+	* The idea for this project was conceived. (syzdek)
 
 # end of news file

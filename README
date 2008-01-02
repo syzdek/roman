@@ -147,10 +147,10 @@ The first example demonstrates generating Roman Numeral strings from an integer:
 	int main(void)
 	{
 	   const char * roman;
-	   roman = long2roman(3132);
+	   roman = int2roman(3132);
 	   if (!(roman))
 	   {
-	      perror("long2roman()");
+	      perror("int2roman()");
 	      return(1);
 	   };
 	   printf("Roman Numeral: %s\n", roman);
@@ -176,10 +176,10 @@ The second example demonstrates converting a Roman Numeral string into an intege
 	int main(void)
 	{
 	   int num;
-	   num = roman2long("MMMCXXXII");
+	   num = roman2int("MMMCXXXII");
 	   if (num < 0)
 	   {
-	      perror("roman2long()");
+	      perror("roman2int()");
 	      return(1);
 	   };
 	   printf("Number: %i\n", num);

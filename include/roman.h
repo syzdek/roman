@@ -67,21 +67,28 @@
 
 
 /* 
- * Support for DDL/SO exported functions/variables.
+ *  Support for DDL/SO exported functions/variables.
+ *  This is loosely taken from:
+ *      OpenLDAP include/ldap_cdefs.h
+ *      http://www.nedprod.com/programs/gccvisibility.html
  */
-#undef ROMAN_F
-#undef ROMAN_V
-#if (defined(_WIN32) || defined(__MINGW32__) )
+#undef ROMAN_F	// used to export functions
+#undef ROMAN_V	// used to export variables
+#undef ROMAN_L	// used for local functions and variables
+#if (defined(_WIN32) || defined(__MINGW32__))
 #   ifdef _ROMAN_LIBRARY
 #      define ROMAN_F(type)   extern __declspec(dllexport) type
 #      define ROMAN_V(type)   extern __declspec(dllexport) type
+#      define ROMAN_L(type)   type
 #     else
 #      define ROMAN_F(type)   extern /* __declspec(dllimport) */ type
 #      define ROMAN_V(type)   extern /* __declspec(dllimport) */ type
+#      define ROMAN_L(type)   type
 #   endif
 #  else
-#   define ROMAN_F(type)      extern type
-#   define ROMAN_V(type)      extern type
+#   define ROMAN_F(type)      extern __attribute__ ((visibility("default"))) type
+#   define ROMAN_V(type)      extern __attribute__ ((visibility("default"))) type
+#   define ROMAN_L(type)      __attribute__ ((visibility("hidden"))) type
 #endif
 
 
@@ -125,13 +132,25 @@
 BEGIN_C_DECLS
 
 /* encodes number as a string with Roman numerals */
-ROMAN_F(const char *) long2roman PARAMS((int num));
+ROMAN_F(const char *) int2roman PARAMS((int num));
 
 /* encodes number as a string with Roman numerals using external buffer */
-ROMAN_F(char *) long2roman_r PARAMS((int num, char * str, size_t len));
+ROMAN_F(char *) int2roman_r PARAMS((int num, char * str, size_t len));
+
+/* encodes number as a string with Roman numerals */
+ROMAN_F(const char *) long2roman PARAMS((int num))
+	__attribute__ ((deprecated));
+
+/* encodes number as a string with Roman numerals using external buffer */
+ROMAN_F(char *) long2roman_r PARAMS((int num, char * str, size_t len))
+	__attribute__ ((deprecated));
 
 /* converts Roman numeral string to integer */
-ROMAN_F(int) roman2long PARAMS((const char * str));
+ROMAN_F(int) roman2int PARAMS((const char * str));
+
+/* converts Roman numeral string to integer */
+ROMAN_F(int) roman2long PARAMS((const char * str))
+	__attribute__ ((deprecated));
 
 /* encodes broken-out time as Roman numerals and Latin */
 ROMAN_F(const char *) roman_asctime PARAMS((const struct tm * tm));

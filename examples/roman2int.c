@@ -18,61 +18,46 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  examples/long2roman.c - example usage of long2roman()
+ *  examples/roman2int.c - example usage of roman2int()
  *
  *  Simple Build:
- *     gcc -Wall -c long2roman.c
- *     gcc -Wall -o long2roman long2roman.o
+ *     gcc -Wall -c roman2int.c
+ *     gcc -Wall -o roman2int roman2int.o
  *
  *  Libtool Build:
- *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c long2roman.c
- *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o long2roman \
- *             long2roman.o -lroman
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c roman2int.c
+ *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o roman2int \
+ *             roman2int.o -lroman
  *
  *  Libtool Install:
- *     libtool --mode=install install -c long2roman /usr/local/bin/long2roman
+ *     libtool --mode=install install -c roman2int /usr/local/bin/roman2int
  *
  *  Libtool Clean:
- *     libtool --mode=clean rm -f long2roman.lo long2roman
+ *     libtool --mode=clean rm -f roman2int.lo roman2int
  *
- *  Usage: long2roman <num> <num> ... <num>
- *
- *  Notes:
- *     The function long2roman() is deprecated, use int2roman().
+ *  Usage: roman2int <num> <num> ... <num>
  */
 
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include <roman.h>
 
 int main(int argc, char * argv[]);
 
 int main(int argc, char * argv[])
 {
-   int          i;
-   int          num;
-   char         buff[512];
-   const char * ptr;
+   int i;
+   int num;
 
    for(i = 1; i < argc; i++)
    {
-      num = atol(argv[i]);
-
-      ptr = long2roman(num);
-      if(ptr)
-         printf("long2roman() %i == %s\n", num, ptr);
+      num = roman2int(argv[i]);
+      if(num == -1)
+         perror("roman2int()");
       else
-         perror("long2roman_r()");
-
-      ptr = long2roman_r(num, buff, 512);
-      if(ptr)
-         printf("long2roman_r() %i == %s\n", num, ptr);
-      else
-         perror("long2roman_r()");
+         printf("%s == %i\n", argv[i], num);
    }
 
    return(0);
 }
 
-/* end of source code */
+/* end of source */

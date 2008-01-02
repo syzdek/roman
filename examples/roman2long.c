@@ -36,6 +36,9 @@
  *     libtool --mode=clean rm -f roman2long.lo roman2long
  *
  *  Usage: roman2long <num> <num> ... <num>
+ *
+ *  Notes:
+ *     The function roman2long() is deprecated, use roman2int().
  */
 
 #include <stdio.h>

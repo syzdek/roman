@@ -18,27 +18,24 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  examples/long2roman.c - example usage of long2roman()
+ *  examples/int2roman.c - example usage of int2roman()
  *
  *  Simple Build:
- *     gcc -Wall -c long2roman.c
- *     gcc -Wall -o long2roman long2roman.o
+ *     gcc -Wall -c int2roman.c
+ *     gcc -Wall -o int2roman int2roman.o
  *
  *  Libtool Build:
- *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c long2roman.c
- *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o long2roman \
- *             long2roman.o -lroman
+ *     libtool --mode=compile gcc -Wall -g -O2 -I../include -c int2roman.c
+ *     libtool --mode=link    gcc -Wall -g -O2 -L../lib -o int2roman \
+ *             int2roman.o -lroman
  *
  *  Libtool Install:
- *     libtool --mode=install install -c long2roman /usr/local/bin/long2roman
+ *     libtool --mode=install install -c int2roman /usr/local/bin/int2roman
  *
  *  Libtool Clean:
- *     libtool --mode=clean rm -f long2roman.lo long2roman
+ *     libtool --mode=clean rm -f int2roman.lo int2roman
  *
- *  Usage: long2roman <num> <num> ... <num>
- *
- *  Notes:
- *     The function long2roman() is deprecated, use int2roman().
+ *  Usage: int2roman <num> <num> ... <num>
  */
 
 #include <stdlib.h>
@@ -59,17 +56,17 @@ int main(int argc, char * argv[])
    {
       num = atol(argv[i]);
 
-      ptr = long2roman(num);
+      ptr = int2roman(num);
       if(ptr)
-         printf("long2roman() %i == %s\n", num, ptr);
+         printf("int2roman() %i == %s\n", num, ptr);
       else
-         perror("long2roman_r()");
+         perror("int2roman_r()");
 
-      ptr = long2roman_r(num, buff, 512);
+      ptr = int2roman_r(num, buff, 512);
       if(ptr)
-         printf("long2roman_r() %i == %s\n", num, ptr);
+         printf("int2roman_r() %i == %s\n", num, ptr);
       else
-         perror("long2roman_r()");
+         perror("int2roman_r()");
    }
 
    return(0);

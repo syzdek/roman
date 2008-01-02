@@ -114,9 +114,9 @@ int main(int argc, char * argv[])
    /* converts roman numeral */
    if (cnf->rom)
    {
-      if ((num = roman2long(cnf->rom)) == -1)
+      if ((num = roman2int(cnf->rom)) == -1)
       {
-         perror(PROGRAM_NAME ": roman2long()");
+         perror(PROGRAM_NAME ": roman2int()");
          free(cnf);
          return(1);
       };
@@ -124,9 +124,9 @@ int main(int argc, char * argv[])
    }
    else if (cnf->num != -1)
    {
-      if (!(str = long2roman(cnf->num)))
+      if (!(str = int2roman(cnf->num)))
       {
-         perror(PROGRAM_NAME ": long2roman()");
+         perror(PROGRAM_NAME ": int2roman()");
          free(cnf);
          return(1);
       };

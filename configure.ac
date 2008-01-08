@@ -31,7 +31,7 @@ AC_PREREQ(2.61)
 
 AC_COPYRIGHT([Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.])
 AC_REVISION($Revision$)
-AC_INIT([Roman Numeral Conversion API],[0.0.4-devel],[syzdek@users.sourceforge.net],[roman])
+AC_INIT([Roman Numeral Conversion API],[0.0.4],[syzdek@users.sourceforge.net],[roman])
 AC_SUBST(PACKAGE_COPYRIGHT, ["Copyright (C) 2007 David M. Syzdek."])
 AC_DEFINE_UNQUOTED(PACKAGE_COPYRIGHT, ["$PACKAGE_COPYRIGHT"], ["Copyright info"])
 AC_SUBST([RELEASE_MONTH],["December 2007"])
@@ -71,7 +71,6 @@ AC_MINIX
 AC_C_BIGENDIAN
 
 # binary locations
-AC_PROG_INSTALL
 AC_PATH_PROG([SHELL],	sh bash,	[AC_MSG_ERROR([missing "sh"])], [$PATH])
 AC_CHECK_TOOLS(AR,	ar gar,		[AC_MSG_ERROR([missing binutil "ar"])])
 AC_CHECK_TOOLS(LD,	ld gld,		[AC_MSG_ERROR([missing binutil "ld"])])

@@ -15,7 +15,7 @@
 #
 
 2008/01/02
-	- Deprecated the functions long2roman(), long2roman_r(), and
+	* Deprecated the functions long2roman(), long2roman_r(), and
 	  roman2long().  These functions were replaced with the identical
 	  functions int2roman(), int2roman_r(), and roman2int().  This
 	  change was made so that the function names would accurately

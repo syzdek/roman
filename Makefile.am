@@ -39,7 +39,10 @@ AM_CPPFLAGS				= -I$(top_srcdir)/include
 # automake targets
 bin_PROGRAMS				= src/romannum src/romandate
 check_PROGRAMS				= tests/check_roman2int \
-					  tests/check_int2roman
+					  tests/check_int2roman \
+					  tests/check_roman2int_iiiii \
+					  tests/check_roman2int_xxxxx \
+					  tests/check_roman2int_ccccc
 noinst_DATA				= lib/libroman.def lib/libroman.sym
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
@@ -101,13 +104,25 @@ src_romandate_SOURCES			= $(include_HEADERS) \
 					  src/roman_charts.h \
 					  src/romandate.c
 
-# macros for tests/long2roman
+# macros for tests/int2roman
 tests_check_int2roman_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
 tests_check_int2roman_LDADD		= $(AM_LDADD)
 
-# macros for tests/roman2long
+# macros for tests/roman2int
 tests_check_roman2int_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
 tests_check_roman2int_LDADD		= $(AM_LDADD)
+
+# macros for tests/roman2int_iiiii
+tests_check_roman2int_iiiii_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_iiiii_LDADD	= $(AM_LDADD)
+
+# macros for tests/roman2int_xxxxx
+tests_check_roman2int_xxxxx_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_xxxxx_LDADD	= $(AM_LDADD)
+
+# macros for tests/roman2int_ccccc
+tests_check_roman2int_ccccc_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_ccccc_LDADD	= $(AM_LDADD)
 
 
 TESTS					= $(check_PROGRAMS)

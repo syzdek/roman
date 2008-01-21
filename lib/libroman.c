@@ -294,13 +294,22 @@ ROMAN_F(int) roman2int(const char * str)
             break;
          case 'i':
          case 'I':
+            num  += 1;
+            /* prevent patterns like IXI */
             if ((p[1] == 1) && (p[0] != 1))
             {
                errno = EINVAL;
                return(-1);
             };
+
+            /* prevent patterns like IIIII and VIIIII */
+            if ((!(num%5)) || (!(num%10)))
+            {
+               errno = EINVAL;
+               return(-1);
+            };
+
             p[1]   = p[0];
-            num  += 1;
             p[0]  = 1;
             break;
          case 'v':
@@ -319,13 +328,21 @@ ROMAN_F(int) roman2int(const char * str)
          case 'x':
          case 'X':
             num += 10;
+            /* prevent patterns like XCX */
             if (((p[0] < 10) && (p[1] < 10)) || ((p[1] < 10) && (p[0] <= 10)))
             {
                errno = EINVAL;
                return(-1);
-            }
-            else if (p[0] < 10)
+            };
+            if (p[0] < 10)
                num -= (p[0] * 2);
+
+            /* prevent patterns like XXXXX and VXXXXX */
+            if ((!(num%50)) || (!(num%100)))
+            {
+               errno = EINVAL;
+               return(-1);
+            };
             p[1]  = p[0];
             p[0] = 10;
             break;
@@ -345,13 +362,21 @@ ROMAN_F(int) roman2int(const char * str)
          case 'c':
          case 'C':
             num += 100;
+            /* prevent patterns like CMC */
             if (((p[0] < 100) && (p[1] < 100)) || ((p[1] < 100) && (p[0] <= 100)))
             {
                errno = EINVAL;
                return(-1);
-            }
-            else if (p[0] < 100)
+            };
+            if (p[0] < 100)
                num -= (p[0] * 2);
+
+            /* prevent patterns like CCCCC and VCCCCC */
+            if ((!(num%500)) || (!(num%1000)))
+            {
+               errno = EINVAL;
+               return(-1);
+            };
             p[1]  = p[0];
             p[0] = 100;
             break;
@@ -371,13 +396,21 @@ ROMAN_F(int) roman2int(const char * str)
          case 'm':
          case 'M':
             num += 1000;
+            /* prevent patterns like M?M */
             if (((p[0] < 1000) && (p[1] < 1000)) || ((p[1] < 100) && (p[0] <= 1000)))
             {
                errno = EINVAL;
                return(-1);
-            }
-            else if (p[0] < 1000)
+            };
+            if (p[0] < 1000)
                num -= (p[0] * 2);
+
+            /* prevent patterns like MMMMM and VMMMMM */
+            if ((!(num%5000)) || (!(num%10000)))
+            {
+               errno = EINVAL;
+               return(-1);
+            };
             p[1]  = p[0];
             p[0] = 1000;
             break;

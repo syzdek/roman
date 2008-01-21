@@ -33,6 +33,8 @@
 	- replaced functions long2roman, long2roman_r, and roman2long with
 	  int2roman, int2roman_r, roman2int to make function names more
 	  accurate (syzdek)
+	- added checks to prevent patterns like IIIII, XXXXX, CCCCC, and
+	  MMMMM from being accepted by roman2int() (syzdek)
 
 0.0.3
 	- fixed error checking in long2roman().  The previous version would

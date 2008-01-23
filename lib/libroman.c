@@ -334,8 +334,13 @@ ROMAN_F(int) roman2int(const char * str)
                errno = EINVAL;
                return(-1);
             };
-            if (p[0] < 10)
+            if (p[0] == 1)
                num -= (p[0] * 2);
+            else if (p[0] < 10)
+            {
+               errno = EINVAL;
+               return(-1);
+            };
 
             /* prevent patterns like XXXXX and VXXXXX */
             if ((!(num%50)) || (!(num%100)))
@@ -368,8 +373,13 @@ ROMAN_F(int) roman2int(const char * str)
                errno = EINVAL;
                return(-1);
             };
-            if (p[0] < 100)
+            if (p[0] == 10)
                num -= (p[0] * 2);
+            else if (p[0] < 100)
+            {
+               errno = EINVAL;
+               return(-1);
+            };
 
             /* prevent patterns like CCCCC and VCCCCC */
             if ((!(num%500)) || (!(num%1000)))
@@ -402,8 +412,13 @@ ROMAN_F(int) roman2int(const char * str)
                errno = EINVAL;
                return(-1);
             };
-            if (p[0] < 1000)
+            if (p[0] == 100)
                num -= (p[0] * 2);
+            else if (p[0] < 1000)
+            {
+               errno = EINVAL;
+               return(-1);
+            };
 
             /* prevent patterns like MMMMM and VMMMMM */
             if ((!(num%5000)) || (!(num%10000)))

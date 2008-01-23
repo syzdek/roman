@@ -34,7 +34,11 @@
 	  int2roman, int2roman_r, roman2int to make function names more
 	  accurate (syzdek)
 	- added checks to prevent patterns like IIIII, XXXXX, CCCCC, and
-	  MMMMM from being accepted by roman2int() (syzdek)
+	  MMMMM from being accepted by roman2int() [thanks to Jerome Couderc
+	  for reporting this bug] (syzdek)
+	- added checks to roman2int() which prevent V, L, and D from preceding
+	  larger values [thanks to Jerome Couderc for reporting this bug]
+	  (syzdek)
 
 0.0.3
 	- fixed error checking in long2roman().  The previous version would

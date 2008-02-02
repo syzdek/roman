@@ -14,7 +14,7 @@
 #   ChangeLog - list of changes made to each revision
 #
 
-0.0.4
+0.0.4	2008/02/01
 	- updated comments of function declarations and function prototypes
 	  to match the purpose of the function. Some of the comments had been
 	  copied and pasted when creating new functions without having the
@@ -42,7 +42,7 @@
 	- updated logic that is used to test the syntax in romain2int()
 	  which provides syntax checking (syzdek)
 
-0.0.3
+0.0.3	2007/12/09
 	- fixed error checking in long2roman().  The previous version would
 	  allow a number line MIMM, XIXX, CXCC.  However the following would
 	  fail on MMIM, XXIX, and CCXC.  The function now correctly reports
@@ -50,7 +50,7 @@
 	  numbers. (syzdek)
 	- added tests to help avoid problems like the above (syzdek)
 
-0.0.2
+0.0.2	2007/12/09
 	- changed command line options for romannum to `-a' for Arabic numerals
 	  instead of using `-d' for decimal numerals. (syzdek) 
 	- added long2roman_r(), roman_asctime(), roman_asctime_r,
@@ -71,7 +71,7 @@
 	  same Roman Numeral [Example: VV == X or LL == 100] (syzdek)
 	- functions now return error conditions using errno (syzdek)
 
-0.0.1
+0.0.1	2007/12/02
 	- initial release of package (syzdek)
 
 # end of ChangeLog

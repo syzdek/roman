@@ -3,7 +3,7 @@
  */
 /*
  *  Roman Numeral Conversion API
- *  Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>
+ *  Copyright (c) 2007, 2008 David M. Syzdek <roman-project@syzdek.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

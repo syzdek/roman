@@ -38,14 +38,15 @@ AM_CPPFLAGS				= -I$(top_srcdir)/include
 
 # automake targets
 bin_PROGRAMS				= src/romannum src/romandate
-check_PROGRAMS				= tests/check_roman2int \
-					  tests/check_int2roman \
-					  tests/check_roman2int_iiiii \
-					  tests/check_roman2int_xxxxx \
-					  tests/check_roman2int_ccccc \
-					  tests/check_roman2int_dm \
-					  tests/check_roman2int_lc \
-					  tests/check_roman2int_vx
+check_PROGRAMS				= tests/check_int2roman \
+					  tests/check_roman2int \
+					  tests/check_roman2int_i \
+					  tests/check_roman2int_v \
+					  tests/check_roman2int_x \
+					  tests/check_roman2int_l \
+					  tests/check_roman2int_c \
+					  tests/check_roman2int_d \
+					  tests/check_roman2int_m
 noinst_DATA				= lib/libroman.def lib/libroman.sym
 lib_LTLIBRARIES				= lib/libroman.la
 include_HEADERS				= include/roman.h
@@ -115,29 +116,33 @@ tests_check_int2roman_LDADD		= $(AM_LDADD)
 tests_check_roman2int_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
 tests_check_roman2int_LDADD		= $(AM_LDADD)
 
-# macros for tests/roman2int_iiiii
-tests_check_roman2int_iiiii_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_iiiii_LDADD	= $(AM_LDADD)
+# macros for tests/roman2int_i
+tests_check_roman2int_i_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_i_LDADD		= $(AM_LDADD)
 
-# macros for tests/roman2int_xxxxx
-tests_check_roman2int_xxxxx_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_xxxxx_LDADD	= $(AM_LDADD)
+# macros for tests/roman2int_v
+tests_check_roman2int_v_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_v_LDADD		= $(AM_LDADD)
 
-# macros for tests/roman2int_ccccc
-tests_check_roman2int_ccccc_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_ccccc_LDADD	= $(AM_LDADD)
+# macros for tests/roman2int_x
+tests_check_roman2int_x_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_x_LDADD		= $(AM_LDADD)
 
-# macros for tests/check_roman2int_vx
-tests_check_roman2int_vx_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_vx_LDADD		= $(AM_LDADD)
+# macros for tests/roman2int_l
+tests_check_roman2int_l_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_l_LDADD		= $(AM_LDADD)
 
-# macros for tests/check_roman2int_lc
-tests_check_roman2int_lc_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_lc_LDADD		= $(AM_LDADD)
+# macros for tests/roman2int_c
+tests_check_roman2int_c_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_c_LDADD		= $(AM_LDADD)
 
-# macros for tests/check_roman2int_dm
-tests_check_roman2int_dm_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
-tests_check_roman2int_dm_LDADD		= $(AM_LDADD)
+# macros for tests/roman2int_d
+tests_check_roman2int_d_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_d_LDADD		= $(AM_LDADD)
+
+# macros for tests/check_roman2int_m
+tests_check_roman2int_m_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_m_LDADD		= $(AM_LDADD)
 
 
 TESTS					= $(check_PROGRAMS)

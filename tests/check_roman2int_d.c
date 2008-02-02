@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_d.c - tests invalid syntax using D
  */
 
 #include <stdio.h>
@@ -29,11 +29,15 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("LC") != -1)
+   if (roman2int("ID") != -1)
       return(1);
-   if (roman2int("CLC") != -1)
+   if (roman2int("VD") != -1)
       return(1);
-   if (roman2int("CCLC") != -1)
+   if (roman2int("XD") != -1)
+      return(1);
+   if (roman2int("DD") != -1)
+      return(1);
+   if (roman2int("CCD") != -1)
       return(1);
    return(0);
 }

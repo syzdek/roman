@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_x.c - tests invalid syntax using X
  */
 
 #include <stdio.h>
@@ -34,6 +34,12 @@ int main(void)
    if (roman2int("XVX") != -1)
       return(1);
    if (roman2int("XXVX") != -1)
+      return(1);
+   if (roman2int("XXXXX") != -1)
+      return(1);
+   if (roman2int("VXXXXX") != -1)
+      return(1);
+   if (roman2int("CXXXXX") != -1)
       return(1);
    return(0);
 }

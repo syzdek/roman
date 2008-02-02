@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_i.c - tests invalid syntax using I
  */
 
 #include <stdio.h>

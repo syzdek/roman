@@ -29,11 +29,19 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("DM") != -1)
+   if (roman2int("LC") != -1)
       return(1);
-   if (roman2int("MDM") != -1)
+   if (roman2int("CLC") != -1)
       return(1);
-   if (roman2int("MMDM") != -1)
+   if (roman2int("CCLC") != -1)
+      return(1);
+   if (roman2int("CCVC") != -1)
+      return(1);
+   if (roman2int("CCIC") != -1)
+      return(1);
+   if (roman2int("CCCCC") != -1)
+      return(1);
+   if (roman2int("DCCCCC") != -1)
       return(1);
    return(0);
 }

@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_m.c - tests invalid syntax using M
  */
 
 #include <stdio.h>
@@ -29,11 +29,15 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("XXXXX") != -1)
+   if (roman2int("DM") != -1)
       return(1);
-   if (roman2int("VXXXXX") != -1)
+   if (roman2int("MDM") != -1)
       return(1);
-   if (roman2int("CXXXXX") != -1)
+   if (roman2int("MMDM") != -1)
+      return(1);
+   if (roman2int("MMMMM") != -1)
+      return(1);
+   if (roman2int("VMMMMM") != -1)
       return(1);
    return(0);
 }

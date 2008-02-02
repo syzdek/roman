@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_v.c - tests invalid syntax using V
  */
 
 #include <stdio.h>
@@ -29,9 +29,11 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("CCCCC") != -1)
+   if (roman2int("VV") != -1)
       return(1);
-   if (roman2int("DCCCCC") != -1)
+   if (roman2int("VIV") != -1)
+      return(1);
+   if (roman2int("IIV") != -1)
       return(1);
    return(0);
 }

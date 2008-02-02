@@ -18,7 +18,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  *
- *  tests/check_int2roman.c - tests int2roman
+ *  tests/check_int2roman_l.c - tests invalid syntax using L
  */
 
 #include <stdio.h>
@@ -29,9 +29,13 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("MMMMM") != -1)
+   if (roman2int("IL") != -1)
       return(1);
-   if (roman2int("VMMMMM") != -1)
+   if (roman2int("VL") != -1)
+      return(1);
+   if (roman2int("LL") != -1)
+      return(1);
+   if (roman2int("XXL") != -1)
       return(1);
    return(0);
 }

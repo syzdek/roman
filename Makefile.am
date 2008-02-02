@@ -235,9 +235,9 @@ lib/libroman.def: Makefile lib/libroman.def.in
 
 htmldocs: Makefile $(man_MANS)
 	@$(mkdir_p) doc/html
-	groff -Thtml -mandoc doc/long2roman.3     |grep -v 'a href' > doc/html/long2roman.3.html
+	groff -Thtml -mandoc doc/int2roman.3      |grep -v 'a href' > doc/html/int2roman.3.html
 	groff -Thtml -mandoc doc/roman.7          |grep -v 'a href' > doc/html/roman.7.html
-	groff -Thtml -mandoc doc/roman2long.3     |grep -v 'a href' > doc/html/roman2long.3.html
+	groff -Thtml -mandoc doc/roman2int.3      |grep -v 'a href' > doc/html/roman2int.3.html
 	groff -Thtml -mandoc doc/roman_ctime.3    |grep -v 'a href' > doc/html/roman_ctime.3.html
 	groff -Thtml -mandoc doc/roman_strftime.3 |grep -v 'a href' > doc/html/roman_strftime.3.html
 	groff -Thtml -mandoc doc/romandate.1      |grep -v 'a href' > doc/html/romandate.1.html

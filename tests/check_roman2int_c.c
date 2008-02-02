@@ -29,6 +29,12 @@ int main(void);
 
 int main(void)
 {
+   if (roman2int("IC") != -1)
+      return(1);
+   if (roman2int("XXC") != -1)
+      return(1);
+   if (roman2int("XCX") != -1)
+      return(1);
    if (roman2int("LC") != -1)
       return(1);
    if (roman2int("CLC") != -1)

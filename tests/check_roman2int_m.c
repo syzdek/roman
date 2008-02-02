@@ -29,6 +29,16 @@ int main(void);
 
 int main(void)
 {
+   if (roman2int("IM") != -1)
+      return(1);
+   if (roman2int("VM") != -1)
+      return(1);
+   if (roman2int("XM") != -1)
+      return(1);
+   if (roman2int("LM") != -1)
+      return(1);
+   if (roman2int("CCM") != -1)
+      return(1);
    if (roman2int("DM") != -1)
       return(1);
    if (roman2int("MDM") != -1)

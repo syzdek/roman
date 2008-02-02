@@ -33,9 +33,11 @@ int main(void)
       return(1);
    if (roman2int("VL") != -1)
       return(1);
-   if (roman2int("LL") != -1)
-      return(1);
    if (roman2int("XXL") != -1)
+      return(1);
+   if (roman2int("XLX") != -1)
+      return(1);
+   if (roman2int("LL") != -1)
       return(1);
    return(0);
 }

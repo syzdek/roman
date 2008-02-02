@@ -37,6 +37,8 @@ int main(void)
       return(1);
    if (roman2int("DD") != -1)
       return(1);
+   if (roman2int("DMD") != -1)
+      return(1);
    if (roman2int("CCD") != -1)
       return(1);
    return(0);

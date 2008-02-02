@@ -29,6 +29,10 @@ int main(void);
 
 int main(void)
 {
+   if (roman2int("IIX") != -1)
+      return(1);
+   if (roman2int("IXI") != -1)
+      return(1);
    if (roman2int("VX") != -1)
       return(1);
    if (roman2int("XVX") != -1)

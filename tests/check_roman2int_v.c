@@ -29,11 +29,13 @@ int main(void);
 
 int main(void)
 {
-   if (roman2int("VV") != -1)
+   if (roman2int("IIV") != -1)
+      return(1);
+   if (roman2int("IVI") != -1)
       return(1);
    if (roman2int("VIV") != -1)
       return(1);
-   if (roman2int("IIV") != -1)
+   if (roman2int("VV") != -1)
       return(1);
    return(0);
 }

@@ -167,8 +167,8 @@ EXTRA_DIST				= doc/int2roman.3.in \
 					  doc/romandate.1.in \
 					  doc/romannum.1.in \
 					  doc/romannumeral.7 \
-					  examples/long2roman.c \
-					  examples/roman2long.c \
+					  examples/int2roman.c \
+					  examples/roman2int.c \
 					  examples/roman_asctime.c \
 					  examples/roman_ctime.c \
 					  examples/roman_strftime.c \

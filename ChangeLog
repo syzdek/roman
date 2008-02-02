@@ -39,8 +39,7 @@
 	- added checks to roman2int() which prevent V, L, and D from preceding
 	  larger values [thanks to Jerome Couderc for reporting this bug]
 	  (syzdek)
-	- updated logic that is used to test the syntax in romain2int()
-	  which provides syntax checking (syzdek)
+	- updated logic in romain2int which provides syntax checking (syzdek)
 
 0.0.3	2007/12/09
 	- fixed error checking in long2roman().  The previous version would

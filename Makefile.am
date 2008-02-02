@@ -40,6 +40,7 @@ AM_CPPFLAGS				= -I$(top_srcdir)/include
 bin_PROGRAMS				= src/romannum src/romandate
 check_PROGRAMS				= tests/check_int2roman \
 					  tests/check_roman2int \
+					  tests/check_roman2int_n \
 					  tests/check_roman2int_i \
 					  tests/check_roman2int_v \
 					  tests/check_roman2int_x \
@@ -115,6 +116,10 @@ tests_check_int2roman_LDADD		= $(AM_LDADD)
 # macros for tests/roman2int
 tests_check_roman2int_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
 tests_check_roman2int_LDADD		= $(AM_LDADD)
+
+# macros for tests/roman2int_n
+tests_check_roman2int_n_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile
+tests_check_roman2int_n_LDADD		= $(AM_LDADD)
 
 # macros for tests/roman2int_i
 tests_check_roman2int_i_DEPENDENCIES	= $(lib_LTLIBRARIES) Makefile

@@ -2,7 +2,7 @@
 #   $Id$
 #
 #   Roman Numeral Conversion API
-#   Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>
+#   Copyright (C) 2007, 2008 David M. Syzdek <roman-project@syzdek.net>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ AC_PREREQ(2.61)
 
 AC_COPYRIGHT([Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.])
 AC_REVISION($Revision$)
-AC_INIT([Roman Numeral Conversion API],[0.0.4],[syzdek@users.sourceforge.net],[roman])
-AC_SUBST(PACKAGE_COPYRIGHT, ["Copyright (C) 2007 David M. Syzdek."])
+AC_INIT([Roman Numeral Conversion API],[0.0.5],[syzdek@users.sourceforge.net],[roman])
+AC_SUBST(PACKAGE_COPYRIGHT, ["Copyright (C) 2007, 2008 David M. Syzdek."])
 AC_DEFINE_UNQUOTED(PACKAGE_COPYRIGHT, ["$PACKAGE_COPYRIGHT"], ["Copyright info"])
 AC_SUBST([RELEASE_MONTH],["December 2007"])
 
@@ -42,7 +42,7 @@ AC_SUBST([RELEASE_MONTH],["December 2007"])
 #    Age        -- How many seqential past API versions is supported by
 #                  this implementation
 # Format => Current:Revision:Age
-AC_SUBST(LIB_VERSION_INFO, 2:0:1)
+AC_SUBST(LIB_VERSION_INFO, 2:1:1)
 AC_SUBST(LIB_RELEASE_INFO, 2) # used by Win32 DLLs
 
 AC_CONFIG_AUX_DIR([gnu])

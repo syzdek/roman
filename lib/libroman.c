@@ -104,13 +104,13 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
 
    /* sets initial values */
    pos = 0;
-   memset(str, 0, len);
    len--;
 
    /* checks for nullae */
    if (!(num))
    {
       str[0] = 'N';
+      str[1] = '\0';
       return(str);
    };
 
@@ -121,6 +121,7 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
       if (1 > len)
       {
          errno = ENOBUFS;
+         str[0] = '\0';
          return(NULL);
       };
       str[pos] = '-';
@@ -132,6 +133,7 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
    if (dividend > (len-1))
    {
       errno = ENOBUFS;
+      str[pos] = '\0';
       return(NULL);
    };
    for(u = 0; u < dividend; u++)
@@ -144,31 +146,34 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
    if (dividend > (len-1-pos))
    {
       errno = ENOBUFS;
+      str[pos] = '\0';
       return(NULL);
    };
-   if (dividend == 9)
+   switch(dividend)
    {
-      str[pos+0] = 'C';
-      str[pos+1] = 'M';
-      pos += 2;
-      dividend = 0;
+      case 9:
+         str[pos+0] = 'C';
+         str[pos+1] = 'M';
+         pos += 2;
+         break;
+      case 4:
+         str[pos+0] = 'C';
+         str[pos+1] = 'D';
+         pos += 2;
+         break;
+      case 8:
+      case 7:
+      case 6:
+      case 5:
+         str[pos] = 'D';
+         dividend -= 5;
+         pos++;
+      default:
+         for(u = 0; u < dividend; u++)
+            str[pos+u] = 'C';
+         pos += u;
+         break;
    };
-   if (dividend >= 5)
-   {
-      str[pos] = 'D';
-      dividend -= 5;
-      pos++;
-   };
-   if (dividend == 4)
-   {
-      str[pos+0] = 'C';
-      str[pos+1] = 'D';
-      dividend -= 4;
-      pos += 2;
-   };
-   for(u = 0; u < dividend; u++)
-      str[pos+u] = 'C';
-   pos += u;
    num %= 100;
 
    /* calculates tens */
@@ -176,31 +181,34 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
    if (dividend > (len-1-pos))
    {
       errno = ENOBUFS;
+      str[pos] = '\0';
       return(NULL);
    };
-   if (dividend == 9)
+   switch(dividend)
    {
-      str[pos+0] = 'X';
-      str[pos+1] = 'C';
-      dividend = 0;
-      pos += 2;
+      case 9:
+         str[pos+0] = 'X';
+         str[pos+1] = 'C';
+         pos += 2;
+         break;
+      case 4:
+         str[pos+0] = 'X';
+         str[pos+1] = 'L';
+         pos += 2;
+         break;
+      case 8:
+      case 7:
+      case 6:
+      case 5:
+         str[pos+0] = 'L';
+         dividend -= 5;
+         pos++;
+      default:
+         for(u = 0; u < dividend; u++)
+            str[pos+u] = 'X';
+         pos += u;
+         break;
    };
-   if (dividend >= 5)
-   {
-      str[pos+0] = 'L';
-      dividend -= 5;
-      pos++;
-   };
-   if (dividend == 4)
-   {
-      str[pos+0] = 'X';
-      str[pos+1] = 'L';
-      pos += 2;
-      dividend -= 4;
-   };
-   for(u = 0; u < dividend; u++)
-      str[pos+u] = 'X';
-   pos += u;
    num %= 10;
 
    /* calculates ones */
@@ -208,30 +216,37 @@ ROMAN_F(char *) int2roman_r(int num, char * str, size_t len)
    if (dividend > (len-1-pos))
    {
       errno = ENOBUFS;
+      str[pos] = '\0';
       return(NULL);
    };
-   if (dividend == 9)
+   switch(dividend)
    {
-      str[pos+0] = 'I';
-      str[pos+1] = 'X';
-      dividend = 0;
-      pos += 2;
+      case 9:
+         str[pos+0] = 'I';
+         str[pos+1] = 'X';
+         pos += 2;
+         break;
+      case 4:
+         str[pos+0] = 'I';
+         str[pos+1] = 'V';
+         pos += 2;
+         break;
+      case 8:
+      case 7:
+      case 6:
+      case 5:
+         str[pos+0] = 'V';
+         dividend -= 5;
+         pos++;
+      default:
+         for(u = 0; u < dividend; u++)
+            str[pos+u] = 'I';
+         pos += u;
+         break;
    };
-   if (dividend >= 5)
-   {
-      str[pos+0] = 'V';
-      dividend -= 5;
-      pos++;
-   };
-   if (dividend == 4)
-   {
-      str[pos+0] = 'I';
-      str[pos+1] = 'V';
-      pos += 2;
-      dividend -= 4;
-   };
-   for(u = 0; u < dividend; u++)
-      str[pos+u] = 'I';
+
+   /* terminate string */
+   str[pos] = '\0';
 
    /* ends function */
    return(str);

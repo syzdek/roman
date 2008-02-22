@@ -2,7 +2,7 @@
 #   $Id$
 #
 #   Roman Numeral Conversion API
-#   Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>
+#   Copyright (C) 2007, 2008 David M. Syzdek <roman-project@syzdek.net>
 #
 #   This program is free software; you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -199,7 +199,7 @@ do_subst = sed \
 	-e 's![@]PACKAGE_NAME[@]!@PACKAGE_NAME@!g' \
 	-e 's,[@]PACKAGE_TARNAME[@],@PACKAGE_TARNAME@,g' \
 	-e 's,[@]PACKAGE_BUGREPORT[@],@PACKAGE_BUGREPORT@,g' \
-	-e 's,[@]PACKAGE_COPYRIGHT[@],@PACKAGE_COPYRIGHT@,g' \
+	-e 's|[@]PACKAGE_COPYRIGHT[@]|@PACKAGE_COPYRIGHT@|g' \
 	-e 's,[@]RELEASE_MONTH[@],@RELEASE_MONTH@,g'
 do_subst_fn = \
 		echo "do_subst < ${@}.in > ${@}"; \

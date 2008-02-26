@@ -227,14 +227,14 @@ MyConfig * my_cmdline(int argc, char *argv[])
    static char   short_options[] = "cd:huvV";
    static struct option long_options[] =
    {
-      {"chart",		no_argument, 0, 'c'},
-      {"date",          no_argument, 0, 'd'},
-      {"help",		no_argument, 0, 'h'},
-      {"utc",		no_argument, 0, 'u'},
-      {"universal",	no_argument, 0, 'u'},
-      {"verbose",	no_argument, 0, 'v'},
-      {"version",	no_argument, 0, 'V'},
-      {NULL,            0,           0, 0}
+      {"chart",		no_argument,		0, 'c'},
+      {"date",          required_argument,	0, 'd'},
+      {"help",		no_argument,		0, 'h'},
+      {"utc",		no_argument,		0, 'u'},
+      {"universal",	no_argument,		0, 'u'},
+      {"verbose",	no_argument,		0, 'v'},
+      {"version",	no_argument,		0, 'V'},
+      {NULL,		0,			0, 0}
    };
 
    /* allocates memory */

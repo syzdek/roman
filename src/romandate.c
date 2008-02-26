@@ -383,9 +383,7 @@ void my_version(void)
    printf("%s (%s) %s\n", PROGRAM_NAME, PACKAGE_NAME, PACKAGE_VERSION);
    printf("Written by David M. Syzdek.\n");
    printf("\n");
-#ifdef PACKAGE_COPYRIGHT
    printf("%s\n", PACKAGE_COPYRIGHT);
-#endif
    printf("This is free software; see the source for copying conditions.  There is NO\n");
    printf("warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n");
    return;

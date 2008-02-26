@@ -163,29 +163,35 @@ time_t my_ascii2time(const char * str)
 {
    /* declares local vars */
    char      buff[5];
+   size_t    c;
    size_t    len;
    struct tm tm;
 
    /* initializes variables */
-   memset(&tm,   0, sizeof(struct tm));
-   memset(buff, 0, 5);
+   memset(&tm, 0, sizeof(struct tm));
+   buff[4]    = '\0';
    len        = strlen(str);
-   tm.tm_mday = 1;
+   tm.tm_mday = 1; // prevents undefined behavior if day is not specified
 
    /* check arguments */
-   if (len < 2)
+   if (len & 0x01) // the time STRING cannot be an odd length
       return(0);
-   if (len &0x01)
+   if (len > 14) // the time STRING is never longer than 14 characters
       return(0);
-   if (len > 14)
-      return(0);
+
+   /* verifies that the time STRING is numeric */
+   for(c = 0; c < len; c++)
+      if ((str[c] < '0') || (str[c] > '9'))
+         return(0);
 
    /* calculates year */
    if (len < 4)
       return(0);
    strncpy(buff, &str[0], 4);
    tm.tm_year = atol(buff) - 1900;
-   memset(buff, 0, 5);
+
+   /* terminates string for two character parameters */
+   buff[3] = '\0';
 
    /* calculates month */
    if (len < 6)

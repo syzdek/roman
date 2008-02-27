@@ -26,6 +26,12 @@
 	  This reduced the variable assignments by BUFF_LEN-1 operations.  For
 	  example with a 1024 byte buffer, this reduced the variable
 	  assignments by 1023 operations.  (syzdek)
+	- fixed long options `--utc' and `--universial' so they toggle UTC
+	  time instead of displaying the usage menu (syzdek)
+	- fixed long option `--date' to accept required argument for setting
+	  the date and time (syzdek)
+	- replaced memset() calls with explicit NULL terminators for strings
+	  and cleaned up the comments (syzdek)
 
 0.0.4	2008/02/01
 	- updated comments of function declarations and function prototypes

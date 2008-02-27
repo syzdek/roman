@@ -3,7 +3,7 @@
  */
 /*
  *  Roman Numeral Conversion API
- *  Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.
+ *  Copyright (c) 2007, 2008 David M. Syzdek <roman-project@syzdek.net>.
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,6 +71,7 @@ typedef struct my_config_struct
 {
    int          opts;
    int          num;
+   int          optind;
    const char * rom;
 } MyConfig;
 
@@ -104,33 +105,26 @@ void my_version PARAMS((void));
 int main(int argc, char * argv[])
 {
    /* declares local vars */
-   int          num;
+   int          x;
+   int          y;
    MyConfig   * cnf;
-   const char * str;
 
    if (!(cnf = my_cmdline(argc, argv)))
       return(1);
 
-   /* converts roman numeral */
-   if (cnf->rom)
+   for(x = cnf->optind; x < argc; x++)
    {
-      if ((num = roman2int(cnf->rom)) == -1)
-      {
-         perror(PROGRAM_NAME ": roman2int()");
-         free(cnf);
-         return(1);
-      };
-      printf("%u\n", num);
-   }
-   else if (cnf->num != -1)
-   {
-      if (!(str = int2roman(cnf->num)))
-      {
-         perror(PROGRAM_NAME ": int2roman()");
-         free(cnf);
-         return(1);
-      };
-      printf("%s\n", str);
+      /* determine type of number */
+      cnf->rom = NULL;
+      for(y = 0; y < (int) strlen(argv[x]); y++)
+         if ( ((argv[x][y] < '0') || (argv[x][y] > '9')) && (argv[x][y] != '-') )
+            cnf->rom = argv[x];
+
+      /* converts number */
+      if (!(cnf->rom))
+         printf("%s\n", int2roman(atol(argv[x])));
+      else
+         printf("%i\n", roman2int(cnf->rom));
    };
 
    /* ends function */
@@ -143,8 +137,9 @@ int main(int argc, char * argv[])
 MyConfig * my_cmdline(int argc, char *argv[])
 {
    /* declares local vars */
-   int        i;
    int        c;
+   int        x;
+   int        y;
    int        option_index;
    MyConfig * cnf;
 
@@ -203,29 +198,41 @@ MyConfig * my_cmdline(int argc, char *argv[])
    };
 
    /* checks for number to convert */
-   if ((optind + 1) != argc)
+   if ((optind + 1) > argc)
    {
       fprintf(stderr, "%s: missing required arguments\n", PROGRAM_NAME);
       fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
       free(cnf);
       return(NULL);
    };
+   cnf->optind = optind;
 
-   /* determine type of number */
-   for(i = 0; i < (int) strlen(argv[optind]); i++)
-      if ( ((argv[optind][i] < '0') || (argv[optind][i] > '9')) && (argv[optind][i] != '-') )
-         cnf->rom = argv[optind];
-
-   /* assume the number is arabic if string contains only */
-   if (!(cnf->rom))
+   for(x = cnf->optind; x < argc; x++)
    {
-      cnf->num = atol(argv[optind]);
-      if (cnf->num < 0)
+      /* determine type of number */
+      cnf->rom = NULL;
+      for(y = 0; y < (int) strlen(argv[x]); y++)
+         if ( ((argv[x][y] < '0') || (argv[x][y] > '9')) && (argv[x][y] != '-') )
+            cnf->rom = argv[x];
+
+      /* tests number */
+      if (!(cnf->rom))
       {
-         fprintf(stderr, "%s: Roman numerals must be positive\n", PROGRAM_NAME);
-         fprintf(stderr, "Try `%s --chart' for more information.\n", PROGRAM_NAME);
-         free(cnf);
-         return(NULL);
+         if (!(int2roman(atol(argv[x]))))
+         {
+            fprintf(stderr, "%s: invalid argument `%s'\n", PROGRAM_NAME, argv[x]);
+            fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+            free(cnf);
+            return(NULL);
+         };
+      } else {
+         if ((roman2int(cnf->rom) == -1))
+         {
+            fprintf(stderr, "%s: invalid argument `%s'\n", PROGRAM_NAME, argv[x]);
+            fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+            free(cnf);
+            return(NULL);
+         };
       };
    };
 
@@ -237,7 +244,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
 /* displays usage */
 void my_usage(void)
 {
-   printf("Usage: %s [OPTIONS] number\n", PROGRAM_NAME);
+   printf("Usage: %s [OPTIONS] number1 number2 ... numberN\n", PROGRAM_NAME);
    printf("  -c, --chart               print table of the Roman numeral symbols and exit\n");
    printf("  -h, --help                print this help and exit\n");
    printf("  -V, --version             print version number and exit\n");

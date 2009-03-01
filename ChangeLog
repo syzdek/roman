@@ -32,6 +32,8 @@
 	  the date and time (syzdek)
 	- replaced memset() calls with explicit NULL terminators for strings
 	  and cleaned up the comments (syzdek)
+	- romannum now accepts multiple numbers on the command line (syzdek)
+	- migrated SCM repository from CVS to Git (syzdek)
 
 0.0.4	2008/02/01
 	- updated comments of function declarations and function prototypes

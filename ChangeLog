@@ -1,6 +1,4 @@
 #
-#   $Id$
-#
 #   Roman Numeral Conversion API
 #   Copyright (C) 2007, 2008 David M. Syzdek <roman-project@syzdek.net>
 #
@@ -34,6 +32,7 @@
 	  and cleaned up the comments (syzdek)
 	- romannum now accepts multiple numbers on the command line (syzdek)
 	- migrated SCM repository from CVS to Git (syzdek)
+	- removing CVS keywords from files (syzdek)
 
 0.0.4	2008/02/01
 	- updated comments of function declarations and function prototypes

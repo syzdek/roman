@@ -1,6 +1,4 @@
 /*
- *  $Id$
- *
  *  Roman Numeral Conversion API
  *  Copyright (c) 2008 David M. Syzdek <roman-project@syzdek.net>
  *

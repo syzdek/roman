@@ -102,6 +102,7 @@ AC_CHECK_MEMBER([struct tm.tm_gmtoff],
 		[AC_DEFINE_UNQUOTED(HAVE_STRUCT_TM_TM_GMTOFF, [1], [have time zone member])],, 
 		[#include <time.h>])
 
+AC_ACS_GIT_VERSION
 
 # Creates outputs
 AC_CONFIG_FILES([Makefile])

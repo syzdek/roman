@@ -198,6 +198,7 @@ do_subst = sed \
 	-e 's,[@]PACKAGE_TARNAME[@],@PACKAGE_TARNAME@,g' \
 	-e 's,[@]PACKAGE_BUGREPORT[@],@PACKAGE_BUGREPORT@,g' \
 	-e 's|[@]PACKAGE_COPYRIGHT[@]|@PACKAGE_COPYRIGHT@|g' \
+	-e 's,[@]GIT_PACKAGE_VERSION[@],@GIT_PACKAGE_VERSION@,g' \
 	-e 's,[@]RELEASE_MONTH[@],@RELEASE_MONTH@,g'
 do_subst_fn = \
 		echo "do_subst < ${@}.in > ${@}"; \

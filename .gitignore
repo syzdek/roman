@@ -19,6 +19,9 @@ config.log
 config.status
 configure
 libtool
+roman-*.tar.bz2
+roman-*.tar.gz
+roman-*.zip
 src/romandate
 src/romannum
 stamp-h1

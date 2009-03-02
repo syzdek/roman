@@ -33,6 +33,7 @@
 	- romannum now accepts multiple numbers on the command line (syzdek)
 	- migrated SCM repository from CVS to Git (syzdek)
 	- removing CVS keywords from files (syzdek)
+	- updated to a newer versions of autotools (syzdek)
 
 0.0.4	2008/02/01
 	- updated comments of function declarations and function prototypes

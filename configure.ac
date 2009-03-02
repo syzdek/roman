@@ -30,7 +30,7 @@ AC_PREREQ(2.63)
 AC_COPYRIGHT([Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.])
 AC_REVISION(0.0.5)
 AC_INIT([Roman Numeral Conversion API],[0.0.5],[syzdek@users.sourceforge.net],[roman])
-AC_SUBST([RELEASE_MONTH],["December 2007"])
+AC_SUBST([RELEASE_MONTH],["March 2009"])
 
 # Version Info:
 #    Current    -- the current version number of this API

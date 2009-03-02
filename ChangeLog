@@ -12,7 +12,7 @@
 #   ChangeLog - list of changes made to each revision
 #
 
-0.0.5
+0.0.5	2009/03/01
 	- updated logic in int2roman() by using switch() instead of if,
 	  else if, and else.  By using switch(), I was able to reduce
 	  variable assignments and if statements.  For example the conversion

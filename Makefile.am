@@ -71,8 +71,7 @@ lib_libroman_la_DEPENDENCIES		= lib/libroman.def lib/libroman.sym Makefile
 lib_libroman_la_CFLAGS			= $(AM_CFLAGS)
 lib_libroman_la_LIBADD			= $(AM_LIBS)
 lib_libroman_la_LDFLAGS			= $(AM_LDFLAGS) \
-                                          -rpath '$(libdir)' \
-					  -no-undefined
+                                          -rpath '$(libdir)'
 lib_libroman_la_SOURCES			= $(include_HEADERS) \
 					  lib/libroman.c \
 					  lib/libroman.h

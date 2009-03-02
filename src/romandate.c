@@ -114,7 +114,7 @@ int main PARAMS((int argc, char * argv[]));
 time_t my_ascii2time PARAMS((const char * str));
 
 /* parses config */
-MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
+MyConfig * my_cmdline PARAMS((int argc, char *argv[], int * errp));
 
 /* displays usage */
 void my_usage PARAMS((void));
@@ -133,12 +133,13 @@ void my_version PARAMS((void));
 int main(int argc, char * argv[])
 {
    /* declares local vars */
+   int          err;
    char         buff[MY_BUFF_LEN];
    MyConfig   * cnf;
    struct tm  * tptr;
 
-   if (!(cnf = my_cmdline(argc, argv)))
-      return(1);
+   if (!(cnf = my_cmdline(argc, argv, &err)))
+      return(err);
 
    if (cnf->opts & MY_OPT_UTC)
       tptr = gmtime(&cnf->tclock);
@@ -220,7 +221,7 @@ time_t my_ascii2time(const char * str)
 
 
 /* parses config */
-MyConfig * my_cmdline(int argc, char *argv[])
+MyConfig * my_cmdline(int argc, char *argv[], int * errp)
 {
    /* declares local vars */
    int        c;
@@ -249,6 +250,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
    memset(cnf, 0, sizeof(MyConfig));
 
    /* sets variables */
+   *errp        = 0;
    option_index = 0;
    cnf->tclock  = time(NULL);
 
@@ -263,6 +265,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case 'c':
             my_roman_numeral_chart();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case 'd':
             if (!(cnf->tclock = my_ascii2time(optarg)))
@@ -276,6 +279,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case 'h':
             my_usage();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case 'u':
             cnf->opts |= MY_OPT_UTC;
@@ -283,6 +287,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case 'V':
             my_version();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case '?':
             fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);

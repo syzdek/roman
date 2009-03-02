@@ -83,7 +83,7 @@ typedef struct my_config_struct
 int main PARAMS((int argc, char * argv[]));
 
 /* parses config */
-MyConfig * my_cmdline PARAMS((int argc, char *argv[]));
+MyConfig * my_cmdline PARAMS((int argc, char *argv[], int * errp));
 
 /* displays usage */
 void my_usage PARAMS((void));
@@ -104,10 +104,11 @@ int main(int argc, char * argv[])
    /* declares local vars */
    int          x;
    int          y;
+   int          err;
    MyConfig   * cnf;
 
-   if (!(cnf = my_cmdline(argc, argv)))
-      return(1);
+   if (!(cnf = my_cmdline(argc, argv, &err)))
+      return(err);
 
    for(x = cnf->optind; x < argc; x++)
    {
@@ -131,7 +132,7 @@ int main(int argc, char * argv[])
 
 
 /* parses config */
-MyConfig * my_cmdline(int argc, char *argv[])
+MyConfig * my_cmdline(int argc, char *argv[], int * errp)
 {
    /* declares local vars */
    int        c;
@@ -160,6 +161,7 @@ MyConfig * my_cmdline(int argc, char *argv[])
    cnf->num = -1;
 
    /* sets variables */
+   *errp        = 1;
    option_index = 0;
 
    /* loops through args */
@@ -173,14 +175,17 @@ MyConfig * my_cmdline(int argc, char *argv[])
          case 'h':
             my_usage();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case 'c':
             my_roman_numeral_chart();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case 'V':
             my_version();
             free(cnf);
+            *errp = 0;
             return(NULL);
          case '?':
             fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);

@@ -149,7 +149,8 @@ tests_check_roman2int_m_LDADD		= $(AM_LDADD)
 
 TESTS					= $(check_PROGRAMS)
 XFAIL_TESTS				=
-EXTRA_DIST				= doc/int2roman.3.in \
+EXTRA_DIST				= build-aux/git-package-version \
+					  doc/int2roman.3.in \
 					  doc/int2roman_r.3 \
 					  doc/long2roman.3 \
 					  doc/long2roman_r.3 \
@@ -207,6 +208,10 @@ do_subst_fn = \
 
 
 # custom targets
+build-aux/git-package-version:
+	mkdir -p build-aux
+	echo $(PACKAGE_VERSION) > $(srcdir)/build-aux/git-package-version
+
 doc/int2roman.3: Makefile doc/int2roman.3.in
 	@$(do_subst_fn)
 

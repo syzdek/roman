@@ -25,13 +25,11 @@
 # |                 |
 # +-=-=-=-=-=-=-=-=-+
 
-AC_PREREQ(2.61)
+AC_PREREQ(2.63)
 
 AC_COPYRIGHT([Copyright (c) 2007 David M. Syzdek <roman-project@syzdek.net>.])
-AC_REVISION($Revision$)
+AC_REVISION(0.0.5)
 AC_INIT([Roman Numeral Conversion API],[0.0.5],[syzdek@users.sourceforge.net],[roman])
-AC_SUBST(PACKAGE_COPYRIGHT, ["Copyright (C) 2007, 2008 David M. Syzdek."])
-AC_DEFINE_UNQUOTED(PACKAGE_COPYRIGHT, ["$PACKAGE_COPYRIGHT"], ["Copyright info"])
 AC_SUBST([RELEASE_MONTH],["December 2007"])
 
 # Version Info:
@@ -43,10 +41,10 @@ AC_SUBST([RELEASE_MONTH],["December 2007"])
 AC_SUBST(LIB_VERSION_INFO, 2:1:1)
 AC_SUBST(LIB_RELEASE_INFO, 2) # used by Win32 DLLs
 
-AC_CONFIG_AUX_DIR([gnu])
-AC_CONFIG_SRCDIR([.])
-#AC_CONFIG_LIBOBJ_DIR(compat)
+AC_CONFIG_AUX_DIR([build-aux])
+AC_CONFIG_SRCDIR([AUTHORS])
 AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_MACRO_DIR([m4])
 
 # determines host type
 AC_CANONICAL_BUILD
@@ -54,18 +52,13 @@ AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
 
 # configures for automake
-AM_MAINTAINER_MODE
 AM_INIT_AUTOMAKE(gnu std-options subdir-objects)
 
 # Compilers                                                       
 AC_PROG_CC 
 AM_PROG_CC_C_O
 AC_PROG_INSTALL
-
-# checks for Unix Variants
-AC_AIX
-AC_GNU_SOURCE
-AC_MINIX
+AC_USE_SYSTEM_EXTENSIONS # replaces AC_AIX AC_GNU_SOURCE AC_MINIX
 AC_C_BIGENDIAN
 
 # binary locations
@@ -75,6 +68,13 @@ AC_CHECK_TOOLS(LD,	ld gld,		[AC_MSG_ERROR([missing binutil "ld"])])
 AC_CHECK_TOOLS(NM,	nm gnm,		[AC_MSG_ERROR([missing binutil "nm"])])
 AC_CHECK_TOOLS(RANLIB,	ranlib granlib,	[AC_MSG_ERROR([missing binutil "ranlib"])])
 AC_CHECK_TOOLS(STRIP,	strip gstrip,	[AC_MSG_ERROR([missing binutil "strip"])])
+
+# shell programs
+AC_PROG_AWK
+AC_PROG_EGREP
+AC_PROG_FGREP
+AM_PROG_LEX
+AC_PROG_LN_S
 
 # GNU Libtool Support
 AC_LIBTOOL_DLOPEN

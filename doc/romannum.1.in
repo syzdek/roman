@@ -1,13 +1,7 @@
 .\"
 .\" Roman Numeral Conversion API
 .\" Copyright (C) 2007 David M. Syzdek <roman-project@syzdek.net>.
-.\"
-.\" Permission is granted to copy, distribute and/or modify this document
-.\" under the terms of the GNU Free Documentation License, Version 1.2
-.\" or any later version published by the Free Software Foundation;
-.\" with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
-.\" A copy of the license is included in the section entitled "GNU
-.\" Free Documentation License".
+.\" Copyright (C) 2010 Bindle Binaries
 .\"
 .\" @configure_input@
 .\"
@@ -34,11 +28,6 @@ print version number and exit
 Written by David M. Syzdek.
 .SH "REPORTING BUGS"
 Report bugs to <@PACKAGE_BUGREPORT@>.
-.SH COPYRIGHT
-@PACKAGE_COPYRIGHT@
-.br
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 .SH "SEE ALSO"
 .BR roman (7),
 .BR romandate (1),

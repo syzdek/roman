@@ -76,22 +76,28 @@ More information on Roman Numerals can be found on the following web sites:
 IV. Obtaining the Source
 ------------------------
 
-This project is hosted on SourceForge.  The source code can be downloaded from the
-following web page:
+The source code for this project is maintained using git (http://git-scm.com).
+The following contains information to checkout the source code from the git
+repository.
 
-	<a href=https://sourceforge.net/projects/roman/>
-	https://sourceforge.net/projects/roman/
-	</a>
+   Git URLs:
+      git://github.com/syzdek/roman.git
+      git://roman.git.sourceforge.net/gitroot/roman/roman
+      git://git.scm.syzdek.net/pub/scm/net.sourceforge/roman.git
 
-The latest source code can be retieved from CVS using the following commands:
+   Downloading Source:
 
-	CVSROOT=:pserver:anonymous@roman.cvs.sourceforge.net:/cvsroot/roman
-	export CVSROOT
-	cvs -z3 checkout -P roman
-	autoreconf -i
+      $ git://roman.git.sourceforge.net/gitroot/roman/roman
 
-This should create a directory called `roman' which contains the latest
-development source.
+   Preparing Source:
+
+      $ autoreconf -i -f
+
+   Git Branches:
+      master - Current release of packages.
+      next   - changes staged for next release
+      pu     - proposed updates for next release
+      xx/yy+ - branch for testing new changes before merging to 'pu' branch
 
 
 V. Compiling and Installing

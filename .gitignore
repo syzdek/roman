@@ -6,8 +6,14 @@
 *.lo
 *.o
 .deps
+*.mode1v3
+*.pbxuser
+*.xcuserdatad
+*.xcworkspace
+.DS_Store
 .dirstamp
 .libs
+/build/
 Makefile
 Makefile.in
 aclocal.m4

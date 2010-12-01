@@ -85,6 +85,7 @@ The latest source code can be retieved from CVS using the following commands:
 	CVSROOT=:pserver:anonymous@roman.cvs.sourceforge.net:/cvsroot/roman
 	export CVSROOT
 	cvs -z3 checkout -P roman
+	autoreconf -i
 
 This should create a directory called `roman' which contains the latest
 development source.

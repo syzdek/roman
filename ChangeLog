@@ -1,7 +1,7 @@
 
 Roman Numeral Conversion API
 
-0.6
+0.6	2010/12/01
 	- updating license from GPL to modified BSD license in order to
 	  allow the library to be used in iOS development. (syzdek)
 	- Removing generated files from git repository. (syzdek)

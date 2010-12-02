@@ -5,6 +5,9 @@ Roman Numeral Conversion API
 	- updating license from GPL to modified BSD license in order to
 	  allow the library to be used in iOS development. (syzdek)
 	- Removing generated files from git repository. (syzdek)
+	- Changing Revision scheme from major.minor.patch in official
+	  releases to major.minor and using git describe to determine
+	  patch level. (syzdek)
 
 0.0.5	2009/03/01
 	- updated logic in int2roman() by using switch() instead of if,
